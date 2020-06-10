@@ -3,7 +3,8 @@ import { RandomNumberService } from '../services/randomNumber.service';
 
 @Component({
     selector: 'app-random-tables',
-    templateUrl: './randomTables.component.html'
+    templateUrl: './randomTables.component.html',
+    styleUrls: ['./randomTables.component.scss']
 })
 
 export class RandomTablesComponent {

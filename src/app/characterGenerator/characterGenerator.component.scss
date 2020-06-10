@@ -1,24 +1,29 @@
 .character-grid {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: auto;
-    grid-template-areas: 
-    "sectionOne sectionTwo sectionThree"
-    "sectionFour"
-    "sectionFive";
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+    "header header"
+    "sectionOne sectionTwo"
+    "sectionThree sectionFour"
+    "sectionFive sectionFive";
+}
 
-    &.sectionOne {
-        grid-area: sectionOne;
-    }
+.charSheetHeader {
+    grid-area: header;
+}
 
-    &.sectionTwo {
-        grid-area: sectionTwo;
-    }
+.sectionOne {
+    grid-area: sectionOne;
+}
+
+.sectionTwo {
+    grid-area: sectionTwo;
 }
 
 .section-one-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: 20% 80%;
+    grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
     "header header" 
     "strTag strScore"
@@ -38,6 +43,9 @@
 .circleBorder {
     border: solid white;
     border-radius: 16px;
+    justify-self: start;
+    align-self: center;
+    padding: 2px;
 }
 
 .sectionOneHeader {
@@ -62,7 +70,6 @@
 
 .strScore {
     grid-area: strScore;
-    justify-self: end;
 }
 
 .spdScore {

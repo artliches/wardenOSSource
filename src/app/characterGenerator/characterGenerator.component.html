@@ -1,0 +1,27 @@
+<section class='basic-grid character-grid'>
+    <div class='sectionOne'>
+        <div>roll 6d10 for each of your <a (click)='rollStats()'><u>STATS</u></a></div>
+        <div class='scoreRow'>
+            <span class='pillBorder strTag'>STRENGTH</span> <span *ngIf='statGen' class='circleBorder strScore'>{{strengthScore}}</span>
+        </div>
+        <div class='scoreRow'>
+            <span class='pillBorder spdTag'>SPEED</span> <span *ngIf='statGen' class='circleBorder spdScore'>{{speedScore}}</span>
+        </div>
+        <div class='scoreRow'>
+            <span class='pillBorder intTag'>INTELLECT</span> <span *ngIf='statGen' class='circleBorder intScore'>{{intellectScore}}</span>
+        </div>
+        <div class='scoreRow'>
+            <span class='pillBorder comTag'>COMBAT</span> <span *ngIf='statGen' class='circleBorder comScore'>{{combatScore}}</span>
+        </div>
+    </div>
+
+    <div class='sectionTwo'>
+        <div>pick a CLASS and note their starting SAVES</div>
+        <div>SANITY</div>
+        <div>FEAR</div>
+        <div>BODY</div>
+        <div>ARMOR</div>
+    </div>
+
+    ---
+</section>

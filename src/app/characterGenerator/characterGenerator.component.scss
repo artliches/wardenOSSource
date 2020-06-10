@@ -1,0 +1,75 @@
+.character-grid {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas: 
+    "sectionOne sectionTwo sectionThree"
+    "sectionFour"
+    "sectionFive";
+
+    &.sectionOne {
+        grid-area: sectionOne;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        grid-template-areas: 
+        "strTag strScore"
+        "spdTag spdScore"
+        "intTag intScore"
+        "comTag comScore";
+    }
+
+    &.sectionTwo {
+        grid-area: sectionTwo;
+    }
+}
+
+.pillBorder {
+    border: solid white;
+    padding: 1px 5px;
+    border-radius: 16px;
+    background-color: white;
+    color:  rgba(0, 150, 0, 0.75);
+}
+
+.circleBorder {
+    border: solid white;
+    border-radius: 16px;
+}
+
+.strTag {
+    grid-area: strTag;
+}
+
+.spdTag {
+    grid-area: spdTag;
+}
+
+.intTag {
+    grid-area: intTag;
+}
+
+.comTag {
+    grid-area: comTag;
+}
+
+.strScore {
+    grid-area: strScore;
+    justify-self: end;
+}
+
+.spdScore {
+    grid-area: spdScore;
+}
+
+.intScore {
+    grid-area: intScore;
+}
+
+.comScore {
+    grid-area: comScore;
+}
+
+.scoreRow {
+    padding-top: 10px;
+    padding-bottom: 10px
+}

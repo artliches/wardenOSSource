@@ -8,19 +8,23 @@
 
     &.sectionOne {
         grid-area: sectionOne;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-        grid-template-areas: 
-        "strTag strScore"
-        "spdTag spdScore"
-        "intTag intScore"
-        "comTag comScore";
     }
 
     &.sectionTwo {
         grid-area: sectionTwo;
     }
+}
+
+.section-one-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-areas:
+    "header header" 
+    "strTag strScore"
+    "spdTag spdScore"
+    "intTag intScore"
+    "comTag comScore";
 }
 
 .pillBorder {
@@ -34,6 +38,10 @@
 .circleBorder {
     border: solid white;
     border-radius: 16px;
+}
+
+.sectionOneHeader {
+    grid-area: header;
 }
 
 .strTag {

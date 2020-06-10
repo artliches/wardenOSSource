@@ -1,6 +1,6 @@
 <section class='basic-grid character-grid'>
-    <div class='sectionOne'>
-        <div>roll 6d10 for each of your <a (click)='rollStats()'><u>STATS</u></a></div>
+    <div class='sectionOne section-one-grid'>
+        <div class='sectionOneHeader'>roll 6d10 for each of your <a (click)='rollStats()'><u>STATS</u></a></div>
         <div class='scoreRow'>
             <span class='pillBorder strTag'>STRENGTH</span> <span *ngIf='statGen' class='circleBorder strScore'>{{strengthScore}}</span>
         </div>

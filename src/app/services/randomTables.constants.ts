@@ -1,18 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges } from '@angular/core';
-import { RandomNumberService } from '../services/randomNumber.service';
-
-@Component({
-    selector: 'app-random-tables',
-    templateUrl: './randomTables.component.html',
-    styleUrls: ['./randomTables.component.scss']
-})
-
-export class RandomTablesComponent implements OnChanges {
-  @Input() command: any;
-  patch: any;
-  trinket: any;
-
-  patchTable = [
+export const PATCH_TABLE = [
     {num: 0 , descrip: '“#1 Worker”'},
     {num: 1 , descrip: 'Security Guard patch'},
     {num: 2 , descrip: 'Blood Type (Reference Patch)'},
@@ -114,7 +100,7 @@ export class RandomTablesComponent implements OnChanges {
     {num: 98, descrip: '“Volunteer”'},
     {num: 99, descrip: '“Solve Et Coagula” (Baphomet)'},
   ];
-  trinketTable = [
+export const TRINKET_TABLE = [
     { num: 0, descrip: 'Preserved Insectile Aberration'},
     { num: 1, descrip: 'Faded Green Poker Chip'},
     { num: 2, descrip: 'Antique Company Script (Asteroid Mine)'},
@@ -217,32 +203,5 @@ export class RandomTablesComponent implements OnChanges {
     { num: 99, descrip: 'Miniature Chess Set, Bone, Pieces Missing'},
   ];
 
-  constructor(private randomNumber: RandomNumberService) {}
+export const CLASSES = ['TEAMSTER', 'ANDROID', 'SCIENTIST', 'MARINE'];
 
-  ngOnChanges(changes: SimpleChanges) {
-    console.log('here!');
-    for (const prop in changes) {
-      if (prop === 'command') {
-        console.log('Previous:', changes[prop].previousValue);
-        console.log('Current:', changes[prop].currentValue);
-      }
-    }
-    if (this.command !== 'random') {
-      if (this.command === 'trinket -g') {
-        this.createTrinketOrPatch(1, 100, true);
-      } else {
-        this.createTrinketOrPatch(1, 100, false);
-      }
-    }
-  }
-
-  createTrinketOrPatch(min: number, max: number, isTrinket: boolean) {
-    const rand = this.randomNumber.getRandomNumber(min, max);
-
-    if (isTrinket) {
-      this.trinket = (this.trinketTable.find(trinket => trinket.num === rand));
-    } else {
-      this.patch = (this.patchTable.find(patch => patch.num === rand));
-    }
-  }
-}

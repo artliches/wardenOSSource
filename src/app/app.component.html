@@ -1,5 +1,37 @@
-> greetings warden...
-<p>---</p>
+<h1 class='warden-banner'>
+    WARDEN OS
+   <div> v.5.0</div>
+</h1>
 
-<!-- <app-character-generator></app-character-generator> -->
-<app-random-tables></app-random-tables>
+<div>
+    > greetings crew of VAC-R-13//THE LAB RAT
+</div>
+
+<app-command-line-interface (acceptedCommand)='acceptCommand($event)'></app-command-line-interface>
+<p></p>
+<div *ngIf='acceptedCommand === "trinket -g" || acceptedCommand === "patch -g"'>
+    <b *ngIf='patchTrinket && patchTrinket.descrip'>{{patchTrinket.num}} - {{patchTrinket.descrip}}</b>
+</div>
+<div *ngIf='acceptedCommand === "crew -c"'>
+    <div *ngFor='let key of objectKeys(crewManifest)'>
+        {{key + ' : ' + crewManifest[key]}}
+    </div>
+</div>
+<div *ngIf='acceptedCommand.includes("mission_brief") && brief && brief.descrip || briefList'>
+    <span *ngIf='brief && briefList.length === 0; else bList'>
+        <div>BRIEF NUMBER: {{brief.num}}</div>
+        <div>SECTOR DESIGNATION: <span [ngStyle]="{'color':brief.sector === 'dead' ? 'red' : 'white'}">{{brief.sector.toUpperCase()}}</span></div>
+        <div>////////////////////////////////////</div>
+        <span [innerHtml]='brief.descrip'></span>
+    </span>
+    <ng-template #bList>
+        <span *ngFor = 'let brief of briefList'>
+            <div>BRIEF NUMBER: {{brief.num}}</div>
+            <div>TITLE: {{brief.title}}</div>
+            <p></p>
+        </span>
+    </ng-template>
+</div>
+<div *ngIf='errorMessage !== ""'>
+    {{errorMessage}}
+</div>

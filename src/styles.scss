@@ -1,8 +1,8 @@
 body {
     background-color: black;
-    background-image: radial-gradient(
-      rgba(0, 150, 0, 0.75), black 120%
-    );
+    // background-image: radial-gradient(
+    //   rgba(0, 150, 0, 0.75), black 120%
+    // );
     height: 100vh;  
     color: white;
     font: 1.3rem Inconsolata, monospace;
@@ -14,22 +14,22 @@ body {
   grid-gap: 1rem;
 }
 
+.warden-banner {
+  padding-bottom: 2rem;
+  font-family: 'Monoton';
+  text-shadow: none;
+}
+
 .hyperLink {
   cursor: pointer;
 }
 
-// body::after {
-//   content: "";
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-//   width: 100vw;
-//   height: 100vh;
-//   background: repeating-linear-gradient(
-//     0deg,
-//     rgba(black, 0.15),
-//     rgba(black, 0.15) 1px,
-//     transparent 1px,
-//     transparent 2px
-//   );
-// }
+input {
+  background-color: black;
+  color: #33FF68;
+  font: 1.3rem Inconsolata, monospace;
+  border-left: 5px solid green;
+  border-right: none;
+  border-top: none;
+  border-bottom: none;
+}

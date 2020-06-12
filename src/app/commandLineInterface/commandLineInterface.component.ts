@@ -16,10 +16,12 @@ export class CommandLineInterfaceComponent {
         this.wardenOutput = `
         List of available commands (enter without brackets):
         <p>[help]: displays list of available commands</p>
-        <p>[trinket -g]: generates a random trinket</p>
-        <p>[patch -g]: generates a random patch</p>
         <p>[crew -c]: generates a crew member manifest</p>
-        <p>[mission_brief/# || "list"]: retrieve mission briefing. requires a brief number or "list" for list of mission_briefs`;
+        <p>[mission_brief/# || "list"]: retrieve mission briefing. requires a brief number or "list" for list of mission_briefs
+        <p>[patch -g]: generates a random patch</p>
+        <p>[trinket -g]: generates a random trinket</p>
+        <p>[ship/"status"]: displays status of VAC-R-13</p>
+        `;
         this.acceptedCommand.emit('help');
       } else if (this.wardenInput.toLowerCase() === 'random' && this.adminMode) {
         this.wardenOutput = 'displaying random tables...';
@@ -39,6 +41,13 @@ export class CommandLineInterfaceComponent {
         this.acceptedCommand.emit('crew -c');
       } else if (this.wardenInput.toLowerCase().includes('mission_brief/')) {
         this.wardenOutput = 'retrieving mission briefing...';
+        this.acceptedCommand.emit(this.wardenInput.toLowerCase());
+      } else if (this.wardenInput.toLowerCase().includes('ship/')) {
+        this.acceptedCommand.emit(this.wardenInput.toLowerCase());
+      } else if (
+          this.wardenInput.toLowerCase() === 'hello' ||
+          this.wardenInput.toLowerCase() === 'kill' ||
+          this.wardenInput.toLowerCase() === 'goodbye') {
         this.acceptedCommand.emit(this.wardenInput.toLowerCase());
       } else {
         this.wardenOutput = `command "${this.wardenInput}" not recognized`;

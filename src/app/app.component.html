@@ -1,6 +1,6 @@
 <h1 class='warden-banner'>
     WARDEN OS
-   <div> v.5.0</div>
+   <div> v.5.0.1</div>
 </h1>
 
 <div>
@@ -12,7 +12,7 @@
 <div *ngIf='acceptedCommand === "trinket -g" || acceptedCommand === "patch -g"'>
     <b *ngIf='patchTrinket && patchTrinket.descrip'>{{patchTrinket.num}} - {{patchTrinket.descrip}}</b>
 </div>
-<div *ngIf='acceptedCommand === "crew -c"'>
+<div *ngIf='acceptedCommand === "crew -c" && crewManifest'>
     <div *ngFor='let key of objectKeys(crewManifest)'>
         {{key + ' : ' + crewManifest[key]}}
     </div>
@@ -31,6 +31,26 @@
             <p></p>
         </span>
     </ng-template>
+</div>
+<div *ngIf='acceptedCommand.includes("ship/")'>
+    <div *ngFor='let key of objectKeys(shipStatus)'>
+        <b>{{key.toUpperCase()}}</b>
+        <div *ngFor='let sys of objectKeys(shipStatus[key])'>
+            <span *ngIf='sys === "cargohold"; else restOfCargo'>
+                {{sys + ' : '}}
+                <div class='cargoList' *ngFor='let cargo of objectKeys(shipStatus[key][sys])'>
+                    {{cargo + ' : ' + shipStatus[key][sys][cargo] }}
+                </div>
+            </span>
+            <ng-template #restOfCargo>
+                {{sys + ' : '}} <span [ngClass]="{'green-text':shipStatus[key][sys].includes('online') || shipStatus[key][sys].includes('sound')}">{{shipStatus[key][sys]}}</span>
+            </ng-template>
+        </div>
+        <p></p>
+    </div>
+</div>
+<div id='shadowBox' *ngIf='rougeAI !== ""'>
+    <span class='rainbow rainbow_text_animated'>{{rougeAI}}</span>
 </div>
 <div *ngIf='errorMessage !== ""'>
     {{errorMessage}}

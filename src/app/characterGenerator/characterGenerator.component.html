@@ -1,48 +1,47 @@
-<section class='basic-grid character-grid'>
-    <div class='charSheetHeader'>
-        <span>
-            STRESS
-        </span>
-        <span class='circleBorder'>2</span>
-
-        <span>
-            RESOLVE
-        </span>
-        <span class='circleBorder'>0</span>
-
-        <span>
-            HEALTH
-        </span>
-        <span class='circleBorder'>0</span>
-    </div>
-
-    <div class='sectionOne section-one-grid'>
-        <div class='sectionOneHeader'>roll 6d10 for each of your <a (click)='rollStats()'><u>STATS</u></a></div>
-        <div class='scoreRow strTag'>
-            <span class='pillBorder'>STRENGTH</span>
+<div class='basic-grid cg-grid-master'>
+    <section class='card name-section'>
+        <div class='warden-banner title-section'>NAME</div>
+        {{name}} THE {{class.toUpperCase()}}
+    </section>
+    <section class='card basic-grid stats-grid'>
+        <div class='title-section warden-banner'>STATS</div>
+        <div *ngFor='let key of objectKeys(statsArray)'
+        [ngClass]="{
+            'stress-section': key === 'stress',
+            'resolve-section': key === 'resolve',
+            'health-section': key === 'health',
+            'str-section': key === 'strength',
+            'spd-section': key === 'speed',
+            'int-section': key === 'intellect',
+            'com-section': key === 'combat'
+        }">
+            <b>{{key.toUpperCase()}}</b> : {{statsArray[key]}}
         </div>
-        <span *ngIf='statGen' class='circleBorder strScore'>{{strengthScore}}</span>
-        <div class='scoreRow spdTag'>
-            <span class='pillBorder'>SPEED</span>
-        </div>
-        <span *ngIf='statGen' class='circleBorder spdScore'>{{speedScore}}</span>
-        <div class='scoreRow intTag'>
-            <span class='pillBorder intTag'>INTELLECT</span>
-        </div>
-        <span *ngIf='statGen' class='circleBorder intScore'>{{intellectScore}}</span>
-        <div class='scoreRow comTag'>
-            <span class='pillBorder comTag'>COMBAT</span>
-        </div>
-        <span *ngIf='statGen' class='circleBorder comScore'>{{combatScore}}</span>
-    </div>
+    </section>
 
-    <div class='sectionTwo'>
-        <div>pick a CLASS and note their starting SAVES</div>
-        <div>SANITY</div>
-        <div>FEAR</div>
-        <div>BODY</div>
-        <div>ARMOR</div>
-    </div>
-
-    ---
-</section>
+    <section class='card basic-grid saves-grid'>
+        <div class='title-section warden-banner'>SAVES</div>
+        <div *ngFor='let key of objectKeys(savesArray)'
+        [ngClass]="{
+            'san-section': key === 'sanity',
+            'fea-section': key === 'fear',
+            'bod-section': key === 'body',
+            'arm-section': key === 'armor'
+        }">
+            <b>{{key.toUpperCase()}}</b> : {{savesArray[key]}}
+        </div>
+    </section>
+    <section class='card basic-grid skills-grid'>
+        <div class='warden-banner title-section'>
+            SKILLS
+        </div>
+        <div *ngFor='let skill of skillsArray'>
+            >> {{skill.descrip}} | {{skill.percent}}
+        </div>
+    </section>
+    <section class='card basic-grid equipStressDetails-grid'>
+        <div class='title-section warden-banner'>
+            EQUIPMENT/STRESS_DETAILS/
+        </div>
+    </section>
+</div>

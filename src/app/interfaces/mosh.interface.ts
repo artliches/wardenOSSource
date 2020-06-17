@@ -32,3 +32,20 @@ export interface ShipStatus {
         frame: string;
     };
 }
+
+export interface CharacterStats {
+    stress: number;
+    resolve: number;
+    max_Health: number;
+    strength: number;
+    speed: number;
+    intellect: number;
+    combat: number;
+}
+
+export interface CharacterSaves {
+    sanity: string;
+    fear: string;
+    body: string;
+    armor: string;
+}

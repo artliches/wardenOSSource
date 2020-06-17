@@ -14,8 +14,13 @@ body {
   grid-gap: 1rem;
 }
 
+.card {
+  background: hotpink;
+  // border-radius: 8px;
+  padding: 5px;
+}
+
 .warden-banner {
-  padding-bottom: 2rem;
   font-family: 'Monoton';
   text-shadow: none;
 }

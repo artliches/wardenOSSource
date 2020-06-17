@@ -1,90 +1,81 @@
-.character-grid {
+.cg-grid-master {
     grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(4, 1fr);
     grid-template-areas:
-    "header header"
-    "sectionOne sectionTwo"
-    "sectionThree sectionFour"
-    "sectionFive sectionFive";
+        "name name"
+        ". skills"
+        ". skills"
+        "equip equip";
+    
+    .name-section {
+        grid-area: name;
+    }
 }
 
-.charSheetHeader {
-    grid-area: header;
-}
-
-.sectionOne {
-    grid-area: sectionOne;
-}
-
-.sectionTwo {
-    grid-area: sectionTwo;
-}
-
-.section-one-grid {
-    display: grid;
-    grid-template-columns: 20% 80%;
-    grid-template-rows: repeat(5, 1fr);
+.stats-grid {
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-    "header header" 
-    "strTag strScore"
-    "spdTag spdScore"
-    "intTag intScore"
-    "comTag comScore";
+        "title title title"
+        "stress resolve health"
+        "str str str"
+        "spd spd spd"
+        "int int int"
+        "com com com";
+
+    .str-section {
+        grid-area: str;
+    }
+    .spd-section {
+        grid-area: spd;
+    }
+    .int-section {
+        grid-area: int;
+    }
+    .com-section {
+        grid-area: com;
+    }
 }
 
-.pillBorder {
-    border: solid white;
-    padding: 1px 5px;
-    border-radius: 16px;
+.saves-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "title"
+    "sanity"
+    "fear"
+    "body"
+    "armor";
+
+    .san-section {
+        grid-area: sanity;
+    }
+    .fea-section {
+        grid-area: fear;
+    }
+    .bod-section {
+        grid-area: body;
+    }
+    .arm-section {
+        grid-area: armor;
+    }
+}
+
+.skills-grid {
+    grid-area: skills;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title";
+}
+
+.equipStressDetails-grid {
+    grid-area: equip;
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+        "title";
+}
+
+.title-section {
+    grid-area: title;
     background-color: white;
-    color:  rgba(0, 150, 0, 0.75);
-}
-
-.circleBorder {
-    border: solid white;
-    border-radius: 16px;
-    justify-self: start;
-    align-self: center;
-    padding: 2px;
-}
-
-.sectionOneHeader {
-    grid-area: header;
-}
-
-.strTag {
-    grid-area: strTag;
-}
-
-.spdTag {
-    grid-area: spdTag;
-}
-
-.intTag {
-    grid-area: intTag;
-}
-
-.comTag {
-    grid-area: comTag;
-}
-
-.strScore {
-    grid-area: strScore;
-}
-
-.spdScore {
-    grid-area: spdScore;
-}
-
-.intScore {
-    grid-area: intScore;
-}
-
-.comScore {
-    grid-area: comScore;
-}
-
-.scoreRow {
-    padding-top: 10px;
-    padding-bottom: 10px
+    color: black;
+    padding: 5px;
+    height: 2rem;
 }

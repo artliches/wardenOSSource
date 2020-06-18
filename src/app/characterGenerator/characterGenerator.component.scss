@@ -2,8 +2,9 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
         "name name"
-        ". skills"
-        ". skills"
+        ". trinket"
+        ". stress"
+        "skills skills"
         "equip equip";
     
     .name-section {
@@ -60,15 +61,32 @@
 
 .skills-grid {
     grid-area: skills;
+    grid-gap: 0rem;
     grid-template-columns: 1fr;
     grid-template-areas:
         "title";
 }
 
-.equipStressDetails-grid {
+.equip-grid {
     grid-area: equip;
     grid-template-columns: 1fr;
     grid-template-areas: 
+        "title";
+}
+
+.trinket-grid {
+    grid-area: trinket;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title";
+    align-items: start;
+}
+
+.stress-grid {
+    grid-area: stress;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-areas:
         "title";
 }
 
@@ -78,4 +96,27 @@
     color: black;
     padding: 5px;
     height: 2rem;
+}
+
+.subsection-title {
+    background-color: white;
+    color: black;
+}
+
+.itemDetailsFont {
+    font-size: .9rem;
+}
+
+@media only screen and (max-width: 768px) {
+    .cg-grid-master {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "name"
+            "stats"
+            "saves"
+            "skills"
+            "stress"
+            "equip"
+            "trinket";
+    }    
 }

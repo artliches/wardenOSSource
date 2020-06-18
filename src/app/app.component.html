@@ -1,2 +1,14 @@
-<h1 class='warden-banner'>WARDEN OS</h1>
-<app-character-generator></app-character-generator>
+<section class='basic-grid warden-grid'>
+    <h1 class='warden-banner'>WARDEN OS</h1>
+</section>
+<section class='button-grid'>
+    <button class='crew-button' (click)='generateRandomCrewMember()'>
+        <div *ngIf='!createCrewMember; else newText'>
+            GIVE ME A POUND OF FLESH
+        </div>
+        <ng-template #newText>
+            ONCE MORE UNTO THE BREACH
+        </ng-template>
+    </button>
+</section>
+<app-character-generator *ngIf='createCrewMember' [statsArray]='defaultStatArray'></app-character-generator>

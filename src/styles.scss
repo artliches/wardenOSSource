@@ -1,12 +1,8 @@
 body {
     background-color: black;
-    // background-image: radial-gradient(
-    //   rgba(0, 150, 0, 0.75), black 120%
-    // );
     height: 100vh;  
     color: white;
     font: 1.3rem Inconsolata, monospace;
-    text-shadow: 0 0 5px #C8C8C8;
 }
 
 .basic-grid {
@@ -14,9 +10,33 @@ body {
   grid-gap: 1rem;
 }
 
+.warden-grid {
+  grid-template-columns: 1fr;
+}
+
+.button-grid {
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 1fr;
+  grid-gap: 1rem;
+  grid-template-areas: 
+    "s1 s2 s3";
+  
+  padding-bottom: 1rem;
+  justify-items: center;
+}
+
+.crew-button {
+  grid-area: s2;
+  background-color: #FB007E;
+  color: white;
+  font-family: 'PT Serif', Times, serif;
+  font-size: 1.3rem;
+  border: none;
+}
+
 .card {
-  background-color: hotpink;
-  // border-radius: 8px;
+  background-color: #FB007E;
   padding: 5px;
 }
 
@@ -25,54 +45,23 @@ body {
   text-shadow: none;
 }
 
-.cargoList {
-  padding-left: 1rem;
+.section-banner {
+  font-family: 'PT Serif', Times, serif;
 }
 
-.green-text {
-  color: green;
-  text-shadow: none;
+@media only screen and (max-width: 768px) {
+  .crew-button {
+    grid-area: s1;
+  }
+  .button-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "s1"
+      "s2"
+      "s3";
+  }
+  .warden-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
 }
-
-input {
-  background-color: black;
-  color: #33FF68;
-  font: 1.3rem Inconsolata, monospace;
-  border-left: 5px solid green;
-  border-right: none;
-  border-top: none;
-  border-bottom: none;
-}
-
-#shadowBox {
-  background-color: rgb(0, 0, 0);
-  /* Fallback color */
-  background-color: rgba(0, 0, 0, 0.2);
-  /* Black w/opacity/see-through */
-  border: none;
-}
-
-.rainbow {
-  text-align: center;
-  font-size: 32px;
-  font-family: 'Monoton';
-  letter-spacing: 5px;
-}
-// .rainbow_text_animated {
-//   background: linear-gradient(to right, #6666ff, #0099ff , #00ff00, #ff3399, #6666ff);
-//   -webkit-background-clip: text;
-//   background-clip: text;
-//   color: transparent;
-//   animation: rainbow_animation 6s ease-in-out infinite;
-//   background-size: 400% 100%;
-// }
-
-// @keyframes rainbow_animation {
-//   0%,100% {
-//       background-position: 0 0;
-//   }
-
-//   50% {
-//       background-position: 100% 0;
-//   }
-// }

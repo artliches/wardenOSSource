@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { RandomNumberService } from './services/randomNumber.service';
-import { MISSION_BRIEF } from './services/missionBriefings.constants';
-import { Brief, ShipStatus } from './interfaces/mosh.interface';
+import { CharacterStats } from './interfaces/mosh.interface';
 
 @Component({
   selector: 'app-root',
@@ -9,5 +7,20 @@ import { Brief, ShipStatus } from './interfaces/mosh.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private random: RandomNumberService) {}
+  createCrewMember = false;
+  defaultStatArray: CharacterStats;
+  constructor() {}
+
+  generateRandomCrewMember() {
+    this.defaultStatArray = {
+      stress: 2,
+      resolve: 0,
+      max_Health: 0,
+      strength: 0,
+      speed: 0,
+      intellect: 0,
+      combat: 0
+  };
+    this.createCrewMember = true;
+  }
  }

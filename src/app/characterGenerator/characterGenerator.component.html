@@ -1,10 +1,10 @@
 <div class='basic-grid cg-grid-master'>
     <section class='card name-section'>
-        <div class='warden-banner title-section'>NAME</div>
+        <div class='section-banner title-section'>NAME</div>
         {{name}} THE {{class.toUpperCase()}}
     </section>
     <section class='card basic-grid stats-grid'>
-        <div class='title-section warden-banner'>STATS</div>
+        <div class='title-section section-banner'>STATS</div>
         <div *ngFor='let key of objectKeys(statsArray)'
         [ngClass]="{
             'stress-section': key === 'stress',
@@ -20,7 +20,7 @@
     </section>
 
     <section class='card basic-grid saves-grid'>
-        <div class='title-section warden-banner'>SAVES</div>
+        <div class='title-section section-banner'>SAVES</div>
         <div *ngFor='let key of objectKeys(savesArray)'
         [ngClass]="{
             'san-section': key === 'sanity',
@@ -32,16 +32,75 @@
         </div>
     </section>
     <section class='card basic-grid skills-grid'>
-        <div class='warden-banner title-section'>
+        <div class='section-banner title-section'>
             SKILLS
         </div>
         <div *ngFor='let skill of skillsArray'>
-            >> {{skill.descrip}} | {{skill.percent}}
+            >> {{skill.title}} | {{skill.percent}}
+            <div class='itemDetailsFont'>
+                {{skill.descrip}}
+            </div>
         </div>
     </section>
-    <section class='card basic-grid equipStressDetails-grid'>
-        <div class='title-section warden-banner'>
-            EQUIPMENT/STRESS_DETAILS/
+
+    <section class='card basic-grid equip-grid'>
+        <div class='title-section section-banner'>
+            EQUIPMENT
+        </div>
+        <div class='subsection-title'>
+            {{loadoutName.toUpperCase()}} LOADOUT
+        </div>
+        <div *ngFor='let item of equipmentArray'>
+            >> {{item.title.trim()}}
+            <div class='itemDetailsFont'>
+                
+                <span *ngIf='item.dmg'>
+                    DMG: <span [innerHTML]=item.dmg.trim()></span> |
+                </span>
+                <span *ngIf='item.crit && item.crit.trim() !== ""'>
+                    CRIT EFFECT: {{item.crit.trim()}} |
+                </span>
+                <span *ngIf='item.range'>
+                    RANGE: {{item.range.trim()}} |
+                </span>
+                <span *ngIf='item.ammo && item.ammo.trim() !== ""'>
+                    AMMO: {{item.ammo.trim()}} |
+                </span>
+                <span *ngIf='item.shots && item.shots.trim() !== ""'>
+                    MAG SIZE: {{item.shots.trim()}} |
+                </span>
+                <span *ngIf='item.special && item.special.trim() !== ""' [innerHTML]=item.special.trim()>
+                </span>
+                <div *ngIf='item.descrip && item.descrip.trim() !== ""'>
+                    {{item.descrip}}
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class='card basic-grid trinket-grid'>
+        <div class='title-section section-banner'>
+            TRINKETS & PATCHES
+        </div>
+        <div class='subsection-title'>
+            TRINKET
+        </div>
+        <div> >> {{trinketPatch[0].num}} - {{trinketPatch[0].descrip}}</div>
+        <div class='subsection-title'>
+            PATCH
+        </div>
+        <div> >> {{trinketPatch[1].num}} - {{trinketPatch[1].descrip}}</div>
+    </section>
+
+    <section class='card basic-grid stress-grid'>
+        <div class='title-section section-banner'>
+            STRESS, PANIC, ETC.
+        </div>
+        <div>
+            >> {{getStress().fear}}
+        </div>
+        <div *ngIf='getStress().extra'>
+            >> {{getStress().extra}}
         </div>
     </section>
 </div>

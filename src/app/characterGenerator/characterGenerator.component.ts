@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, Input } from '@angular/core';
 import { RandomNumberService } from '../services/randomNumber.service';
 import { CharacterStats, CharacterSaves } from '../interfaces/mosh.interface';
-import { FIRST_NAMES, LAST_NAMES, SKILLS } from '../services/randomTables.constants';
+import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../services/randomTables.constants';
 
 @Component({
     selector: 'app-character-generator',
@@ -9,7 +9,9 @@ import { FIRST_NAMES, LAST_NAMES, SKILLS } from '../services/randomTables.consta
     styleUrls: ['./characterGenerator.component.scss']
 })
 
-export class CharacterGeneratorComponent implements OnInit {
+export class CharacterGeneratorComponent implements OnChanges {
+    @Input() statsArray: CharacterStats;
+
     classArray = [
         'teamster',
         'android',
@@ -17,6 +19,61 @@ export class CharacterGeneratorComponent implements OnInit {
         'marine'
     ];
     class = '';
+    equipmentArray = [];
+    equipmentPresets = {
+        excavation: [
+            'Crowbar',
+            'Hand Welder',
+            'Laser Cutter',
+            'Body Cam',
+            'Bioscanner',
+            'Infrared Goggles',
+            'Lockpick Set',
+            'Vaccsuit',
+            'Oxygen Tank',
+            'Mag-Boots',
+            'Short-range Comms'
+        ],
+        exploration: [
+            'Vibechete',
+            'Rigging Gun',
+            'Flare Gun',
+            'First Aid Kit',
+            'Vaccsuit',
+            'Long-range Comms',
+            'Oxygen Tank',
+            'Survey Kit',
+            'Water Filter',
+            'Locator',
+            'Rebreather',
+            'Binoculars',
+            'Flashlight',
+            'Camping Gear',
+            'MRE (x7)'
+        ],
+        extermination: [
+            'SMG',
+            'Frag Grenade (x6)',
+            'Standard Battle Dress',
+            'Heads-up Display',
+            'Body Cam',
+            'Short-range Comms',
+            'Stimpak (x6)',
+            'Electronic Tool Set'
+        ],
+        examination: [
+            'Scalpel',
+            'Tranq Pistol',
+            'Stun Baton',
+            'Hazard Suit',
+            'Medscanner',
+            'Automed (x6)',
+            'Pain Pills (x6)',
+            'Stimpak (x6)',
+            'Cybernetic Diagnostic Scanner'
+        ]
+    };
+    loadoutName = '';
     name = '';
     savesArray: CharacterSaves;
     savesPresets = {
@@ -67,26 +124,22 @@ export class CharacterGeneratorComponent implements OnInit {
             skillPoints: 3
         }
     };
-    statsArray: CharacterStats;
+    trinketPatch = [];
     objectKeys = Object.keys;
 
     constructor(private randomNumber: RandomNumberService) {}
 
-    ngOnInit() {
-        this.statsArray = {
-            stress: 2,
-            resolve: 0,
-            max_Health: 0,
-            strength: 0,
-            speed: 0,
-            intellect: 0,
-            combat: 0
-        };
+    ngOnChanges() {
+        this.startCharacterGen();
+    }
+
+    startCharacterGen() {
         this.generateName();
         this.rollStats();
         this.rollClass();
         this.assignSaves();
         this.assignSkills();
+        this.getEquipment();
     }
 
     assignSaves() {
@@ -100,6 +153,7 @@ export class CharacterGeneratorComponent implements OnInit {
         let points = this.skillsPresets[this.class].skillPoints;
         const skillsToFind = [];
         let pickTwoCounter = 0;
+        this.skillsArray = [];
 
         if (baseSkills) {
             skillsToFind.push(...baseSkills);
@@ -124,21 +178,45 @@ export class CharacterGeneratorComponent implements OnInit {
             const filteredSkills = SKILLS.filter(skill => {
                 return skill.cost <= points &&
                     (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
-                    (!skillsToFind.includes(skill.descrip.slice(0, skill.descrip.indexOf(':')).toLowerCase()));
+                    (!skillsToFind.includes(skill.title.toLowerCase()));
             });
             const skillToPush = filteredSkills[this.randomNumber.getRandomNumber(0, filteredSkills.length - 1)];
-            skillsToFind.push(skillToPush.descrip.slice(0, skillToPush.descrip.indexOf(':')).toLowerCase());
+            skillsToFind.push(skillToPush.title.toLowerCase());
             points -= skillToPush.cost;
         } while (points > 0);
 
-
         skillsToFind.forEach(skill => {
-            this.skillsArray.push(SKILLS.find(x => x.descrip.slice(0, x.descrip.indexOf(':')).toLowerCase() === skill.toLowerCase()));
+            this.skillsArray.push(SKILLS.find(x => x.title.toLowerCase() === skill.toLowerCase()));
         });
     }
 
+    getEquipment() {
+        this.equipmentArray = [];
+        this.trinketPatch = [];
+
+        const keys = Object.keys(this.equipmentPresets);
+        const chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+        this.loadoutName = keys[chosenLoadout];
+
+        this.equipmentArray = this.equipmentPresets[keys[chosenLoadout]].map(item => {
+            return ITEMS.find(x => x.title.toLowerCase().trim() === item.toLowerCase());
+        });
+
+        for (let i = 0; i < 2; i++) {
+            const trinketOrPatch = i % 2 ? false : true;
+            this.trinketPatch.push(this.randomNumber.getTrinketOrPatch(0, 99, trinketOrPatch));
+        }
+    }
+
     generateName() {
-        this.name = `${FIRST_NAMES[this.randomNumber.getRandomNumber(0, 99)]} ${LAST_NAMES[this.randomNumber.getRandomNumber(0, 99)]}`;
+        this.name = '';
+        const firstNameNum = this.randomNumber.getRandomNumber(0, 99);
+        const lastNameNum = this.randomNumber.getRandomNumber(0, 99);
+        this.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`;
+    }
+
+    getStress() {
+        return STRESS_PANIC.find(x => x.title === this.class);
     }
 
     rollClass() {

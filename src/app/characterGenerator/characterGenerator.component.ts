@@ -102,6 +102,12 @@ export class CharacterGeneratorComponent implements OnChanges {
             armor: 40
         }
     };
+    savesPresetsExplain = {
+        sanity: 'Rationalization, Logic',
+        fear: 'Surprise, Loneliness',
+        body: 'Hunger, Disease, Infection',
+        armor: 'Physical Damage'
+    };
     skillsArray = [];
     skillsPresets = {
         teamster : {
@@ -213,6 +219,10 @@ export class CharacterGeneratorComponent implements OnChanges {
         const firstNameNum = this.randomNumber.getRandomNumber(0, 99);
         const lastNameNum = this.randomNumber.getRandomNumber(0, 99);
         this.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`;
+    }
+
+    getSavesSubtext(save: string) {
+        return this.savesPresetsExplain[save];
     }
 
     getStress() {

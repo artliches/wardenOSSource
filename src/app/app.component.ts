@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CharacterStats } from './interfaces/mosh.interface';
+import { RandomNumberService } from './services/randomNumber.service';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +8,12 @@ import { CharacterStats } from './interfaces/mosh.interface';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  buttonText = this.random.getRandomSaying(99).text;
   createCrewMember = false;
   defaultStatArray: CharacterStats;
-  constructor() {}
+  previousSaying = 0;
+  randomSaying: any;
+  constructor(private random: RandomNumberService) {}
 
   generateRandomCrewMember() {
     this.defaultStatArray = {
@@ -22,5 +26,11 @@ export class AppComponent {
       combat: 0
   };
     this.createCrewMember = true;
+  }
+
+  getRandomSaying() {
+    this.randomSaying = this.random.getRandomSaying(this.previousSaying);
+    this.buttonText = this.randomSaying.text;
+    this.previousSaying = this.randomSaying.num;
   }
  }

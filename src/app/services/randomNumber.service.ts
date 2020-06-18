@@ -21,37 +21,24 @@ export class RandomNumberService {
         }
     }
 
-    createCrewMember(): any {
-      const crewMember = {};
-      let comScore = 0;
-      let intScore = 0;
-      let spdScore = 0;
-      let strScore = 0;
+    getRandomSaying(previousNum: number) {
+      const randomSayings = [
+        'GIVE ME A POUND OF FLESH',
+        'ONCE MORE UNTO THE BREACH',
+        'ONE SMALL STEP FOR MAN',
+        'SHOOT FOR THE MOON',
+        'A TIME TO LIVE',
+        'A TIME TO DIE',
+        'A LAMB FOR THE SLAUGHTER',
+        'IT\'S TIME TO GO',
+        '01110011 01101111 01110011'
+      ];
+      let chosenSaying: number;
 
-      for (let i = 0; i < 6; i++) {
-        comScore += this.getRandomNumber(1, 10);
-        intScore += this.getRandomNumber(1, 10);
-        spdScore += this.getRandomNumber(1, 10);
-        strScore += this.getRandomNumber(1, 10);
-      }
-      crewMember['CLASS'] = CLASSES[this.getRandomNumber(0, 3)];
-      crewMember['STRENGTH'] = strScore;
-      crewMember['SPEED'] = spdScore;
-      crewMember['INTELLECT'] = intScore;
-      crewMember['COMBAT'] = comScore;
+      do {
+        chosenSaying = this.getRandomNumber(0, randomSayings.length - 1);
+      } while (chosenSaying === previousNum);
 
-      if (crewMember['CLASS'] === 'TEAMSTER') {
-        crewMember['STRENGTH'] += 5;
-        crewMember['SPEED'] += 5;
-      } else if (crewMember['CLASS'] === 'ANDROID') {
-        crewMember['SPEED'] += 5;
-        crewMember['INTELLECT'] += 5;
-      } else if (crewMember['CLASS'] === 'SCIENTIST') {
-        crewMember['INTELLECT'] += 10;
-      } else {
-        crewMember['COMBAT'] += 5;
-      }
-
-      return crewMember;
+      return {num: chosenSaying, text: randomSayings[chosenSaying]};
     }
 }

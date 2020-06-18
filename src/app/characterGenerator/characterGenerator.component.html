@@ -15,7 +15,7 @@
             'int-section': key === 'intellect',
             'com-section': key === 'combat'
         }">
-            <b>{{key.toUpperCase()}}</b> : {{statsArray[key]}}
+            <b>{{key.toUpperCase()}}</b> {{statsArray[key]}}
         </div>
     </section>
 
@@ -29,6 +29,7 @@
             'arm-section': key === 'armor'
         }">
             <b>{{key.toUpperCase()}}</b> : {{savesArray[key]}}
+            <div class='subText'>{{getSavesSubtext(key.toLowerCase())}}</div>
         </div>
     </section>
     <section class='card basic-grid skills-grid'>

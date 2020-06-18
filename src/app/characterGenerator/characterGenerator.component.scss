@@ -2,10 +2,12 @@
     grid-template-columns: repeat(2, 1fr);
     grid-template-areas:
         "name name"
-        ". trinket"
-        ". stress"
+        "stress stress"
+        "stats saves"
         "skills skills"
-        "equip equip";
+        "equip equip"
+        "trinket trinket";
+
     
     .name-section {
         grid-area: name;
@@ -14,6 +16,7 @@
 
 .stats-grid {
     grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
     grid-template-areas:
         "title title title"
         "stress resolve health"
@@ -85,7 +88,6 @@
 .stress-grid {
     grid-area: stress;
     grid-template-columns: 1fr;
-    grid-template-rows: repeat(5, 1fr);
     grid-template-areas:
         "title";
 }

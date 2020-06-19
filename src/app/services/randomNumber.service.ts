@@ -21,7 +21,7 @@ export class RandomNumberService {
         }
     }
 
-    getRandomSaying(previousNum: number) {
+    getRandomSaying(previousNum: number, sayingsIndex: number) {
       const randomSayings = [
         'GIVE ME A POUND OF FLESH',
         'ONCE MORE UNTO THE BREACH',
@@ -33,12 +33,33 @@ export class RandomNumberService {
         'IT\'S TIME TO GO',
         '01110011 01101111 01110011'
       ];
-      let chosenSaying: number;
 
+      const randomPerson = [
+        'HERO',
+        'LAMB',
+        'MEATBAG',
+        'MEAT-POPSICLE',
+        'MULTIPASS',
+        'ASTRONAUT',
+        'EXPLORER',
+        'SACRIFICE',
+        'FOOL',
+        'VILLIAN',
+        'WANDERER',
+        'SPACER',
+        'REPLICANT',
+        'POUND OF FLESH'
+      ];
+
+      const sayings = [
+        randomSayings, randomPerson
+      ];
+
+      let chosenSaying: number;
       do {
-        chosenSaying = this.getRandomNumber(0, randomSayings.length - 1);
+        chosenSaying = this.getRandomNumber(0, sayings[sayingsIndex].length - 1);
       } while (chosenSaying === previousNum);
 
-      return {num: chosenSaying, text: randomSayings[chosenSaying]};
+      return {num: chosenSaying, text: sayings[sayingsIndex][chosenSaying]};
     }
 }

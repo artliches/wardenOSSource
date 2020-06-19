@@ -8,14 +8,16 @@ import { RandomNumberService } from './services/randomNumber.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  buttonText = this.random.getRandomSaying(99).text;
+  buttonText = this.random.getRandomSaying(99, 1).text;
+  bias = false;
   createCrewMember = false;
   defaultStatArray: CharacterStats;
   previousSaying = 0;
   randomSaying: any;
   constructor(private random: RandomNumberService) {}
 
-  generateRandomCrewMember() {
+  generateRandomCrewMember(bias: boolean) {
+    this.bias = bias;
     this.defaultStatArray = {
       stress: 2,
       resolve: 0,
@@ -29,8 +31,9 @@ export class AppComponent {
   }
 
   getRandomSaying() {
-    this.randomSaying = this.random.getRandomSaying(this.previousSaying);
+    this.randomSaying = this.random.getRandomSaying(this.previousSaying, 1);
     this.buttonText = this.randomSaying.text;
+
     this.previousSaying = this.randomSaying.num;
   }
  }

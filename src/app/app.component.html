@@ -2,8 +2,13 @@
     <h1 class='warden-banner'>WARDEN OS</h1>
 </section>
 <section class='button-grid'>
-    <button class='crew-button' (click)='generateRandomCrewMember(); getRandomSaying()'>
-        <div>{{buttonText}}</div>
+    <button class='crew-button button-s2-r1' (click)='generateRandomCrewMember(false); getRandomSaying()'>
+        <div>A TRULY RANDOM {{buttonText}}</div>
     </button>
+    <div class='button-s2-r2'>
+        <button class='crew-button' (click)='generateRandomCrewMember(true); getRandomSaying()'>
+            <div>A BIASED {{buttonText}}</div>
+        </button>
+    </div>
 </section>
-<app-character-generator *ngIf='createCrewMember' [statsArray]='defaultStatArray'></app-character-generator>
+<app-character-generator *ngIf='createCrewMember' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>

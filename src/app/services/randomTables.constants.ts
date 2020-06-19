@@ -411,7 +411,7 @@ export const LAST_NAMES = [
 ];
 
 export const SKILLS = [
-  {title: 'Archaelogy', percent: '10%', cost: 1, pre: [], descrip: 'Ancient cultures and their artifacts'},
+  {title: 'Archaeology', percent: '10%', cost: 1, pre: [], descrip: 'Ancient cultures and their artifacts'},
   {title: 'Art', percent: '10%', cost: 1, pre: [], descrip: ' The expression or application of a species’ creative ability and imagination'},
   {title: 'Athletics', percent: '10%', cost: 1, pre: [], descrip: ' Physical sports and games'},
   {title: 'Biology', percent: '10%', cost: 1, pre: [], descrip: ' Study of life'},
@@ -441,7 +441,7 @@ export const SKILLS = [
   {title: 'Genetics', percent: '15%', cost: 2, pre: ['biology'] , descrip: ' Heredity and the variation of inherited characteristics'},
   {title: 'Gunnery', percent: '15%', cost: 2, pre: ['military training'] , descrip: ' Starship weaponry'},
   {title: 'Hacking', percent: '15%', cost: 2, pre: ['computers'] , descrip: ' Unauthorized access to computer systems'},
-  {title: 'Jury-Rigging', percent: '15%', cost: 2, pre: ['scavenging', 'computers'] , descrip: ' Makeshift repairs'},
+  {title: 'Jury-Rigging', percent: '15%', cost: 2, pre: ['scavenging', 'mechanical repair'] , descrip: ' Makeshift repairs'},
   {title: 'Mysticism', percent: '15%', cost: 2, pre: ['art', 'archaeology', 'theology'] , descrip: ' Spiritual apprehension of hidden knowledge'},
   {title: 'Pathology', percent: '15%', cost: 2, pre: ['first aid'] , descrip: ' Study of the cause and effect of disease'},
   {title: 'Physics', percent: '15%', cost: 2, pre: ['mathematics'] , descrip: ' Study of nature and properties of matter and energy'},
@@ -451,7 +451,7 @@ export const SKILLS = [
   {title: 'Vehicle Specialization', percent: '15%', cost: 2, pre: ['mechanical repair', 'driving', 'piloting'] , descrip: ' Specific vehicle classes'},
   {title: 'Artificial Intelligence', percent: '20%', cost: 3, pre: ['engineering', 'hacking'] , descrip: ' Knowledge of simulacrum of human consciousness'},
   {title: 'Command', percent: '20%', cost: 3, pre: ['vehicle specialization', 'tactics'] , descrip: ' Leadership and authority'},
-  {title: 'Cybernetics', percent: '20%', cost: 3, pre: ['jury rigging', 'engineering'] , descrip: ' Interface between man and machine'},
+  {title: 'Cybernetics', percent: '20%', cost: 3, pre: ['jury-rigging', 'engineering'] , descrip: ' Interface between man and machine'},
   {title: 'Hyperspace', percent: '20%', cost: 3, pre: ['astrogation', 'physics', 'mysticism'] , descrip: ' Faster-than-light travel'},
   {title: 'Robotics', percent: '20%', cost: 3, pre: ['engineering'] , descrip: ' Design and operation of robots, drones, and androids'},
   {title: 'Sophontology', percent: '20%', cost: 3, pre: ['linguistics'] , descrip: ' Alien psychology'},

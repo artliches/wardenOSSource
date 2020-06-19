@@ -20,19 +20,27 @@ body {
   grid-template-rows: 1fr;
   grid-gap: 1rem;
   grid-template-areas: 
-    "s1 s2 s3";
+    "s1 s2 s3"
+    ". s2r2 .";
   
   padding-bottom: 1rem;
   justify-items: center;
 }
 
 .crew-button {
-  grid-area: s2;
   background-color: #FB007E;
   color: white;
   font-family: 'PT Serif', Times, serif;
   font-size: 1.3rem;
   border: none;
+}
+
+.button-s2-r1 {
+  grid-area: s2;
+}
+
+.button-s2-r2 {
+  grid-area: s2r2;
 }
 
 .card {
@@ -54,11 +62,17 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  .crew-button {
+  .button-s2-r1 {
     grid-area: s1;
   }
+
+  .button-s2-r2 {
+    grid-area: s2;
+  }
+  
   .button-grid {
     grid-template-columns: 1fr;
+    justify-items: center;
     grid-template-areas:
       "s1"
       "s2"

@@ -10,6 +10,7 @@ import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../service
 })
 
 export class CharacterGeneratorComponent implements OnChanges {
+    @Input() bias: boolean;
     @Input() statsArray: CharacterStats;
 
     classArray = [
@@ -19,6 +20,7 @@ export class CharacterGeneratorComponent implements OnChanges {
         'marine'
     ];
     class = '';
+    credits = 0;
     equipmentArray = [];
     equipmentPresets = {
         excavation: [
@@ -113,20 +115,24 @@ export class CharacterGeneratorComponent implements OnChanges {
         teamster : {
             base: ['zero-g', 'mechanical repair'],
             pickOne: ['heavy machinery', 'piloting'],
+            thematics: ['scavenging', 'driving', 'rimwise', 'athletics'],
             skillPoints: 4
         },
         android: {
             base: ['linguistics', 'computers', 'mathematics'],
+            thematics: ['military training', 'mechanical repair', 'biology'],
             skillPoints: 2
         },
         scientist: {
             pickTwo: ['biology', 'hydroponics',
                 'geology', 'computers',
                 'mathematics', 'chemistry'],
+            thematics: ['linguistics', 'first aid', 'archaeology'],
             skillPoints: 3
         },
         marine: {
             base: ['military training'],
+            thematics: ['first aid', 'driving', 'rimwise', 'athletics'],
             skillPoints: 3
         }
     };
@@ -177,15 +183,43 @@ export class CharacterGeneratorComponent implements OnChanges {
                 }
             } while (pickTwoCounter !== 2);
         }
-
-        // point buy
+        // choose a random skill
         do {
-            // pick any random skill where the point value is not larger than what we have and that we match the prerequisetes
-            const filteredSkills = SKILLS.filter(skill => {
-                return skill.cost <= points &&
-                    (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
-                    (!skillsToFind.includes(skill.title.toLowerCase()));
-            });
+            let filteredSkills;
+            const randomBias = this.randomNumber.getRandomNumber(1, 4);
+            if (this.bias && randomBias !== 4) {
+                filteredSkills = SKILLS.filter(skill => {
+                    return skill.cost <= points &&
+                    (
+                        this.skillsPresets[this.class].thematics &&
+                        this.skillsPresets[this.class].thematics.includes(skill.title.toLowerCase())
+                    ) && (!skillsToFind.includes(skill.title.toLowerCase()));
+                });
+            } else if (this.bias && randomBias === 4 && points >= 2) {
+                // try to take master skill
+                filteredSkills = SKILLS.filter(skill => {
+                    return skill.cost > 2 && points > 2 &&
+                        (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
+                        (!skillsToFind.includes(skill.title.toLowerCase()));
+                });
+
+                // otherwise take expert skill
+                if (filteredSkills.length === 0) {
+                    filteredSkills = SKILLS.filter(skill => {
+                        return skill.cost >= 2 && points >= 2 &&
+                            (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
+                            (!skillsToFind.includes(skill.title.toLowerCase()));
+                    });
+                }
+            } else if (!this.bias || (this.bias && randomBias === 4)) {
+                // pick any random skill where the point value is not larger than what we have and that we match the prerequisetes
+                filteredSkills = SKILLS.filter(skill => {
+                    return skill.cost <= points &&
+                        (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
+                        (!skillsToFind.includes(skill.title.toLowerCase()));
+                });
+            }
+
             const skillToPush = filteredSkills[this.randomNumber.getRandomNumber(0, filteredSkills.length - 1)];
             skillsToFind.push(skillToPush.title.toLowerCase());
             points -= skillToPush.cost;
@@ -199,11 +233,30 @@ export class CharacterGeneratorComponent implements OnChanges {
     getEquipment() {
         this.equipmentArray = [];
         this.trinketPatch = [];
-
+        this.credits = 0;
+        let chosenLoadout;
         const keys = Object.keys(this.equipmentPresets);
-        const chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
-        this.loadoutName = keys[chosenLoadout];
 
+        if (this.bias) {
+            if (this.class === 'marine') {
+                chosenLoadout = 2; // extermination
+            } else {
+                const skillTitles = this.skillsArray.map(skill => skill.title.toLowerCase());
+                if (skillTitles.includes('first aid') && skillTitles.includes('biology')) { // examination
+                    chosenLoadout = 3;
+                } else if (skillTitles.includes('scavenging') && skillTitles.includes('heavy machinery')) { // excavation
+                    chosenLoadout = 0;
+                } else if (skillTitles.includes('geology') && skillTitles.includes('archaeology')) { // exploration
+                    chosenLoadout = 1;
+                } else {
+                    chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+                }
+            }
+        } else {
+            chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+        }
+
+        this.loadoutName = keys[chosenLoadout];
         this.equipmentArray = this.equipmentPresets[keys[chosenLoadout]].map(item => {
             return ITEMS.find(x => x.title.toLowerCase().trim() === item.toLowerCase());
         });
@@ -212,6 +265,11 @@ export class CharacterGeneratorComponent implements OnChanges {
             const trinketOrPatch = i % 2 ? false : true;
             this.trinketPatch.push(this.randomNumber.getTrinketOrPatch(0, 99, trinketOrPatch));
         }
+
+        for (let i = 0; i < 5; i++) {
+            this.credits += this.randomNumber.getRandomNumber(1, 10);
+        }
+        this.credits = this.credits * 10;
     }
 
     generateName() {
@@ -230,7 +288,30 @@ export class CharacterGeneratorComponent implements OnChanges {
     }
 
     rollClass() {
-        this.class = this.classArray[this.randomNumber.getRandomNumber(0, 3)];
+        if (this.bias) {
+            if (
+                this.statsArray.combat > this.statsArray.strength &&
+                this.statsArray.combat > this.statsArray.speed &&
+                this.statsArray.combat > this.statsArray.intellect
+                ) {
+                    this.class = 'marine';
+                } else if (
+                  this.statsArray.intellect > this.statsArray.strength &&
+                  this.statsArray.intellect > this.statsArray.speed
+                ) {
+                    this.class = 'scientist';
+                } else if (
+                    this.statsArray.strength + this.statsArray.speed >
+                    this.statsArray.speed + this.statsArray.intellect
+                ) {
+                    this.class = 'teamster';
+                } else {
+                    this.class = 'android';
+                }
+        } else {
+            this.class = this.classArray[this.randomNumber.getRandomNumber(0, 3)];
+        }
+
         switch (this.class) {
             case 'teamster': {
                 this.statsArray.strength += 5;
@@ -251,6 +332,7 @@ export class CharacterGeneratorComponent implements OnChanges {
                 break;
             }
         }
+
         this.statsArray.max_Health = this.statsArray.strength * 2;
     }
 

@@ -187,7 +187,7 @@ export class CharacterGeneratorComponent implements OnChanges {
         do {
             let filteredSkills;
             const randomBias = this.randomNumber.getRandomNumber(1, 4);
-            if (this.bias && randomBias !== 4) {
+            if (this.bias && randomBias <= 2) {
                 filteredSkills = SKILLS.filter(skill => {
                     return skill.cost <= points &&
                     (
@@ -195,10 +195,10 @@ export class CharacterGeneratorComponent implements OnChanges {
                         this.skillsPresets[this.class].thematics.includes(skill.title.toLowerCase())
                     ) && (!skillsToFind.includes(skill.title.toLowerCase()));
                 });
-            } else if (this.bias && randomBias === 4 && points >= 2) {
+            } else if (this.bias && randomBias >= 3 && points >= 2) {
                 // try to take master skill
                 filteredSkills = SKILLS.filter(skill => {
-                    return skill.cost > 2 && points > 2 &&
+                    return skill.cost === 3 && points >= 3 &&
                         (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
                         (!skillsToFind.includes(skill.title.toLowerCase()));
                 });
@@ -206,12 +206,12 @@ export class CharacterGeneratorComponent implements OnChanges {
                 // otherwise take expert skill
                 if (filteredSkills.length === 0) {
                     filteredSkills = SKILLS.filter(skill => {
-                        return skill.cost >= 2 && points >= 2 &&
+                        return skill.cost === 2 && points >= 2 &&
                             (skill.pre.some(item => skillsToFind.includes(item.toLowerCase())) || skill.pre.length === 0) &&
                             (!skillsToFind.includes(skill.title.toLowerCase()));
                     });
                 }
-            } else if (!this.bias || (this.bias && randomBias === 4)) {
+            } else if (!this.bias || (this.bias && randomBias >= 3)) {
                 // pick any random skill where the point value is not larger than what we have and that we match the prerequisetes
                 filteredSkills = SKILLS.filter(skill => {
                     return skill.cost <= points &&
@@ -242,11 +242,11 @@ export class CharacterGeneratorComponent implements OnChanges {
                 chosenLoadout = 2; // extermination
             } else {
                 const skillTitles = this.skillsArray.map(skill => skill.title.toLowerCase());
-                if (skillTitles.includes('first aid') && skillTitles.includes('biology')) { // examination
+                if (skillTitles.includes('first aid') || skillTitles.includes('biology')) { // examination
                     chosenLoadout = 3;
-                } else if (skillTitles.includes('scavenging') && skillTitles.includes('heavy machinery')) { // excavation
+                } else if (skillTitles.includes('scavenging') || skillTitles.includes('heavy machinery')) { // excavation
                     chosenLoadout = 0;
-                } else if (skillTitles.includes('geology') && skillTitles.includes('archaeology')) { // exploration
+                } else if (skillTitles.includes('geology') || skillTitles.includes('archaeology')) { // exploration
                     chosenLoadout = 1;
                 } else {
                     chosenLoadout = this.randomNumber.getRandomNumber(0, 3);

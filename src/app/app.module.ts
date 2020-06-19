@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { RandomTablesComponent } from './randomTables/randomTables.component';
 import { CharacterGeneratorComponent } from './characterGenerator/characterGenerator.component';
 import { CommandLineInterfaceComponent } from './commandLineInterface/commandLineInterface.component';
+import { TrinketPatchDisplayComponent } from './trinketPatchDisplay/trinketPatchDisplay.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +16,7 @@ import { CommandLineInterfaceComponent } from './commandLineInterface/commandLin
     CommandLineInterfaceComponent,
     CharacterGeneratorComponent,
     RandomTablesComponent,
+    TrinketPatchDisplayComponent,
   ],
   imports: [
     BrowserModule,

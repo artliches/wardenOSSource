@@ -435,7 +435,7 @@ export const SKILLS = [
   {title: 'Astrogation', percent: '15%', cost: 2, pre: ['pioloting'] , descrip: ' Navigation in outer space'},
   {title: 'Botany', percent: '15%', cost: 2, pre: ['hydroponics'] , descrip: ' The study of plant life'},
   {title: 'Close-Quarters Combat', percent: '15%', cost: 2, pre: ['military training', 'rimwise', 'athletics'], descrip: ' Hand-to-hand, melee fighting'},
-  {title: 'Engineering', percent: '15%', cost: 2, pre: ['heavy machinery', 'mechanical repair', 'computers'], descrip: ' design, building, and use of engines, machines, and structures'},
+  {title: 'Engineering', percent: '15%', cost: 2, pre: ['heavy machinery', 'mechanical repair', 'computers'], descrip: ' Design, building, and use of engines, machines, and structures'},
   {title: 'Explosives', percent: '15%', cost: 2, pre: ['military training', 'chemistry'] , descrip: ' Bombs and incendiary devices'},
   {title: 'Firearms', percent: '15%', cost: 2, pre: ['military training', 'rimwise'] , descrip: ' Guns and their use'},
   {title: 'Genetics', percent: '15%', cost: 2, pre: ['biology'] , descrip: ' Heredity and the variation of inherited characteristics'},
@@ -532,6 +532,47 @@ export const STRESS_PANIC = [
     fear: 'Whenever a Marine Panics, every friendly player nearby must make a Fear Save',
     extra: 'Gain +5 COMBAT whenever a friendly Marine is nearby'
   }
+];
+
+export const DERELICT = [
+  [
+    ...Array(35).fill('mining frigate'),
+    ...Array(23).fill('freighter'),
+    ...Array(14).fill('shuttle'),
+    ...Array(9).fill('courier'),
+    ...Array(4).fill('research vessel'),
+    ...Array(4).fill('blockade runner'),
+    ...Array(3).fill('cutter'),
+    ...Array(4).fill('troopship'),
+    ...Array(4).fill('colony ship')
+  ],
+  [
+    ...Array(85).fill('uninhabitable'),
+    ...Array(10).fill('habitable (non-functioning)'),
+    ...Array(5).fill('habitable (functioning)')
+  ],
+  [
+    ...Array(90).fill('no survivors'),
+    ...Array(6).fill('2d10 survivors (in cryosleep)'),
+    ...Array(4).fill('survivors')
+  ],
+  [
+    ...Array(50).fill('2d100 scrap'),
+    ...Array(26).fill('1d10 fuel units'),
+    ...Array(6).fill('2d10 galley stock'),
+    ...Array(4).fill('1d10 cryopods'),
+    ...Array(3).fill('medbay'),
+    ...Array(3).fill('weapon'),
+    ...Array(4).fill('computer'),
+    ...Array(4).fill('jump drive')
+  ],
+  [
+    ...Array(61).fill('4d10 ore'),
+    ...Array(15).fill('3d10 metal'),
+    ...Array(10).fill('1d100 trade units of random cargo'),
+    ...Array(7).fill('1d10 precious metal'),
+    ...Array(7).fill('1d10 contraband')
+  ]
 ];
 
 export const CLASSES = ['TEAMSTER', 'ANDROID', 'SCIENTIST', 'MARINE'];

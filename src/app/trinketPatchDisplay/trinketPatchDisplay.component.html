@@ -1,0 +1,20 @@
+<div *ngFor='let item of (trinketPatch)'>
+    <section class='card randGen-card'>
+        <span *ngFor='let key of objectKeys(item)'>
+            <div *ngIf='item[key] === "trinket" || item[key] === "patch"; else patchTrinketInfo' class='section-banner'>
+                {{item[key].toUpperCase()}}
+            </div>
+            <ng-template #patchTrinketInfo>
+                <span *ngFor='let iKey of objectKeys(item[key])'>
+                    <span *ngIf='iKey === "num"; else itemDescrip'>
+                        {{item[key][iKey]}} - 
+                    </span>
+                    <ng-template #itemDescrip>
+                        {{item[key][iKey]}}
+                    </ng-template>
+                </span>
+            </ng-template>
+        </span>
+    </section>
+
+</div>

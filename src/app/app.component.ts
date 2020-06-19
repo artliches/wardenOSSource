@@ -10,10 +10,12 @@ import { RandomNumberService } from './services/randomNumber.service';
 export class AppComponent {
   buttonText = this.random.getRandomSaying(99, 1).text;
   bias = false;
-  createCrewMember = false;
+  displayCrewMember = false;
+  displayTrinketPatch = false;
   defaultStatArray: CharacterStats;
   previousSaying = 0;
   randomSaying: any;
+  trinketPatch = [];
   constructor(private random: RandomNumberService) {}
 
   generateRandomCrewMember(bias: boolean) {
@@ -27,13 +29,22 @@ export class AppComponent {
       intellect: 0,
       combat: 0
   };
-    this.createCrewMember = true;
+    this.displayTrinketPatch = false;
+    this.displayCrewMember = true;
+  }
+
+  generateRandomTrinketPatch() {
+    this.trinketPatch = [];
+    this.trinketPatch.push({ type: 'trinket', info: this.random.getTrinketOrPatch(0, 99, true)});
+    this.trinketPatch.push({ type: 'patch', info: this.random.getTrinketOrPatch(0, 99, false)});
+
+    this.displayTrinketPatch = true;
+    this.displayCrewMember = false;
   }
 
   getRandomSaying() {
     this.randomSaying = this.random.getRandomSaying(this.previousSaying, 1);
     this.buttonText = this.randomSaying.text;
-
     this.previousSaying = this.randomSaying.num;
   }
  }

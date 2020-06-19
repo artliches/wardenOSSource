@@ -1,3 +1,6 @@
+$web-safe-magenta: #ff0066;
+$web-safe-cyan: #009999;
+
 body {
     background-color: black;
     height: 100vh;  
@@ -20,32 +23,54 @@ body {
   grid-template-rows: 1fr;
   grid-gap: 1rem;
   grid-template-areas: 
-    "s1 s2 s3"
-    ". s2r2 .";
+    "trinket cRand ."
+    "patch cBias .";
   
   padding-bottom: 1rem;
   justify-items: center;
 }
 
-.crew-button {
-  background-color: #FB007E;
+.control-button {
   color: white;
   font-family: 'PT Serif', Times, serif;
   font-size: 1.3rem;
   border: none;
+
+  &.crew-button {
+    background-color: $web-safe-magenta;
+  }
+
+  &.randGen-button {
+    background-color: $web-safe-cyan;
+  }
 }
 
-.button-s2-r1 {
-  grid-area: s2;
+.crew-random-button {
+  grid-area: cRand;
 }
 
-.button-s2-r2 {
-  grid-area: s2r2;
+.crew-bias-button {
+  grid-area: cBias;
+}
+
+.trinket-button {
+  grid-area: trinket;
+}
+
+.patch-button {
+  grid-area: patch;
 }
 
 .card {
-  background-color: #FB007E;
   padding: 5px;
+
+  &.crew-card {
+    background-color: $web-safe-magenta;
+  }
+
+  &.randGen-card {
+    background-color: $web-safe-cyan;
+  }
 }
 
 .warden-banner {
@@ -55,28 +80,23 @@ body {
 
 .section-banner {
   font-family: 'PT Serif', Times, serif;
+  background-color: white;
+  color: black;
 }
 
 .subText {
   font-size: 0.8rem;
 }
 
-@media only screen and (max-width: 768px) {
-  .button-s2-r1 {
-    grid-area: s1;
-  }
-
-  .button-s2-r2 {
-    grid-area: s2;
-  }
-  
+@media only screen and (max-width: 768px) {  
   .button-grid {
     grid-template-columns: 1fr;
     justify-items: center;
     grid-template-areas:
-      "s1"
-      "s2"
-      "s3";
+      "patch"
+      "trinket"
+      "cRand"
+      "cBias";
   }
   .warden-grid {
     grid-template-columns: 1fr;

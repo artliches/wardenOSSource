@@ -1,0 +1,47 @@
+.derelict-card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 1fr);
+    grid-template-rows: repeat(auto-fill, 1fr);
+    grid-template-areas: 
+        "banner"
+        "descrip";
+
+    .derelict-banner {
+        grid-area: banner;
+    }
+    .derelict-descrip {
+        grid-area: descrip
+    }
+}
+
+.derelict-layout-grid {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas:
+        "upper-start upper1 upper2 upper-end"
+        "middle-start middle1 middle2 middle-end"
+        "lower-start lower1 lower2 lower-end"
+        "bottom-start bottom1 bottom2 bottom-end";
+
+    .shipClass {
+        grid-column: upper-start / upper-end;
+    }
+    .habStatus {
+        grid-column: middle-start / middle1;
+    }
+    .engStatus {
+        grid-column: middle2 / middle-end;
+        grid-row: middle-start;
+    }
+    .sal {
+        grid-column: lower1 / lower2;
+    }
+    .weird {
+        grid-column: bottom-start / bottom-end;
+    }
+
+    .hide {
+        display: none;
+    }
+}

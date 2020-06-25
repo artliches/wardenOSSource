@@ -8,23 +8,32 @@
         "equip equip"
         "trinket trinket";
 
-    
     .name-section {
         grid-area: name;
     }
 }
 
 .stats-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 0rem;
+    grid-template-columns: repeat(autofill, 1fr);
     grid-template-rows: repeat(auto-fill, 1fr);
     grid-template-areas:
-        "title title title"
-        "stress resolve health"
-        "str str str"
-        "spd spd spd"
-        "int int int"
-        "com com com";
+        "title title title title title title"
+        "stress stress-stat resolve resolve-stat health health-stat"
+        "str str-stat . . . ."
+        "spd spd-stat . . . ."
+        "int int-stat . . . ."
+        "com com-stat . . . .";
 
+    .stress-section {
+        grid-area: stress;
+    }
+    .resolve-section {
+        grid-area: resolve;
+    }
+    .health-section {
+        grid-area: health;
+    }
     .str-section {
         grid-area: str;
     }
@@ -37,16 +46,39 @@
     .com-section {
         grid-area: com;
     }
+
+    .str-stat {
+        grid-area: str-stat;
+    }
+    .spd-stat {
+        grid-area: spd-stat; 
+    }
+    .int-stat {
+        grid-area: int-stat;
+    }
+    .com-stat {
+        grid-area: com-stat;
+    }
+    .stress-stat {
+        grid-area: stress-stat;
+    }
+    .resolve-stat {
+        grid-area: resolve-stat;
+    }
+    .health-stat {
+        grid-area: health-stat;
+    }
 }
 
 .saves-grid {
-    grid-template-columns: 1fr;
+    grid-gap: 0rem;
+    grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
-    "title"
-    "sanity"
-    "fear"
-    "body"
-    "armor";
+    "title title title"
+    "sanity san-stat ."
+    "fear fea-stat ."
+    "body bod-stat ."
+    "armor arm-stat .";
 
     .san-section {
         grid-area: sanity;
@@ -59,6 +91,19 @@
     }
     .arm-section {
         grid-area: armor;
+    }
+
+    .san-stat {
+        grid-area: san-stat;
+    }
+    .fea-stat {
+        grid-area: fea-stat;
+    }
+    .bod-stat {
+        grid-area: bod-stat;
+    }
+    .arm-stat {
+        grid-area: arm-stat;
     }
 }
 
@@ -78,6 +123,7 @@
 }
 
 .trinket-grid {
+    grid-gap: 0rem;
     grid-area: trinket;
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -86,6 +132,7 @@
 }
 
 .stress-grid {
+    grid-gap: 0rem;
     grid-area: stress;
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -94,7 +141,7 @@
 
 .title-section {
     grid-area: title;
-    padding: 5px;
+    padding-left: 5px;
     height: 2rem;
 }
 
@@ -105,6 +152,7 @@
 
 .itemDetailsFont {
     font-size: .9rem;
+    color: black;
 }
 
 @media only screen and (max-width: 768px) {
@@ -118,5 +166,28 @@
             "stress"
             "equip"
             "trinket";
-    }    
+    }
+    .saves-grid {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-areas:
+        "title title"
+        "sanity san-stat"
+        "fear fea-stat"
+        "body bod-stat"
+        "armor arm-stat";
+    }
+    .stats-grid {
+        grid-gap: 0rem;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(auto-fill, 1fr);
+        grid-template-areas:
+            "title title"
+            "stress stress-stat"
+            "resolve resolve-stat"
+            "health health-stat"
+            "str str-stat"
+            "spd spd-stat"
+            "int int-stat"
+            "com com-stat";
+    }
 }

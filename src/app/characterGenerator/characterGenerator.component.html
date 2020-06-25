@@ -9,14 +9,29 @@
         [ngClass]="{
             'stress-section': key === 'stress',
             'resolve-section': key === 'resolve',
-            'health-section': key === 'health',
+            'health-section': key.toLowerCase() === 'max_health',
             'str-section': key === 'strength',
             'spd-section': key === 'speed',
             'int-section': key === 'intellect',
             'com-section': key === 'combat'
         }">
-            <b>{{key.toUpperCase()}}</b> {{statsArray[key]}}
+            <b>{{key.toUpperCase()}}</b> 
         </div>
+        <span *ngFor='let key of objectKeys(statsArray)' [ngClass]="{
+            'stress-stat': key === 'stress',
+            'resolve-stat': key === 'resolve',
+            'health-stat': key.toLowerCase() === 'max_health',
+            'str-stat' : key === 'strength',
+            'spd-stat' : key === 'speed',
+            'int-stat' : key === 'intellect',
+            'com-stat' : key === 'combat'
+        }">
+            <span>
+                {{statsArray[key]}}
+            </span>
+            <p *ngIf="key === 'max_Health'">
+            </p>
+        </span>
     </section>
 
     <section class='card crew-card basic-grid saves-grid'>
@@ -28,16 +43,27 @@
             'bod-section': key === 'body',
             'arm-section': key === 'armor'
         }">
-            <b>{{key.toUpperCase()}}</b> : {{savesArray[key]}}
+            <b>{{key.toUpperCase()}}</b>
             <div class='subText'>{{getSavesSubtext(key.toLowerCase())}}</div>
         </div>
+        <span *ngFor='let key of objectKeys(savesArray)'
+            [ngClass]="{
+                'san-stat': key === 'sanity',
+                'fea-stat': key === 'fear',
+                'bod-stat': key === 'body',
+                'arm-stat': key === 'armor'
+            }">
+            {{savesArray[key]}}
+        </span>
     </section>
     <section class='card crew-card basic-grid skills-grid'>
         <div class='section-banner title-section'>
             SKILLS
         </div>
         <div *ngFor='let skill of skillsArray'>
-            >> {{skill.title}} | {{skill.percent}}
+            <span class='printItemBold'>
+                >> {{skill.title}} | {{skill.percent}}
+            </span>
             <div class='itemDetailsFont'>
                 {{skill.descrip}}
             </div>
@@ -52,28 +78,29 @@
             {{loadoutName.toUpperCase()}} LOADOUT
         </div>
         <div *ngFor='let item of equipmentArray'>
-            >> {{item.title.trim()}}
+            <span class='printItemBold'>
+                >> {{item.title.trim()}}
+            </span>
             <div class='itemDetailsFont'>
-                
                 <span *ngIf='item.dmg'>
-                    DMG: <span [innerHTML]=item.dmg.trim()></span> |
+                    <b>DMG</b>: <span [innerHTML]=item.dmg.trim()></span> |
                 </span>
                 <span *ngIf='item.crit && item.crit.trim() !== ""'>
-                    CRIT EFFECT: {{item.crit.trim()}} |
+                    <b>CRIT EFFECT</b> {{item.crit.trim()}} |
                 </span>
                 <span *ngIf='item.range'>
-                    RANGE: {{item.range.trim()}} |
+                    <b>RANGE</b>: {{item.range.trim()}} |
                 </span>
                 <span *ngIf='item.ammo && item.ammo.trim() !== ""'>
-                    AMMO: {{item.ammo.trim()}} |
+                    <b>AMMO</b>: {{item.ammo.trim()}} |
                 </span>
                 <span *ngIf='item.shots && item.shots.trim() !== ""'>
-                    MAG SIZE: {{item.shots.trim()}} |
+                    <b>MAG SIZE</b>: {{item.shots.trim()}} |
                 </span>
                 <span *ngIf='item.special && item.special.trim() !== ""' [innerHTML]=item.special.trim()>
                 </span>
                 <div *ngIf='item.descrip && item.descrip.trim() !== ""'>
-                    {{item.descrip}}
+                    <span [innerHTML]=item.descrip.trim()></span>
                 </div>
             </div>
         </div>

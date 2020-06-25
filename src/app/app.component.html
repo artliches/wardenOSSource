@@ -11,15 +11,19 @@
         </button>
     </div>
     <div class='trinket-button'>
-        <button class='control-button randGen-button' (click)='generateRandomTrinketPatch(true)'>
-            SEARCH THE CORPSE
+        <button class='control-button randGen-button' (click)='generateRandomTrinketPatch(true); getRandomSaying()'>
+            SEARCH THE {{buttonText}}
         </button>
     </div>
     <!-- <div class='patch-button'>
-        <button class='control-button randGen-button'>
+        <button class='control-button randGen-button' (click)='generateDerelict()'>
             SCAN THE DERELICT SHIP
         </button>
     </div> -->
 </section>
-<app-character-generator *ngIf='displayCrewMember' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>
+<app-character-generator *ngIf='displayCrewMember' (charName)='passCharName($event)' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>
 <app-trinket-patch-display *ngIf='displayTrinketPatch' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
+<app-derelict-generator *ngIf='displayDerelict'></app-derelict-generator>
+<section *ngIf='displayPrintButton' class='button-grid print-button-grid'>
+    <button class='control-button print-button' (click)='print()'>HIRE {{charName}}</button>
+</section>

@@ -1,7 +1,7 @@
-import { Component, OnChanges, Input } from '@angular/core';
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { RandomNumberService } from '../services/randomNumber.service';
 import { CharacterStats, CharacterSaves } from '../interfaces/mosh.interface';
-import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../services/randomTables.constants';
+import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC, DERELICT } from '../services/randomTables.constants';
 
 @Component({
     selector: 'app-character-generator',
@@ -12,6 +12,7 @@ import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../service
 export class CharacterGeneratorComponent implements OnChanges {
     @Input() bias: boolean;
     @Input() statsArray: CharacterStats;
+    @Output() charName = new EventEmitter<string>();
 
     classArray = [
         'teamster',
@@ -152,6 +153,7 @@ export class CharacterGeneratorComponent implements OnChanges {
         this.assignSaves();
         this.assignSkills();
         this.getEquipment();
+        this.charName.emit(`${this.name.toUpperCase()} THE ${this.class.toUpperCase()}`);
     }
 
     assignSaves() {

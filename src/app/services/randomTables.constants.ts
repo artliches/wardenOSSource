@@ -461,23 +461,23 @@ export const SKILLS = [
   {title: 'Surgery', percent: '20%', cost: 3, pre: ['pathology'], descrip: ' Medical speciality involving manual operation'}
 ];
 export const ITEMS = [
-  {title: 'Advanced Battle Dress        ' , descrip: 'Heavy combat outfit worn by marines in battletorn offworld engagements. It confers a +15% bonus to the wearer’s Armor save. It has a small exo-skeleton that allows the wearer to carry twice what they normally could.'},
-  {title: 'Automed (x6)                 ' , descrip: 'Nanotech pills that assist your body in repairing damage. They give +10% to Body saves meant to repel disease, poison, and attempts to heal, and +10% to Fear saves made to reduce Stress.'},
+  {title: 'Advanced Battle Dress        ' , descrip: 'Heavy combat outfit worn by marines in battletorn offworld engagements. It confers a <b>+15%</b> bonus to the wearer’s Armor save. It has a small exo-skeleton that allows the wearer to carry twice what they normally could.'},
+  {title: 'Automed (x6)                 ' , descrip: 'Nanotech pills that assist your body in repairing damage. They give <b>+10%</b> to Body saves meant to repel disease, poison, and attempts to heal, and <b>+10%</b> to Fear saves made to reduce Stress.'},
   {title: 'Binoculars                   ' , descrip: '20x magnification. Often come with thermal and night vision options.'},
   {title: 'Bioscanner                   ' , descrip: 'Allows the user to scan the immediate area for signs of life. Generally can scan for 100m in all directions, without being blocked by most known metals. Can tell the location of signs of life, but not what that life is.'},
   {title: 'Body Cam                     ' , descrip: 'A camera worn on your clothing that can stream video back to a control center so that your other crew members can see what you’re seeing.'},
   {title: 'Camping Gear                 ' , descrip: 'Tent, Canteen, Stove, Backpack, Sleeping Bag'},
   {title: 'Cybernetic Diagnostic Scanner' , descrip: 'Allows the user to scan androids and other cybernetic organisms in order to diagnose any physical or mental issues they may be having. Often distrusted by androids. Can be used as a locating device for synthetic organisms.'},
-  {title: 'Electronic Tool Set          ' , descrip: 'A full set of tools for doing detailed repair or construction work on electronics. Confers +10% to rolls seeking to repair electronics.'},
+  {title: 'Electronic Tool Set          ' , descrip: 'A full set of tools for doing detailed repair or construction work on electronics. Confers <b>+10%</b> to rolls seeking to repair electronics.'},
   {title: 'Emergency Beacon             ' , descrip: 'A small device that sends up a flare and then emits a loud beep every few seconds. Additionally, sends out a call on all radio channels to ships, or vehicles in the area. Can be configured to be silent, or to only make calls on known channels.'},
   {title: 'Field Recorder               ' , descrip: 'Used to research alien flora and fauna in the field. Can take vital signs, DNA samples, and perform basic genetic and material analysis on foreign objects.'},
-  {title: 'First Aid Kit                ' , descrip: 'When used adds +10% to rolls made to bandage wounds and stop bleeding.'},
+  {title: 'First Aid Kit                ' , descrip: 'When used adds <b>+10%</b> to rolls made to bandage wounds and stop bleeding.'},
   {title: 'Flashlight                   ' , descrip: 'Handheld or shoulder mounted, illuminates 20m ahead of the user.'},
-  {title: 'Hazard Suit                  ' , descrip: 'A standard suit for scientists to wear on alien planets. Not built for outerspace travel like the vaccsuit, but does provide air filtration and a small supply of air as well as +5% Armor save.'},
+  {title: 'Hazard Suit                  ' , descrip: 'A standard suit for scientists to wear on alien planets. Not built for outerspace travel like the vaccsuit, but does provide air filtration and a small supply of air as well as <b>+5%</b> Armor save.'},
   {title: 'Heads-Up Display             ' , descrip: 'Often worn by marines, the HUD allows the wearer to see through the body cams of others in their unit, and tap into their guns’ smart-link capabilities.'},
   {title: 'Infrared Goggles             ' , descrip: 'Allows the wearer to see heat signatures, sometimes several hours old.'},
   {title: 'Locator                      ' , descrip: 'When worn, allows crew members at a control center (or on the bridge of a ship) to track the location of the wearer.'},
-  {title: 'Lockpick Set                 ' , descrip: 'A highly advanced set of tools meant for hacking basic airlock and electronic door systems. Confers +10% on rolls made to open these doors.'},
+  {title: 'Lockpick Set                 ' , descrip: 'A highly advanced set of tools meant for hacking basic airlock and electronic door systems. Confers <b>+10%</b> on rolls made to open these doors.'},
   {title: 'Long-range Comms             ' , descrip: 'For use in ship-to-surface comunication.'},
   {title: 'Mag-Boots                    ' , descrip: 'Grants a magnetic grip to the wearer, allowing them to easily to walk on the surface of a ship (in space, while docked or free-floating), or metal based asteroids.'},
   {title: 'Medscanner                   ' , descrip: 'Allows the user to scan a living or dead body and to analyze it for disease or abnormalities, without having to do a biopsy (or autopsy).'},
@@ -486,13 +486,13 @@ export const ITEMS = [
   {title: 'Pain Pills (x6)              ' , descrip: 'When ingested immediately heals 1d10 points of damage and lowers Stress by 1. There is a danger of addiction and/or overdose if used frequently.'},
   {title: 'Radio Jammer                 ' , descrip: 'When activated, renders incomprehensible the radio signals of all within 100km.'},
   {title: 'Rebreather                   ' , descrip: 'When worn, filters air and allows for underwater breathing for up to twenty minutes at a time without resurfacing.'},
-  {title: 'Scalpel                      ' , descrip: 'Grants +10% to anyone making Surgery skill rolls. Can be used as a weapon.'},
+  {title: 'Scalpel                      ' , descrip: 'Grants <b>+10%</b> to anyone making Surgery skill rolls. Can be used as a weapon.'},
   {title: 'Short-range Comms            ' , descrip: 'Allows communication from ship-to-ship within a reasonable distance, as well as surface-to-surface within a dozen kilometers.'},
-  {title: 'Standard Battle Dress        ' , descrip: 'This light plated armor is the standard dress for marines going into combat and confers a +10% bonus to the wearer’s Armor save.'},
+  {title: 'Standard Battle Dress        ' , descrip: 'This light plated armor is the standard dress for marines going into combat and confers a <b>+10%</b> bonus to the wearer’s Armor save.'},
   {title: 'Standard Crew Attire         ' , descrip: 'Coveralls, leather jackets, sneakers, tank top or ragged tee. The standard outfit worn by crew members aboard spacecraft. Standard assumed attire for all classes.'},
   {title: 'Stimpak (x6)                 ' , descrip: 'Grants an immediate 2d10 to Health and temporarily increases Strength and Combat by 2d10 each for 1d10 hours. There is a danger of addiction and/or overdose if used frequently.'},
   {title: 'Survey Kit                   ' , descrip: 'When used on the surface of a planet, allows for quick mapping of a nearby few kilometers, as well as data on air breathability, gravity, and other important notable features of the surrounding landscape.'},
-  {title: 'Vaccsuit                     ' , descrip: 'Allows for movement in space without suffering penalties from radiation or lack of oxygen. Requires an oxygen tank to breathe. Often used with Mag-boots and a rigging gun. Confers +7% to Armor saves.'},
+  {title: 'Vaccsuit                     ' , descrip: 'Allows for movement in space without suffering penalties from radiation or lack of oxygen. Requires an oxygen tank to breathe. Often used with Mag-boots and a rigging gun. Confers <b>+7%</b> to Armor saves.'},
   {title: 'Water Filter                 ' , descrip: 'Can pump 50 liters of filtered water an hour from even the most brackish swamps.'},
   {title: 'Combat Shotgun', dmg: '2d10        ', crit: 'Knockdown             ', range: '10m 20m 30m  ', ammo: 'Knockback on hit. 1/2 damage at medium range. 1/4 damage at long range.              ', shots: '4   ', special:      'Audio rangefinder: Beeps when non-friendlies approach within 10m.'},
   {title: 'Crowbar       ', dmg: '1d10        ', crit: '                      ', range: 'CQC Only     ', ammo: '                                                                                  ', shots: '', special:      '+5 (Mechanical Repair). Confers Advantage on Strength checks to open jammed airlocks, or lift heavy objects.'},
@@ -535,45 +535,159 @@ export const STRESS_PANIC = [
 ];
 
 export const DERELICT = [
-  [
-    ...Array(35).fill('mining frigate'),
-    ...Array(23).fill('freighter'),
-    ...Array(14).fill('shuttle'),
-    ...Array(9).fill('courier'),
-    ...Array(4).fill('research vessel'),
-    ...Array(4).fill('blockade runner'),
-    ...Array(3).fill('cutter'),
-    ...Array(4).fill('troopship'),
-    ...Array(4).fill('colony ship')
-  ],
-  [
-    ...Array(85).fill('uninhabitable'),
-    ...Array(10).fill('habitable (non-functioning)'),
-    ...Array(5).fill('habitable (functioning)')
-  ],
-  [
-    ...Array(90).fill('no survivors'),
-    ...Array(6).fill('2d10 survivors (in cryosleep)'),
-    ...Array(4).fill('survivors')
-  ],
-  [
-    ...Array(50).fill('2d100 scrap'),
-    ...Array(26).fill('1d10 fuel units'),
-    ...Array(6).fill('2d10 galley stock'),
-    ...Array(4).fill('1d10 cryopods'),
-    ...Array(3).fill('medbay'),
-    ...Array(3).fill('weapon'),
-    ...Array(4).fill('computer'),
-    ...Array(4).fill('jump drive')
-  ],
-  [
-    ...Array(61).fill('4d10 ore'),
-    ...Array(15).fill('3d10 metal'),
-    ...Array(10).fill('1d100 trade units of random cargo'),
-    ...Array(7).fill('1d10 precious metal'),
-    ...Array(7).fill('1d10 contraband')
-  ]
+  {
+    title: 'ship class',
+    table:
+    [
+      ...Array(35).fill('mining frigate'),
+      ...Array(23).fill('freighter'),
+      ...Array(14).fill('shuttle'),
+      ...Array(9).fill('courier'),
+      ...Array(4).fill('research vessel'),
+      ...Array(4).fill('blockade runner'),
+      ...Array(3).fill('cutter'),
+      ...Array(4).fill('troopship'),
+      ...Array(4).fill('colony ship')
+    ],
+  },
+  {
+    title: 'habitation status',
+    table: [
+      ...Array(85).fill('uninhabitable'),
+      ...Array(10).fill('habitable (non-functioning)'),
+      ...Array(5).fill('habitable (functioning)')
+    ],
+  },
+  {
+    title: 'survivors',
+    table: [
+      ...Array(90).fill('no survivors'),
+      ...Array(6).fill('2d10 survivors (in cryosleep)'),
+      ...Array(4).fill('survivors')
+    ],
+
+  },
+  {
+    title: 'engine status',
+    table: [
+      ...Array(81).fill('Engine, Thrusters, Jump Drive non-functioning'),
+      ...Array(13).fill('Stable Engine, Thrusters, Jump Drive'),
+      ...Array(6).fill('Unstable Core')
+    ],
+  },
+  {
+    title: 'salvage_1',
+    table:  [
+      ...Array(50).fill('2d100 units of scrap'),
+      ...Array(26).fill('1d10 fuel unit(s)'),
+      ...Array(6).fill('2d10 units of galley stock'),
+      ...Array(4).fill('1d10 cryopods'),
+      ...Array(3).fill('medbay'),
+      ...Array(3).fill('weapon'),
+      ...Array(4).fill('computer'),
+      ...Array(4).fill('jump drive')
+    ],
+  },
+  {
+    title: 'salvage_2',
+    table:  [
+      ...Array(61).fill('4d10 units of ore'),
+      ...Array(15).fill('3d10 units metal'),
+      ...Array(10).fill('1d100 trade units of random cargo'),
+      ...Array(7).fill('1d10 units of precious metal'),
+      ...Array(7).fill('1d10 units of contraband')
+    ],
+  },
+  {
+    title: 'cause of ruination',
+    table:   [
+      'Virus',
+      ...Array(9).fill('Combat'),
+      ...Array(10).fill('Raided by Pirates'),
+      ...Array(5).fill('Hyperspace Malfunction'),
+      ...Array(5).fill('Abandoned Ship'),
+      ...Array(5).fill('Insane AI                        '),
+      ...Array(5).fill('Mutiny                           '),
+      ...Array(5).fill('Crash: Other Ship                '),
+      ...Array(5).fill('Crash: Space Debris              '),
+      ...Array(5).fill('Crash: Jump Drive Miscalculation '),
+      ...Array(3).fill('Engine Failure                   '),
+      ...Array(3).fill('Cannibalism                      '),
+      ...Array(3).fill('Nerve Gas                        '),
+      ...Array(3).fill('Escape Pod Never Returned        '),
+      ...Array(3).fill('Betrayal/Backstabbing            '),
+      ...Array(2).fill('Succumbed to Nightmares          '),
+      ...Array(2).fill('Hatch Opened, No Air             '),
+      ...Array(2).fill('Cargo Created Mishap             '),
+      ...Array(2).fill('Starvation                       '),
+      ...Array(2).fill('Part of a Conspiracy             '),
+      'Thrusters Slagged                ',
+      'Weapons System Malfunction       ',
+      'Cryosleep Never Disengaged       ',
+      'Complex Series of Events         ',
+      'Suicide Pact                     ',
+      'Parasite Infestation             ',
+      'Environmental Systems Failure    ',
+      'Uncontrollable Fire              ',
+      'Failed Fraud Attempt             ',
+      'Void Worshipping                 ',
+      'Bizarre Love Triangle            ',
+      'Fight Spiraled Out of Control    ',
+      'Chainsaw Rampage*                ',
+      'Drug Addled Debauchery           ',
+      'Fatal Depressurization           ',
+      'Nightmares Ending in Heart Attack',
+      'Mob Hit                          ',
+      'Crew Members Vanished            ',
+      'Prank Taken Too Far              ',
+      'William Tell Trick               ',
+    ],
+  },
+  {
+    title: 'weird',
+    table:   [
+      'Haunted',
+      ...Array(9).fill('Inhabited by Alien Life'),
+      ...Array(10).fill('Terraformed by strange creatures'),
+      ...Array(5).fill('Crew Dressed For Costume Party'),
+      ...Array(5).fill('Crew All Identical'),
+      ...Array(5).fill('Crew was preparing Theatrical Performance'),
+      ...Array(5).fill('Morbid Artwork'),
+      ...Array(5).fill('Pet Hoarders'),
+      ...Array(5).fill('Erotic Sculptures'),
+      ...Array(5).fill('Communist Regalia'),
+      ...Array(3).fill('Company Uniform'),
+      ...Array(3).fill('Cult Members'),
+      ...Array(3).fill('Extensive Journals Kept'),
+      ...Array(3).fill('Strange Health Obsession'),
+      ...Array(3).fill('Unnervingly Clean'),
+      ...Array(2).fill('Android was Poisoning Captain'),
+      ...Array(2).fill('Ancient Ship'),
+      ...Array(2).fill('Temporal Distortions'),
+      ...Array(2).fill('Failed Utopia'),
+      ...Array(2).fill('Crew Weighed and Measured Weekly'),
+      'Extensive Body Modification',
+      'Isolated Physics Anomalies',
+      'Sexual Deviants',
+      'Religious Extremists',
+      'Transhumanist Android Worshippers',
+      'Anti-Android Conspiracists',
+      'Nauseating Stench',
+      'Everything is Jury-Rigged',
+      'Crew Taking Video Through the Catastrophe',
+      'Body Horror',
+      'Scooby-Doo Crew',
+      'Interior Coated in Flesh, Doors are Membranes',
+      'Whispering Echoes Always a Room Ahead',
+      'Dolls in Macabre Tableaux',
+      'Dead Crew: Exploded Heads',
+      'Elaborately Posed Corpses (Hooks & Chains)',
+      'Flickering Lights and Frenzied Screams',
+      'Ship Rearranges Itself Frequently',
+      'Ship Has Infinite Depth',
+      'Fruit Basket, Greeting Card Inexplicably Addressed to Crew',
+    ]
+  }
 ];
 
 export const CLASSES = ['TEAMSTER', 'ANDROID', 'SCIENTIST', 'MARINE'];
-

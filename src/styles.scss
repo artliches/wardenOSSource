@@ -1,5 +1,8 @@
 $web-safe-magenta: #ff0066;
 $web-safe-cyan: #009999;
+$web-safe-grey: #cccccc;
+
+@page { size: auto;  margin: 0mm; }
 
 body {
     background-color: black;
@@ -45,6 +48,12 @@ body {
   }
 }
 
+.print-button {
+  grid-area: cRand;
+  background-color: #ffcc00;
+  color: black;
+}
+
 .crew-random-button {
   grid-area: cRand;
 }
@@ -71,6 +80,9 @@ body {
   &.randGen-card {
     background-color: $web-safe-cyan;
   }
+  &.scan-card {
+    background-color: black;
+  }
 }
 
 .warden-banner {
@@ -84,8 +96,19 @@ body {
   color: black;
 }
 
+.invert-section-banner {
+  font-family: 'PT Serif', Times, serif;
+  background-color: black;
+  color: white;
+}
+
 .subText {
   font-size: 0.8rem;
+  color: black;
+}
+
+.print-button-grid {
+  padding-top: 1rem;
 }
 
 @media only screen and (max-width: 768px) {  
@@ -101,5 +124,56 @@ body {
   .warden-grid {
     grid-template-columns: 1fr;
     justify-items: center;
+  }
+}
+
+@media print {
+  body {
+    background-color: white;
+    height: 100vh;  
+    color: black;
+    font: .9rem Inconsolata, monospace;
+  }
+
+  .card {  
+    &.crew-card {
+      background-color: white;
+      border: 3px solid black;
+    }
+  }
+
+  .printItemBold {
+    font-weight: bold;
+  }
+
+  .section-banner {
+    font-family: 'PT Serif', Times, serif;
+    font-weight: bold;
+    background-color: white;
+    color: black;
+    border: 1px solid black;
+  }
+
+  .basic-grid {
+    grid-gap: 0rem;
+  }
+
+  .warden-banner {
+    display: none;
+  }
+
+  .button-grid {
+    display: none;
+  }
+
+  .title-section {
+    padding-left: 5px;
+    height: 2rem;
+  }
+
+  .subsection-title {
+    background-color: white;
+    color: black;
+    border: 1px solid black;
   }
 }

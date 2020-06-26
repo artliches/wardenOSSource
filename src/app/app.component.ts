@@ -45,7 +45,6 @@ export class AppComponent implements OnInit {
       intellect: 0,
       combat: 0
   };
-    document.title = `MOTHERSHIP_${this.charName}`;
     this.displayDerelict = false;
     this.displayTrinketPatch = false;
     this.displayCrewMember = true;
@@ -73,6 +72,7 @@ export class AppComponent implements OnInit {
 
   passCharName(name: string) {
     this.charName = name;
+    document.title = `MOTHERSHIP_${this.charName}`;
   }
 
   print() {

@@ -26,6 +26,8 @@ export class AppComponent implements OnInit {
   }
 
   generateDerelict() {
+    document.title = `WARDEN OS ONLINE`;
+
     this.displayTrinketPatch = false;
     this.displayCrewMember = false;
     this.displayPrintButton = false;
@@ -43,6 +45,7 @@ export class AppComponent implements OnInit {
       intellect: 0,
       combat: 0
   };
+    document.title = `MOTHERSHIP_${this.charName}`;
     this.displayDerelict = false;
     this.displayTrinketPatch = false;
     this.displayCrewMember = true;
@@ -53,6 +56,8 @@ export class AppComponent implements OnInit {
     this.trinketPatch = [];
     this.trinketPatch.push({ type: 'trinket', info: this.random.getTrinketOrPatch(0, 99, true)});
     this.trinketPatch.push({ type: 'patch', info: this.random.getTrinketOrPatch(0, 99, false)});
+
+    document.title = `WARDEN OS ONLINE`;
 
     this.displayDerelict = false;
     this.displayTrinketPatch = true;
@@ -74,6 +79,5 @@ export class AppComponent implements OnInit {
     document.title = `MOTHERSHIP_${this.charName}`;
     window.print();
     document.title = `WARDEN OS ONLINE`;
-
   }
  }

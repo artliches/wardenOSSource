@@ -76,8 +76,6 @@ export class AppComponent implements OnInit {
   }
 
   print() {
-    document.title = `MOTHERSHIP_${this.charName}`;
     window.print();
-    document.title = `WARDEN OS ONLINE`;
   }
  }

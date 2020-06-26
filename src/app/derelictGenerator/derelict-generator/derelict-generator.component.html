@@ -1,30 +1,30 @@
-<section class='basic-grid card randGen-card'>
-    <span class='section-banner'>
-        SHIP SCAN RESULTS
-    </span>
-    <span class='derelict-layout-grid'>
+<section class='basic-grid derelict-grid-master card randGen-card'>
+    <section class='derelict-title section-banner'>
+        SCAN RESULTS - THE {{derelictName}}
+    </section>
+    <section class='derelict-content derelict-layout-grid'>
         <span class='card scan-card'
-        *ngFor='let key of objectKeys(derelictObject)'
-        [ngClass]="{
-            'shipClass': derelictObject[key].title === 'ship class',
-            'habStatus': derelictObject[key].title === 'habitation status',
-            'engStatus': derelictObject[key].title === 'engine status',
-            'surStatus': derelictObject[key].title === 'survivors',
-            'hide': derelictObject[key].title === 'salvage_1',
-            'sal': derelictObject[key].title === 'salvage',
-            'ruin': derelictObject[key].title === 'cause of ruination',
-            'weird': derelictObject[key].title === 'weird'
-        }">
-        <span *ngIf='derelictObject[key].title !== "salvage_1" && derelictObject[key].title !== "salvage_2"' class='derelict-card-grid'>
+            *ngFor='let key of objectKeys(derelictObject)'
+            [ngClass]="{
+                'shipClass': derelictObject[key].title === 'ship class',
+                'habStatus': derelictObject[key].title === 'habitation status',
+                'engStatus': derelictObject[key].title === 'engine status',
+                'surStatus': derelictObject[key].title === 'survivors',
+                'hide': derelictObject[key].title === 'salvage_1',
+                'sal': derelictObject[key].title === 'salvage',
+                'ruin': derelictObject[key].title === 'cause of ruination',
+                'weird': derelictObject[key].title === 'weird'
+            }"
+        >
+        <section class='derelict-card-grid'>
             <span class='section-banner derelict-banner'>
                 {{derelictObject[key].title.toUpperCase()}}
             </span>
-            <div class='derelict-descrip'> 
+            <div class='derelict-descrip'>
                 {{derelictObject[key].table | titlecase}}
             </div>
-        </span>
+        </section>
 
     </span>
-    </span>
-
+    </section>
 </section>

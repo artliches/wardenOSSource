@@ -17,7 +17,20 @@ body {
 }
 
 .warden-grid {
+  display: grid;
+  grid-gap: 0rem;
   grid-template-columns: 1fr;
+  grid-template-areas:
+    "banner"
+    "subtext";
+  margin-bottom: 2rem;
+  
+  .warden-subtext {
+    grid-area: subtext;
+    cursor: pointer;
+    font-family: 'PT Serif', Times, serif;
+    font-size: 0.9rem;
+  }
 }
 
 .button-grid {
@@ -88,6 +101,7 @@ body {
 .warden-banner {
   font-family: 'Monoton';
   text-shadow: none;
+  margin: 0;
 }
 
 .section-banner {
@@ -124,6 +138,10 @@ body {
   .warden-grid {
     grid-template-columns: 1fr;
     justify-items: center;
+
+    .warden-subtext {
+      justify-self: center;
+    }
   }
 }
 
@@ -160,6 +178,10 @@ body {
 
   .warden-banner {
     display: none;
+  }
+
+  .warden-grid {
+    margin-bottom: 0rem;
   }
 
   .button-grid {

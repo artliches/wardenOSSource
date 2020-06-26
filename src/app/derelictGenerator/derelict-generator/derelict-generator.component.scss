@@ -1,3 +1,16 @@
+.derelict-grid-master {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title"
+        "content";
+    .derelict-title {
+        grid-area: title;
+    }
+    .derelict-content {
+        grid-area: content;
+    }
+}
+
 .derelict-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 1fr);
@@ -43,5 +56,42 @@
 
     .hide {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .derelict-layout-grid {
+        grid-template-columns: 2fr;
+        grid-template-areas:
+            "first-1 first-2"
+            "second-1 second-2"
+            "third-1 third-2"
+            "fourth-1 fourth-2"
+            "fifth-1 fifth-2"
+            "sixth-1 sixth-2"
+            "seventh-1 seventh-2";
+
+        .shipClass {
+            grid-column: first-1 / first-2;
+        }
+        .habStatus {
+            grid-column: second-1 / second-2;
+        }
+        .engStatus {
+            grid-column: third-1 / third-2;
+            grid-row: third-1;
+        }
+        .surStatus {
+            grid-column: fourth-1 / fourth-2;
+        }
+        .sal {
+            grid-column: fifth-1 / fifth-2;
+        }
+        .ruin {
+            grid-column: sixth-1 / sixth-2;
+        }
+        .weird {
+            grid-column: seventh-1 / seventh-2;
+        }
     }
 }

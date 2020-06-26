@@ -690,4 +690,43 @@ export const DERELICT = [
   }
 ];
 
+export const SHIP_NAMES = [
+  [
+    'IAGO',
+    'HECATE',
+    'OBERON',
+    'WHITEHALL',
+    'DUNCAN',
+    'BANQUO',
+    'WINTER',
+    'MARLOW',
+    'TEMPEST',
+    'FAUST',
+  ],
+  [
+    'VALEFOR',
+    'OPHANIM',
+    'MARAX',
+    'MARINER',
+    'LABOLAS',
+    'ASTAROTH',
+    'CHERUBIM',
+    'TYRANT',
+    'BALAAM',
+    'MURMUR',
+  ],
+  [
+    'ECHO',
+    'ALPHA',
+    'OMEGA',
+    'KING',
+    'BEGGER',
+    'DELTA',
+    'EPISLON',
+    'JIBRIL',
+    'BRAVO',
+    'TANGO',
+  ]
+];
+
 export const CLASSES = ['TEAMSTER', 'ANDROID', 'SCIENTIST', 'MARINE'];

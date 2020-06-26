@@ -31,7 +31,15 @@ export class RandomNumberService {
         'A TIME TO DIE',
         'A LAMB FOR THE SLAUGHTER',
         'IT\'S TIME TO GO',
-        '01110011 01101111 01110011'
+        '01110011 01101111 01110011',
+        'GAME OVER MAN!',
+        'ALLMOTHER, ARE YOU AWAKE?',
+        'IF DREAMS CAN COME TRUE, WHAT DOES THAT SAY ABOUT NIGHTMARES?',
+        'LIKE TEARS IN THE RAIN',
+        'A BLACK BLOOD NOTHINGNESS BEGAN TO SPIN',
+        'A SYSTEM OF CELLS INTERLINKED WITHIN CELLS INTERLINKED WITHIN CELLS INTERLINKED WITHIN ONE STEM',
+        'AND DREADFULLY DISTINCT AGAINST THE DARK A TALL WHITE FOUNTAIN PLAYED',
+        'YOU\'RE NOT HELPING. WHY IS THAT?'
       ];
 
       const randomPerson = [
@@ -51,8 +59,17 @@ export class RandomNumberService {
         'POUND OF FLESH'
       ];
 
+      const randomDerelict = [
+        'DERELICT',
+        'HUSK',
+        'GRAVE',
+        'COFFIN',
+        'DEATH-TRAP',
+        'SEPULCHER'
+      ];
+
       const sayings = [
-        randomSayings, randomPerson
+        randomSayings, randomPerson, randomDerelict
       ];
 
       let chosenSaying: number;

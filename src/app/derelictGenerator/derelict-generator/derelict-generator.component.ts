@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { DERELICT } from 'src/app/services/randomTables.constants';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { DERELICT, SHIP_NAMES } from 'src/app/services/randomTables.constants';
 import { RandomNumberService } from 'src/app/services/randomNumber.service';
 
 @Component({
@@ -7,18 +7,21 @@ import { RandomNumberService } from 'src/app/services/randomNumber.service';
   templateUrl: './derelict-generator.component.html',
   styleUrls: ['./derelict-generator.component.scss']
 })
-export class DerelictGeneratorComponent implements OnInit {
+export class DerelictGeneratorComponent implements OnChanges {
+  @Input() genDerelict = false;
   derelictObject: any;
+  derelictName = '';
   objectKeys = Object.keys;
 
   constructor(private random: RandomNumberService) { }
 
-  ngOnInit() {
+  ngOnChanges() {
     this.rollRandomDerelict();
   }
 
   rollRandomDerelict() {
     let salvage = '';
+    this.derelictName = '';
     this.derelictObject = this.objectKeys(DERELICT).map((key) => {
       const rand = this.random.getRandomNumber(0, 99);
       const derelict = DERELICT[key];
@@ -47,6 +50,9 @@ export class DerelictGeneratorComponent implements OnInit {
         title: derelict.title === 'salvage_2' ? 'salvage' : derelict.title,
         table: derelict.title === 'salvage_2' ? salvage :  tableResults
       };
+    });
+    SHIP_NAMES.forEach(name => {
+      this.derelictName = `${this.derelictName} ${name[this.random.getRandomNumber(0, 9)]}`.trim();
     });
   }
 }

@@ -60,14 +60,16 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
     `;
 
+      const percentOff = this.random.getRandomNumber(1, 100) - 10;
+
       this.crisisOrSafe = this.stationAblib[this.stationAblib.length - 1] ?
         `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
         ${this.random.rollStringDice(`${this.stationAblib[8]}`, 'd1')}
         <div class='crisis-warning'>!!!WARNING!!!</div>` :
         `You can buy supplies and fuel as per normal, though at a hefty markup of
         <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAblib[6]}</b> at
-        <b class='magenta'>${this.random.getRandomNumber(1, 100) - 10 > 0 ? this.random.getRandomNumber(1, 100) - 10 : 0}
-        </b>% off and local free-traders have a line on where to find <b class='magenta'>${this.stationAblib[7]}</b>.`;
+        <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
+        <b class='magenta'>${this.stationAblib[7]}</b>.`;
 
       this.stationStructure = this.createStationStructure(stationName);
 
@@ -104,7 +106,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       if (rand === 9) {
         this.createAmalgamationStructure(i + 2);
       } else {
-        this.amalgamationStructure.push(` ${SPACE_STATION[9].table[rand]}`);
+        this.amalgamationStructure.push(` >> ${SPACE_STATION[9].table[rand]}`);
       }
     }
   }
@@ -115,7 +117,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       structure += ` is built on an ${this.stationAblib[9]}.`;
     } else if (this.stationAblib[9].indexOf('Amalgamation') !== -1) {
       this.createAmalgamationStructure(2);
-      structure += ` is an amalagamation of the following structure-types:${this.amalgamationStructure}.`;
+      structure += ` is an amalagamation, with the following modules haphazardly conjoined:`;
     } else {
       structure += ` is built like a ${this.stationAblib[9]}.`;
     }

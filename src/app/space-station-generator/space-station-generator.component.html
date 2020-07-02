@@ -11,7 +11,15 @@
     </section>
     <div class='card scan-card station-section' [innerHTML]='stationDescrip'></div>
     <div class='card scan-card crisis-section' [innerHTML]='crisisOrSafe'></div>
-    <div class='card scan-card struct-section' [innerHTML]='stationStructure'></div>
+    <div class='card scan-card struct-section'>
+        <span [innerHTML]='stationStructure'></span>
+        <span class='amalgam-section' *ngIf='amalgamationStructure.length > 0'>
+            <span *ngFor='let amalgam of amalgamationStructure'>
+                <div class='amalgam-section' [innerHtml]='amalgam'></div>
+            </span>
+        </span>
+    </div>
+
     <span class='card scan-card local-section'>
         <div [innerHTML]='stationNotableLocations'></div>
         <section class='locationDescrip-grid'>

@@ -1,0 +1,67 @@
+@import '../assets/variables';
+
+div {
+    b.magenta {
+        color: $web-safe-magenta;
+    }
+}
+
+.crisis-warning {
+    font-weight: bold;
+    color: $golden;
+}
+
+.space-station-grid-master {
+    grid-template-areas: 
+        "title title"
+        "descrip local"
+        "crisis local"
+        "struct local";
+
+    .space-station-title {
+        grid-area: title
+    }
+    .station-section {
+        grid-area: descrip;
+    }
+    .crisis-section {
+        grid-area: crisis;
+    }
+    .struct-section {
+        grid-area: struct;
+    }
+    .local-section {
+        grid-area: local;
+    }
+}
+
+.locationDescrip-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "1"
+    "2"
+    "3"
+    "4"
+    "5"
+    "6"
+    "7"
+    "8"
+    "9"
+    "10" ;
+
+    .one {
+        grid-area: 1;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .space-station-grid-master {
+        grid-template-areas: 
+            "title"
+            "descrip"
+            "crisis"
+            "struct"
+            "local";
+    }
+}

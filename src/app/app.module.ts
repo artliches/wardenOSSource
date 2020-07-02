@@ -9,6 +9,7 @@ import { CharacterGeneratorComponent } from './characterGenerator/characterGener
 import { CommandLineInterfaceComponent } from './commandLineInterface/commandLineInterface.component';
 import { TrinketPatchDisplayComponent } from './trinketPatchDisplay/trinketPatchDisplay.component';
 import { DerelictGeneratorComponent } from './derelictGenerator/derelict-generator/derelict-generator.component';
+import { SpaceStationGeneratorComponent } from './space-station-generator/space-station-generator.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { DerelictGeneratorComponent } from './derelictGenerator/derelict-generat
     CharacterGeneratorComponent,
     TrinketPatchDisplayComponent,
     DerelictGeneratorComponent,
+    SpaceStationGeneratorComponent,
   ],
   imports: [
     BrowserModule,

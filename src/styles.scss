@@ -1,6 +1,7 @@
 $web-safe-magenta: #ff0066;
 $web-safe-cyan: #009999;
 $web-safe-grey: #cccccc;
+$golden: #ffcc00;
 
 @page { size: auto;  margin: 0mm; }
 
@@ -35,12 +36,12 @@ body {
 
 .button-grid {
   display: grid;
-  grid-template-columns: 25% 50% 25%;
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr;
   grid-gap: 1rem;
   grid-template-areas: 
-    "trinket cRand ."
-    "patch cBias .";
+    "sStation cRand trinket"
+    "rStation cBias patch";
   
   padding-bottom: 1rem;
   justify-items: center;
@@ -59,12 +60,15 @@ body {
   &.randGen-button {
     background-color: $web-safe-cyan;
   }
+
+  &.yellow-button {
+    background-color: $golden;
+    color: black;
+  }
 }
 
 .print-button {
   grid-area: cRand;
-  background-color: #ffcc00;
-  color: black;
 }
 
 .crew-random-button {
@@ -83,6 +87,14 @@ body {
   grid-area: patch;
 }
 
+.space-station-button {
+  grid-area: sStation;
+}
+
+.rim-station-button {
+  grid-area: rStation;
+}
+
 .card {
   padding: 5px;
 
@@ -93,8 +105,14 @@ body {
   &.randGen-card {
     background-color: $web-safe-cyan;
   }
+
+  &.yellow-card {
+    background-color: #ebbc00;
+    color: black;
+  }
   &.scan-card {
     background-color: black;
+    color: white;
   }
 }
 
@@ -118,7 +136,7 @@ body {
 
 .subText {
   font-size: 0.8rem;
-  color: black;
+  color: lightgrey;
 }
 
 .print-button-grid {
@@ -130,10 +148,12 @@ body {
     grid-template-columns: 1fr;
     justify-items: center;
     grid-template-areas:
-      "patch"
-      "trinket"
+      "sStation"
+      "rStation"
       "cRand"
-      "cBias";
+      "cBias"
+      "patch"
+      "trinket";
   }
   .warden-grid {
     grid-template-columns: 1fr;
@@ -158,6 +178,10 @@ body {
       background-color: white;
       border: 3px solid black;
     }
+    &.scan-card {
+      color: black;
+    }
+
   }
 
   .printItemBold {

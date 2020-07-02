@@ -10,18 +10,25 @@ import { RandomNumberService } from './services/randomNumber.service';
 export class AppComponent implements OnInit {
   bias = false;
   charName = '';
+  coreOrRim: boolean;
   defaultStatArray: CharacterStats;
   derelictButtonText = this.random.getRandomSaying(99, 2).text;
-  displayCrewMember = false;
-  displayDerelict = false;
-  displayPrintButton = false;
-  displayTrinketPatch = false;
+  flags = {
+    crew: false,
+    derelict: false,
+    print: false,
+    trinket: false,
+    station: false
+  };
   genDerelict = false;
+  genSpaceStation = [];
   personButtonText = this.random.getRandomSaying(99, 1).text;
   previousSaying = [];
   randomSaying = [];
   trinketPatch = [];
   wardenSubtext = this.random.getRandomSaying(99, 0).text;
+
+  objectKeys = Object.keys;
 
   constructor(private random: RandomNumberService) {}
 
@@ -29,14 +36,18 @@ export class AppComponent implements OnInit {
     document.title = 'WARDEN OS ONLINE';
   }
 
+  flipFlags(flagName: string) {
+    this.objectKeys(this.flags).forEach(key => {
+      if (flagName === key) {
+        this.flags[key] = true;
+      } else {
+        this.flags[key] = false;
+      }
+    });
+  }
+
   generateDerelict() {
     document.title = `WARDEN OS ONLINE`;
-
-    this.displayTrinketPatch = false;
-    this.displayCrewMember = false;
-    this.displayPrintButton = false;
-    this.displayDerelict = true;
-
     this.genDerelict = !this.genDerelict;
   }
 
@@ -51,10 +62,7 @@ export class AppComponent implements OnInit {
       intellect: 0,
       combat: 0
   };
-    this.displayDerelict = false;
-    this.displayTrinketPatch = false;
-    this.displayCrewMember = true;
-    this.displayPrintButton = true;
+    this.flags.print = true;
   }
 
   generateRandomTrinketPatch() {
@@ -63,11 +71,12 @@ export class AppComponent implements OnInit {
     this.trinketPatch.push({ type: 'patch', info: this.random.getTrinketOrPatch(0, 99, false)});
 
     document.title = `WARDEN OS ONLINE`;
+  }
 
-    this.displayDerelict = false;
-    this.displayTrinketPatch = true;
-    this.displayCrewMember = false;
-    this.displayPrintButton = false;
+  generateRandomSpaceStation(coreOrRim) {
+    document.title = `WARDEN OS ONLINE`;
+    this.coreOrRim = coreOrRim;
+    this.genSpaceStation = [];
   }
 
   getRandomDerelictSaying() {

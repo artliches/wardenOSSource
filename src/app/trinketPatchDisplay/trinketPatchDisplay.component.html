@@ -1,5 +1,5 @@
 <div *ngFor='let item of (trinketPatch)'>
-    <section class='card randGen-card'>
+    <section class='card yellow-card'>
         <span *ngFor='let key of objectKeys(item)'>
             <div *ngIf='item[key] === "trinket" || item[key] === "patch"; else patchTrinketInfo' class='section-banner'>
                 {{item[key].toUpperCase()}}

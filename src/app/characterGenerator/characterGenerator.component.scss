@@ -20,10 +20,10 @@
     grid-template-areas:
         "title title title title title title"
         "stress stress-stat resolve resolve-stat health health-stat"
-        "str str-stat . . . ."
-        "spd spd-stat . . . ."
-        "int int-stat . . . ."
-        "com com-stat . . . .";
+        "str str-stat str-stat str-stat str-stat str-stat"
+        "spd spd-stat spd-stat spd-stat spd-stat spd-stat"
+        "int int-stat int-stat int-stat int-stat int-stat"
+        "com com-stat com-stat com-stat com-stat com-stat";
 
     .stress-section {
         grid-area: stress;
@@ -75,10 +75,10 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-areas:
     "title title title"
-    "sanity san-stat ."
-    "fear fea-stat ."
-    "body bod-stat ."
-    "armor arm-stat .";
+    "sanity san-stat san-stat"
+    "fear fea-stat fea-stat"
+    "body bod-stat bod-stat"
+    "armor arm-stat arm-stat";
 
     .san-section {
         grid-area: sanity;
@@ -152,7 +152,7 @@
 
 .itemDetailsFont {
     font-size: .9rem;
-    color: black;
+    color: lightgray;
 }
 
 @media only screen and (max-width: 768px) {
@@ -165,7 +165,7 @@
             "skills"
             "stress"
             "equip"
-            "trinket";
+            "trinket";        
     }
     .saves-grid {
         grid-template-columns: repeat(2, 1fr);

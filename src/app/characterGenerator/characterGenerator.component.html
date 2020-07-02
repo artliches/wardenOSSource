@@ -1,11 +1,14 @@
 <div class='basic-grid cg-grid-master'>
     <section class='card crew-card name-section'>
         <div class='section-banner title-section'>NAME</div>
-        {{name}} THE {{class.toUpperCase()}}
+        <div class='card scan-card'>
+            {{name}} THE {{class.toUpperCase()}}
+        </div>
     </section>
     <section class='card crew-card basic-grid stats-grid'>
         <div class='title-section section-banner'>STATS</div>
         <div *ngFor='let key of objectKeys(statsArray)'
+        class='card scan-card'
         [ngClass]="{
             'stress-section': key === 'stress',
             'resolve-section': key === 'resolve',
@@ -17,36 +20,38 @@
         }">
             <b>{{key.toUpperCase()}}</b> 
         </div>
-        <span *ngFor='let key of objectKeys(statsArray)' [ngClass]="{
-            'stress-stat': key === 'stress',
-            'resolve-stat': key === 'resolve',
-            'health-stat': key.toLowerCase() === 'max_health',
-            'str-stat' : key === 'strength',
-            'spd-stat' : key === 'speed',
-            'int-stat' : key === 'intellect',
-            'com-stat' : key === 'combat'
-        }">
-            <span>
-                {{statsArray[key]}}
-            </span>
-            <p *ngIf="key === 'max_Health'">
-            </p>
+        <span *ngFor='let key of objectKeys(statsArray)' 
+            class='card scan-card'
+            [ngClass]="{
+                'stress-stat': key === 'stress',
+                'resolve-stat': key === 'resolve',
+                'health-stat': key.toLowerCase() === 'max_health',
+                'str-stat' : key === 'strength',
+                'spd-stat' : key === 'speed',
+                'int-stat' : key === 'intellect',
+                'com-stat' : key === 'combat'
+            }"
+        >
+            {{statsArray[key]}}
         </span>
     </section>
 
     <section class='card crew-card basic-grid saves-grid'>
         <div class='title-section section-banner'>SAVES</div>
         <div *ngFor='let key of objectKeys(savesArray)'
-        [ngClass]="{
-            'san-section': key === 'sanity',
-            'fea-section': key === 'fear',
-            'bod-section': key === 'body',
-            'arm-section': key === 'armor'
-        }">
+            class='card scan-card'
+            [ngClass]="{
+                'san-section': key === 'sanity',
+                'fea-section': key === 'fear',
+                'bod-section': key === 'body',
+                'arm-section': key === 'armor'
+            }"
+        >
             <b>{{key.toUpperCase()}}</b>
             <div class='subText'>{{getSavesSubtext(key.toLowerCase())}}</div>
         </div>
         <span *ngFor='let key of objectKeys(savesArray)'
+            class='card scan-card'
             [ngClass]="{
                 'san-stat': key === 'sanity',
                 'fea-stat': key === 'fear',
@@ -60,7 +65,7 @@
         <div class='section-banner title-section'>
             SKILLS
         </div>
-        <div *ngFor='let skill of skillsArray'>
+        <div class='card scan-card' *ngFor='let skill of skillsArray'>
             <span class='printItemBold'>
                 >> {{skill.title}} | {{skill.percent}}
             </span>
@@ -77,7 +82,7 @@
         <div class='subsection-title'>
             {{loadoutName.toUpperCase()}} LOADOUT
         </div>
-        <div *ngFor='let item of equipmentArray'>
+        <div class='card scan-card' *ngFor='let item of equipmentArray'>
             <span class='printItemBold'>
                 >> {{item.title.trim()}}
             </span>
@@ -104,7 +109,7 @@
                 </div>
             </div>
         </div>
-        <div>
+        <div class='card scan-card'>
             >> CREDITS: {{credits}}
         </div>
     </section>
@@ -116,21 +121,21 @@
         <div class='subsection-title'>
             TRINKET
         </div>
-        <div> >> {{trinketPatch[0].num}} - {{trinketPatch[0].descrip}}</div>
+        <div class='card scan-card'> >> {{trinketPatch[0].num}} - {{trinketPatch[0].descrip}}</div>
         <div class='subsection-title'>
             PATCH
         </div>
-        <div> >> {{trinketPatch[1].num}} - {{trinketPatch[1].descrip}}</div>
+        <div class='card scan-card'> >> {{trinketPatch[1].num}} - {{trinketPatch[1].descrip}}</div>
     </section>
 
     <section class='card crew-card basic-grid stress-grid'>
         <div class='title-section section-banner'>
             STRESS, PANIC, ETC.
         </div>
-        <div>
+        <div class='card scan-card'>
             >> {{getStress().fear}}
         </div>
-        <div *ngIf='getStress().extra'>
+        <div class='card scan-card' *ngIf='getStress().extra'>
             >> {{getStress().extra}}
         </div>
     </section>

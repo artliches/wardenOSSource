@@ -1,0 +1,35 @@
+<section class='basic-grid space-station-grid-master card randGen-card'>
+    <section class='space-station-title section-banner'>
+        HAILING
+        <span *ngIf='coreOrRim; else rim'>
+            CORESPACE STATION <b>{{stationAblib[0].toUpperCase()}} {{stationAblib[1].toUpperCase()}}</b>
+        </span>
+        <ng-template #rim>
+            RIMSPACE OUTPOST CALL-SIGN <b>{{callSign.toUpperCase()}}</b>
+        </ng-template>
+        
+    </section>
+    <div class='card scan-card station-section' [innerHTML]='stationDescrip'></div>
+    <div class='card scan-card crisis-section' [innerHTML]='crisisOrSafe'></div>
+    <div class='card scan-card struct-section' [innerHTML]='stationStructure'></div>
+    <span class='card scan-card local-section'>
+        <div [innerHTML]='stationNotableLocations'></div>
+        <section class='locationDescrip-grid'>
+            <div *ngFor='let local of locationDescrips; let i = index'
+            [ngClass]="{
+                'one': i === 0,
+                'two': i === 1,
+                'three': i === 2,
+                'four': i === 3,
+                'five': i === 4,
+                'six': i === 5,
+                'seven': i === 6,
+                'eight': i === 7,
+                'nine': i === 8,
+                'ten': i === 9
+            }">
+            <b>{{i + 1}}.</b> {{local.trim() | titlecase}}
+        </div>
+        </section>
+    </span>
+</section>

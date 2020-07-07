@@ -6,38 +6,38 @@
 </section>
 <section class='button-grid'>
     <button class='control-button crew-button crew-random-button' (click)='flipFlags("crew"); generateRandomCrewMember(false); getRandomPersonSaying()'>
-        <div>A TRULY RANDOM {{personButtonText}}</div>
+        <div>CREATE A TRULY RANDOM MEMBER</div>
     </button>
     <div class='crew-bias-button'>
         <button class='control-button crew-button' (click)='flipFlags("crew"); generateRandomCrewMember(true); getRandomPersonSaying()'>
-            <div>A BIASED {{personButtonText}}</div>
+            <div>CREATE A BIASED CREW MEMBER</div>
         </button>
     </div>
-    <div class='trinket-button'>
+    <!-- <div class='trinket-button'>
         <button class='control-button yellow-button' (click)='flipFlags("trinket"); generateRandomTrinketPatch(); getRandomPersonSaying()'>
-            SEARCH THE {{personButtonText}}
+            SEARCH THE BODY
         </button>
-    </div>
+    </div> -->
     <div class='patch-button'>
-        <button class='control-button yellow-button' (click)='generateDerelict(); getRandomDerelictSaying(); flipFlags("derelict")'>
-            SCAN THE {{derelictButtonText}}
+        <button class='control-button yellow-button' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
+            SCAN THE DERELICT SHIP
         </button>
     </div>
     <div class='space-station-button'>
-        <button class='control-button randGen-button' (click)='generateRandomSpaceStation(true); flipFlags("station")'>
+        <button class='control-button randGen-button' (click)='flipFlags("station"); generateRandomSpaceStation(true)'>
             HAIL THE CORESPACE STATION
         </button>
     </div>
     <div class='rim-station-button'>
-        <button class='control-button randGen-button' (click)='generateRandomSpaceStation(false); flipFlags("station")'>
+        <button class='control-button randGen-button' (click)='flipFlags("station"); generateRandomSpaceStation(false)'>
             HAIL THE RIMSPACE STATION
         </button>
     </div>
 </section>
-<app-character-generator *ngIf='flags["crew"]' (charName)='passCharName($event)' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>
+<app-character-generator *ngIf='flags["crew"]' (charName)='passPagePrintTitle($event)' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>
 <app-trinket-patch-display *ngIf='flags["trinket"]' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
-<app-derelict-generator *ngIf='flags["derelict"]' [genDerelict]='genDerelict'></app-derelict-generator>
-<app-space-station-generator *ngIf='flags["station"]' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
+<app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
+<app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
 <section *ngIf='flags["print"]' class='button-grid print-button-grid'>
-    <button class='control-button print-button yellow-button' (click)='print()'>HIRE {{charName}}</button>
+    <button class='control-button print-button yellow-button' (click)='print()'>PRINT {{pagePrintTitle}}</button>
 </section>

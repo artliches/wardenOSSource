@@ -15,6 +15,7 @@ div {
     grid-template-areas: 
         "title title"
         "descrip local"
+        "common local"
         "crisis local"
         "struct local";
 
@@ -32,6 +33,9 @@ div {
     }
     .local-section {
         grid-area: local;
+    }
+    .commonProblem-section {
+        grid-area: common;
     }
 }
 
@@ -64,6 +68,7 @@ div {
         grid-template-areas: 
             "title"
             "descrip"
+            "common"
             "crisis"
             "struct"
             "local";

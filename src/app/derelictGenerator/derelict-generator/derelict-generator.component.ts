@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import { DERELICT, SHIP_NAMES, SPACE_STATION } from 'src/app/services/randomTables.constants';
 import { RandomNumberService } from 'src/app/services/randomNumber.service';
 
@@ -9,6 +9,7 @@ import { RandomNumberService } from 'src/app/services/randomNumber.service';
 })
 export class DerelictGeneratorComponent implements OnChanges {
   @Input() genDerelict = false;
+  @Output() derelictTitle = new EventEmitter<string>();
   derelictObject: any;
   derelictName = '';
   objectKeys = Object.keys;
@@ -42,5 +43,7 @@ export class DerelictGeneratorComponent implements OnChanges {
     SHIP_NAMES.forEach(name => {
       this.derelictName = `${this.derelictName} ${name[this.random.getRandomNumber(0, 9)]}`.trim();
     });
+
+    this.derelictTitle.emit(`THE ${this.derelictName}`);
   }
 }

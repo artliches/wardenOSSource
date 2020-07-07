@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, ViewEncapsulation, Output, EventEmitter } from '@angular/core';
 import { SPACE_STATION, SHIP_NAMES } from '../services/randomTables.constants';
 import { RandomNumberService } from '../services/randomNumber.service';
 
@@ -11,6 +11,7 @@ import { RandomNumberService } from '../services/randomNumber.service';
 export class SpaceStationGeneratorComponent implements OnChanges {
   @Input() coreOrRim: boolean;
   @Input() stationAblib = [];
+  @Output() stationTitle = new EventEmitter<string>();
   amalgamationStructure = [];
   callSign = '';
   crisisOrSafe = '';
@@ -38,6 +39,8 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     });
     this.stationAblib.push(this.random.getRandomNumber(1, 100) <= 20);
     this.stationAblib.push(this.random.getRandomNumber(1, 100) <= 5);
+
+    console.log(this.stationAblib);
 
     const stationName = `<b class='magenta'>${this.stationAblib[0]} ${this.stationAblib[1]}</b>`;
     const numLocations = this.random.getRandomNumber(1, 10);
@@ -96,8 +99,11 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       this.stationStructure = this.createStationStructure(`<b class="magenta">${this.callSign}</b>`);
       this.stationNotableLocations = `<b class="magenta">${this.callSign}</b>
         has <b class='magenta'>${numLocations} notable location(s)</b>.`;
-
     }
+
+    this.stationTitle.emit(this.coreOrRim ?
+      `${this.stationAblib[0].toUpperCase()} ${this.stationAblib[1].toUpperCase()}` :
+      `${this.callSign.toUpperCase()}`);
   }
 
   createAmalgamationStructure(numberOfRolls: number) {

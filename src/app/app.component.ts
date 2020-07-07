@@ -9,7 +9,7 @@ import { RandomNumberService } from './services/randomNumber.service';
 })
 export class AppComponent implements OnInit {
   bias = false;
-  charName = '';
+  pagePrintTitle = '';
   coreOrRim: boolean;
   defaultStatArray: CharacterStats;
   derelictButtonText = this.random.getRandomSaying(99, 2).text;
@@ -49,6 +49,7 @@ export class AppComponent implements OnInit {
   generateDerelict() {
     document.title = `WARDEN OS ONLINE`;
     this.genDerelict = !this.genDerelict;
+    this.flags.print = true;
   }
 
   generateRandomCrewMember(bias: boolean) {
@@ -77,6 +78,8 @@ export class AppComponent implements OnInit {
     document.title = `WARDEN OS ONLINE`;
     this.coreOrRim = coreOrRim;
     this.genSpaceStation = [];
+
+    this.flags.print = true;
   }
 
   getRandomDerelictSaying() {
@@ -97,9 +100,9 @@ export class AppComponent implements OnInit {
     this.previousSaying[2] = this.randomSaying[2].num;
   }
 
-  passCharName(name: string) {
-    this.charName = name;
-    document.title = `MOTHERSHIP_${this.charName}`;
+  passPagePrintTitle(name: string) {
+    this.pagePrintTitle = name;
+    document.title = `MOTHERSHIP_${this.pagePrintTitle}`;
   }
 
   print() {

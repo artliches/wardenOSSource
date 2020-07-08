@@ -9,6 +9,8 @@ import { CharacterGeneratorComponent } from './characterGenerator/characterGener
 import { TrinketPatchDisplayComponent } from './trinketPatchDisplay/trinketPatchDisplay.component';
 import { DerelictGeneratorComponent } from './derelictGenerator/derelict-generator/derelict-generator.component';
 import { SpaceStationGeneratorComponent } from './space-station-generator/space-station-generator.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,7 @@ import { SpaceStationGeneratorComponent } from './space-station-generator/space-
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent]

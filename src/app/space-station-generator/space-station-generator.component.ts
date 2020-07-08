@@ -40,8 +40,6 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     this.stationAblib.push(this.random.getRandomNumber(1, 100) <= 20);
     this.stationAblib.push(this.random.getRandomNumber(1, 100) <= 5);
 
-    console.log(this.stationAblib);
-
     const stationName = `<b class='magenta'>${this.stationAblib[0]} ${this.stationAblib[1]}</b>`;
     const numLocations = this.random.getRandomNumber(1, 10);
     const locationThemes = [];

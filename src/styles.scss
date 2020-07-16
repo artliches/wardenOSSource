@@ -55,29 +55,29 @@ body {
 
   &.crew-button {
     background-color: $web-safe-magenta;
+    border: 1px solid $web-safe-magenta;
     &.clickable:hover {
       background-color: black;
       color: $web-safe-magenta;
-      border: 1px solid $web-safe-magenta;
     }
   }
 
   &.randGen-button {
     background-color: $web-safe-cyan;
+    border: 1px solid $web-safe-cyan;
     &.clickable:hover {
       background-color: black;
       color: $web-safe-cyan;
-      border: 1px solid $web-safe-cyan;
     }
   }
 
   &.yellow-button {
     background-color: $golden;
     color: black;
+    border: 1px solid $golden;
     &.clickable:hover {
       background-color: black;
       color: $golden;
-      border: 1px solid $golden;
     }
   }
 }
@@ -146,9 +146,10 @@ body {
   font-family: 'PT Serif', Times, serif;
   background-color: white;
   color: black;
+  border: 1px solid white;
 
   &.clickable:hover {
-    background-color: #262626;
+    background-color: black;
     color: white;
   }
 }

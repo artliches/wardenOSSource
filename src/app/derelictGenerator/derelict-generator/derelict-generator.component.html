@@ -1,5 +1,5 @@
 <section class='basic-grid derelict-grid-master card yellow-card'>
-    <section class='derelict-title section-banner'>
+    <section class='derelict-title section-banner clickable' (click)='reRoll("-1")'>
         SCAN RESULTS - THE {{derelictName}}
     </section>
     <section class='derelict-content derelict-layout-grid'>
@@ -17,14 +17,13 @@
             }"
         >
         <section class='derelict-card-grid'>
-            <span class='section-banner derelict-banner'>
+            <span class='section-banner derelict-banner clickable' (click)='reRoll(derelictObject[key].title.toUpperCase())'>
                 {{derelictObject[key].title.toUpperCase()}}
             </span>
             <div class='derelict-descrip'>
                 {{derelictObject[key].table | titlecase}}
             </div>
         </section>
-
     </span>
     </section>
 </section>

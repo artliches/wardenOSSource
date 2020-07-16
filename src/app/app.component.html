@@ -2,14 +2,14 @@
     <h1 class='warden-banner'>
         WARDEN OS
     </h1>
-    <span (click)='getRandomWardenSubtext()' class='warden-subtext'><i>"{{wardenSubtext}}"</i></span>
+    <span (click)='getRandomWardenSubtext()' class='warden-subtext clickable'><i>"{{wardenSubtext}}"</i></span>
 </section>
 <section class='button-grid'>
-    <button class='control-button crew-button crew-random-button' (click)='flipFlags("crew"); generateRandomCrewMember(false); getRandomPersonSaying()'>
+    <button class='control-button crew-button crew-random-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(false); getRandomPersonSaying()'>
         <div>CREATE A TRULY RANDOM MEMBER</div>
     </button>
     <div class='crew-bias-button'>
-        <button class='control-button crew-button' (click)='flipFlags("crew"); generateRandomCrewMember(true); getRandomPersonSaying()'>
+        <button class='control-button crew-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(true); getRandomPersonSaying()'>
             <div>CREATE A BIASED CREW MEMBER</div>
         </button>
     </div>
@@ -19,17 +19,17 @@
         </button>
     </div> -->
     <div class='patch-button'>
-        <button class='control-button yellow-button' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
+        <button class='control-button yellow-button clickable' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
             SCAN THE DERELICT SHIP
         </button>
     </div>
     <div class='space-station-button'>
-        <button class='control-button randGen-button' (click)='flipFlags("station"); generateRandomSpaceStation(true)'>
+        <button class='control-button randGen-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(true)'>
             HAIL THE CORESPACE STATION
         </button>
     </div>
     <div class='rim-station-button'>
-        <button class='control-button randGen-button' (click)='flipFlags("station"); generateRandomSpaceStation(false)'>
+        <button class='control-button randGen-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(false)'>
             HAIL THE RIMSPACE STATION
         </button>
     </div>
@@ -39,5 +39,5 @@
 <app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
 <app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
 <section *ngIf='flags["print"]' class='button-grid print-button-grid'>
-    <button class='control-button print-button yellow-button' (click)='print()'>PRINT {{pagePrintTitle}}</button>
+    <button class='control-button print-button yellow-button clickable' (click)='print()'>PRINT {{pagePrintTitle}}</button>
 </section>

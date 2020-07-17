@@ -9,36 +9,89 @@
                 <span class='printOnly'>{{name.trim()}}</span> THE {{class.toUpperCase()}}
         </div>
     </section>
-    
+
     <section class='card crew-card basic-grid stats-grid'>
-        <div class='title-section section-banner'>STATS</div>
-        <div *ngFor='let key of objectKeys(statsArray)'
-        class='card scan-card'
-        [ngClass]="{
-            'stress-section': key === 'stress',
-            'resolve-section': key === 'resolve',
-            'health-section': key.toLowerCase() === 'max_health',
-            'str-section': key === 'strength',
-            'spd-section': key === 'speed',
-            'int-section': key === 'intellect',
-            'com-section': key === 'combat'
-        }">
-            <b>{{key.toUpperCase()}}</b> 
-        </div>
-        <span *ngFor='let key of objectKeys(statsArray)' 
-            class='card scan-card'
-            [ngClass]="{
-                'stress-stat': key === 'stress',
-                'resolve-stat': key === 'resolve',
-                'health-stat': key.toLowerCase() === 'max_health',
-                'str-stat' : key === 'strength',
-                'spd-stat' : key === 'speed',
-                'int-stat' : key === 'intellect',
-                'com-stat' : key === 'combat'
-            }"
-        >
-            {{statsArray[key]}}
-        </span>
+        <section class='title'>
+            <div class='title-section section-banner'>STATS</div>
+        </section>
+        <section class='stress-resolve-health-track'>
+            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'stress-title': key === 'stress',
+                    'resolve-title': key === 'resolve',
+                    'health-title': key.toLowerCase() === 'max_health',
+                    'no-display': key !== 'stress' && key !== 'resolve' && key.toLowerCase() !== 'max_health'
+                }">
+                {{key.toUpperCase()}}
+            </div>
+            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'stress-stat': key === 'stress',
+                    'resolve-stat': key === 'resolve',
+                    'health-stat': key.toLowerCase() === 'max_health',
+                    'no-display': key !== 'stress' && key !== 'resolve' && key.toLowerCase() !== 'max_health'
+                }">
+                <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='currStats[key]' type="number" min="0">
+                <span class='printOnly'>{{currStats[key]}}</span>
+            </div>
+            <div class='card scan-card health-max'>
+                / {{statsArray['max_Health']}}
+            </div>
+        </section>
+        <section class='stats-column'>
+            <div class='card scan-card clickable charHover' (click)='rollCheckOrSave(key, true)' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'str-title': key === 'strength',
+                    'spd-title': key === 'speed',
+                    'int-title': key === 'intellect',
+                    'com-title': key === 'combat',
+                    'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
+                }">
+                {{key.toUpperCase()}}
+            </div>
+            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'str-stat': key === 'strength',
+                    'spd-stat': key === 'speed',
+                    'int-stat': key === 'intellect',
+                    'com-stat': key === 'combat',
+                    'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
+                }">
+                {{statsArray[key]}}
+            </div>
+            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'str-add': key === 'strength',
+                    'spd-add': key === 'speed',
+                    'int-add': key === 'intellect',
+                    'com-add': key === 'combat',
+                    'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
+                }">
+                + <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='statMod[key]' type="number" min="0" max="99" value="0">
+                <span class='printOnly'>{{statMod[key]}}</span>
+            </div>
+            <div class='card scan-card hiddenPrint' *ngFor='let key of objectKeys(statsArray)'
+                [ngClass]="{
+                    'str-result': key === 'strength',
+                    'spd-result': key === 'speed',
+                    'int-result': key === 'intellect',
+                    'com-result': key === 'combat',
+                    'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
+                }">
+                <span *ngIf='rolledCheckTotal[key] !== null'>
+                    [{{rolledCheckNums[0]}}, {{rolledCheckNums[1]}}] 
+                    <span [ngStyle]="{'color': rolledCheckTotal[key] <= statsArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledCheckTotal[key]}}</span>
+                    <span style='color: red' *ngIf='rolledCheckTotal[key] > statsArray[key] + statMod[key]'>
+                        <span *ngIf='rolledCheckNums[0] === rolledCheckNums[1]'> CRIT</span>
+                        FAIL
+                    </span>
+                    <span style='color: green' *ngIf='rolledCheckTotal[key] <= statsArray[key] + statMod[key]'>
+                        <span *ngIf='rolledCheckNums[0] === rolledCheckNums[1]'> CRIT</span>
+                        PASS
+                    </span>
+                </span>
+            </div>
+        </section>
     </section>
 
     <section class='card crew-card basic-grid saves-grid'>
@@ -52,7 +105,7 @@
                 'arm-section': key === 'armor'
             }"
         >
-            <b class='clickable savesHover' (click)='rollSave(key)'>{{key.toUpperCase()}}</b>
+            <b class='clickable charHover' (click)='rollCheckOrSave(key, false)'>{{key.toUpperCase()}}</b>
             <div class='subText'>{{getSavesSubtext(key.toLowerCase())}}</div>
         </div>
         <span *ngFor='let key of objectKeys(savesArray)'
@@ -68,19 +121,30 @@
         <span *ngFor='let key of objectKeys(savesArray)'
             class='card scan-card'
             [ngClass]="{
+                'san-add': key === 'sanity',
+                'fea-add': key === 'fear',
+                'bod-add': key === 'body',
+                'arm-add': key === 'armor'
+            }">
+            + <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='statMod[key]' type="number" min="0" max="99" value="0">
+            <span class='printOnly'>{{statMod[key]}}</span>
+        </span>
+        <span *ngFor='let key of objectKeys(savesArray)'
+            class='card scan-card hiddenPrint'
+            [ngClass]="{
                 'san-save': key === 'sanity',
                 'fea-save': key === 'fear',
                 'bod-save': key === 'body',
                 'arm-save': key === 'armor'
             }">
-            <span *ngIf='rolledSaveTotal[key] !== 0'>
+            <span *ngIf='rolledSaveTotal[key] !== null'>
                     [{{rolledSaveNums[0]}}, {{rolledSaveNums[1]}}] 
-                <span [ngStyle]="{'color': rolledSaveTotal[key] <= savesArray[key] ? 'green' : 'red'}">{{rolledSaveTotal[key]}}</span>
-                <span style='color: red' *ngIf='rolledSaveTotal[key] > savesArray[key]'>
+                <span [ngStyle]="{'color': rolledSaveTotal[key] <= savesArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledSaveTotal[key]}}</span>
+                <span style='color: red' *ngIf='rolledSaveTotal[key] > savesArray[key] + statMod[key]'>
                     <span *ngIf='rolledSaveNums[0] === rolledSaveNums[1]'> CRIT</span>
                     FAIL
                 </span>
-                <span style='color: green' *ngIf='rolledSaveTotal[key] <= savesArray[key]'>
+                <span style='color: green' *ngIf='rolledSaveTotal[key] <= savesArray[key] + statMod[key]'>
                     <span *ngIf='rolledSaveNums[0] === rolledSaveNums[1]'> CRIT</span>
                     PASS
                 </span>

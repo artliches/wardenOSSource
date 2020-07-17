@@ -16,69 +16,123 @@
 .stats-grid {
     grid-gap: 0rem;
     grid-template-columns: repeat(autofill, 1fr);
-    grid-template-rows: repeat(auto-fill, 1fr);
+    grid-template-rows: .5fr 1fr 2fr;
+
     grid-template-areas:
-        "title title title title title title"
-        "stress stress-stat resolve resolve-stat health health-stat"
-        "str str-stat str-stat str-stat str-stat str-stat"
-        "spd spd-stat spd-stat spd-stat spd-stat spd-stat"
-        "int int-stat int-stat int-stat int-stat int-stat"
-        "com com-stat com-stat com-stat com-stat com-stat";
+        "title"
+        "stress-resolve-health-track"
+        "stats-column";
+    align-items: stretch;
 
-    .stress-section {
-        grid-area: stress;
+    .title {
+        grid-area: title;
     }
-    .resolve-section {
-        grid-area: resolve;
+    .no-display {
+        display: none;
     }
-    .health-section {
-        grid-area: health;
-    }
-    .str-section {
-        grid-area: str;
-    }
-    .spd-section {
-        grid-area: spd;
-    }
-    .int-section {
-        grid-area: int;
-    }
-    .com-section {
-        grid-area: com;
-    }
+    .stress-resolve-health-track {
+        grid-area: stress-resolve-health-track;
+        display: grid;
+        grid-template-columns: 1fr .5fr 1fr .5fr 1fr .3fr .5fr;
+        grid-template-rows: 1fr;
+        grid-template-areas:
+            "stress-title stress-stat resolve-title resolve-stat health-title health-stat health-max"; 
 
-    .str-stat {
-        grid-area: str-stat;
+        .stress-title {
+            grid-area: stress-title;
+        }
+        .resolve-title {
+            grid-area: resolve-title;
+        }
+        .health-title {
+            grid-area: health-title;
+        }
+        .stress-stat {
+            grid-area: stress-stat;
+        }
+        .resolve-stat {
+            grid-area: resolve-stat;
+        }
+        .health-stat {
+            grid-area: health-stat;
+        }
+        .health-max {
+            grid-area: health-max;
+        }
     }
-    .spd-stat {
-        grid-area: spd-stat; 
-    }
-    .int-stat {
-        grid-area: int-stat;
-    }
-    .com-stat {
-        grid-area: com-stat;
-    }
-    .stress-stat {
-        grid-area: stress-stat;
-    }
-    .resolve-stat {
-        grid-area: resolve-stat;
-    }
-    .health-stat {
-        grid-area: health-stat;
+    .stats-column {
+        grid-area: stats-column;
+        display: grid;
+        grid-template-columns: .5fr .1fr .4fr 1fr;
+        grid-template-areas:
+            "str-title str-stat str-add str-result" 
+            "spd-title spd-stat spd-add spd-result"
+            "int-title int-stat int-add int-result"
+            "com-title com-stat com-add com-result";
+        
+        .str-title {
+            grid-area: str-title;
+        }
+        .spd-title {
+            grid-area: spd-title;
+        }
+        .int-title {
+            grid-area: int-title;
+        }
+        .com-title {
+            grid-area: com-title;
+        }
+
+        .str-stat {
+            grid-area: str-stat;
+        }
+        .spd-stat {
+            grid-area: spd-stat;
+        }
+        .int-stat {
+            grid-area: int-stat;
+        }
+        .com-stat {
+            grid-area: com-stat;
+        }
+
+        .str-add {
+            grid-area: str-add;
+        }
+        .spd-add {
+            grid-area: spd-add;
+        }
+        .int-add {
+            grid-area: int-add;
+        }
+        .com-add {
+            grid-area: com-add;
+        }
+
+        .str-result {
+            grid-area: str-result;
+        }
+        .spd-result {
+            grid-area: spd-result;
+        }
+        .int-result {
+            grid-area: int-result;
+        }
+        .com-result {
+            grid-area: com-result;
+        }
     }
 }
 
 .saves-grid {
     grid-gap: 0rem;
-    grid-template-columns: 1fr .5fr 2fr;
+    grid-template-columns: 1fr .1fr .4fr 2fr;
     grid-template-areas:
-    "title title title"
-    "sanity san-stat san-save"
-    "fear fea-stat fea-save"
-    "body bod-stat bod-save"
-    "armor arm-stat arm-save";
+    "title title title title"
+    "sanity san-stat san-add san-save"
+    "fear fea-stat fea-add fea-save"
+    "body bod-stat bod-add bod-save"
+    "armor arm-stat arm-add arm-save";
 
     .san-section {
         grid-area: sanity;
@@ -104,6 +158,19 @@
     }
     .arm-stat {
         grid-area: arm-stat;
+    }
+
+    .san-add {
+        grid-area: san-add;
+    }
+    .fea-add {
+        grid-area: fea-add;
+    }
+    .bod-add {
+        grid-area: bod-add;
+    }
+    .arm-add {
+        grid-area: arm-add;
     }
 
     .san-save {
@@ -168,7 +235,7 @@
     color: lightgray;
 }
 
-.savesHover:hover {
+.charHover:hover {
     background-color: white;
     color: black;
 }
@@ -186,25 +253,38 @@
             "trinket";        
     }
     .saves-grid {
+        justify-items: stretch;
+        grid-template-columns: .5fr .2fr 1fr;
         grid-template-areas:
         "title title title"
-        "sanity san-stat san-save"
-        "fear fea-stat fea-save"
-        "body bod-stat bod-save"
-        "armor arm-stat arm-save";
+        "sanity san-stat san-add"
+        "san-save san-save san-save"
+        "fear fea-stat fea-add"
+        "fea-save fea-save fea-save"
+        "body bod-stat bod-add"
+        "bod-save bod-save bod-save"
+        "armor arm-stat arm-add"
+        "arm-save arm-save arm-save";
     }
     .stats-grid {
-        grid-gap: 0rem;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(auto-fill, 1fr);
-        grid-template-areas:
-            "title title"
-            "stress stress-stat"
-            "resolve resolve-stat"
-            "health health-stat"
-            "str str-stat"
-            "spd spd-stat"
-            "int int-stat"
-            "com com-stat";
+        .stress-resolve-health-track {
+            grid-template-columns: .5fr .2fr 1fr;
+            grid-template-areas:
+                "stress-title stress-stat stress-stat"
+                "resolve-title resolve-stat resolve-stat"
+                "health-title health-stat health-max"; 
+        }
+        .stats-column {
+            grid-template-columns: .5fr .2fr 1fr;
+            grid-template-areas:
+                "str-title str-stat str-add"
+                "str-result str-result str-result" 
+                "spd-title spd-stat spd-add"
+                "spd-result spd-result spd-result"
+                "int-title int-stat int-add"
+                "int-result int-result int-result"
+                "com-title com-stat com-add"
+                "com-result com-result com-result";
+        }
     }
 }

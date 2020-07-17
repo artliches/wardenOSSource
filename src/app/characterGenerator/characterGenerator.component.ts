@@ -1,7 +1,7 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { RandomNumberService } from '../services/randomNumber.service';
 import { CharacterStats, CharacterSaves } from '../interfaces/mosh.interface';
-import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC, DERELICT } from '../services/randomTables.constants';
+import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../services/randomTables.constants';
 
 @Component({
     selector: 'app-character-generator',
@@ -22,6 +22,11 @@ export class CharacterGeneratorComponent implements OnChanges {
     ];
     class = '';
     credits = 0;
+    currStats = {
+        max_Health: 0,
+        stress: 0,
+        resolve: 0,
+    };
     equipmentArray = [];
     equipmentPresets = {
         excavation: [
@@ -78,12 +83,19 @@ export class CharacterGeneratorComponent implements OnChanges {
     };
     loadoutName = '';
     name = '';
+    rolledCheckTotal = {
+        strength: null,
+        speed: null,
+        intellect: null,
+        combat: null
+    };
+    rolledCheckNums = [0, 0];
     rolledSaveNums = [0, 0];
     rolledSaveTotal = {
-        sanity: 0,
-        fear: 0,
-        body: 0,
-        armor: 0
+        sanity: null,
+        fear: null,
+        body: null,
+        armor: null
     };
     savesArray: CharacterSaves;
     savesPresets = {
@@ -144,6 +156,16 @@ export class CharacterGeneratorComponent implements OnChanges {
             skillPoints: 3
         }
     };
+    statMod = {
+        strength: 0,
+        speed: 0,
+        intellect: 0,
+        combat: 0,
+        sanity: 0,
+        fear: 0,
+        body: 0,
+        armor: 0,
+    };
     trinketPatch = [];
     objectKeys = Object.keys;
 
@@ -161,6 +183,10 @@ export class CharacterGeneratorComponent implements OnChanges {
         this.assignSkills();
         this.getEquipment();
         this.charName.emit(`${this.name.toUpperCase()} THE ${this.class.toUpperCase()}`);
+
+        this.currStats.max_Health = this.statsArray.max_Health;
+        this.currStats.stress = this.statsArray.stress;
+        this.currStats.resolve = this.statsArray.resolve;
     }
 
     assignSaves() {
@@ -359,11 +385,19 @@ export class CharacterGeneratorComponent implements OnChanges {
         }
     }
 
-    rollSave(key: any) {
-        this.objectKeys(this.rolledSaveTotal).forEach(objKey => this.rolledSaveTotal[objKey] = 0);
-        this.rolledSaveNums = this.rolledSaveNums.map(() => {
-            return this.randomNumber.getRandomNumber(0, 9);
-        });
-        this.rolledSaveTotal[key] = Number(`${this.rolledSaveNums[0]}${this.rolledSaveNums[1]}`);
+    rollCheckOrSave(key: any, isCheck: boolean) {
+        if (isCheck) {
+            this.objectKeys(this.rolledCheckTotal).forEach(objKey => this.rolledCheckTotal[objKey] = null);
+            this.rolledCheckNums = this.rolledCheckNums.map(() => {
+                return this.randomNumber.getRandomNumber(0, 9);
+            });
+            this.rolledCheckTotal[key] = Number(`${this.rolledCheckNums[0]}${this.rolledCheckNums[1]}`);
+        } else {
+            this.objectKeys(this.rolledSaveTotal).forEach(objKey => this.rolledSaveTotal[objKey] = null);
+            this.rolledSaveNums = this.rolledSaveNums.map(() => {
+                return this.randomNumber.getRandomNumber(0, 9);
+            });
+            this.rolledSaveTotal[key] = Number(`${this.rolledSaveNums[0]}${this.rolledSaveNums[1]}`);
+        }
     }
 }

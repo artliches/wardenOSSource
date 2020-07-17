@@ -169,7 +169,19 @@ body {
   padding-top: 1rem;
 }
 
+.moshInput {
+  background-color: black;
+  color: white;
+  font: 1.3rem Inconsolata, monospace;
+  border: 1px solid white;
+}
+
+.printOnly {
+  display: none;
+}
+
 @media only screen and (max-width: 768px) {  
+
   .button-grid {
     grid-template-columns: 1fr;
     justify-items: center;
@@ -195,6 +207,20 @@ body {
   body {
     background-color: white;
     height: 100vh;  
+    color: black;
+    font: .9rem Inconsolata, monospace;
+  }
+
+  .hiddenPrint {
+    display: none;
+  }
+
+  .printOnly {
+    display: inline;
+  }
+
+  .moshInput {
+    background-color: white;
     color: black;
     font: .9rem Inconsolata, monospace;
   }

@@ -78,6 +78,13 @@ export class CharacterGeneratorComponent implements OnChanges {
     };
     loadoutName = '';
     name = '';
+    rolledSaveNums = [0, 0];
+    rolledSaveTotal = {
+        sanity: 0,
+        fear: 0,
+        body: 0,
+        armor: 0
+    };
     savesArray: CharacterSaves;
     savesPresets = {
         teamster: {
@@ -232,6 +239,11 @@ export class CharacterGeneratorComponent implements OnChanges {
         });
     }
 
+    changeName(newName: any) {
+        this.name = newName.toUpperCase();
+        this.charName.emit(`${newName.toUpperCase()} THE ${this.class.toUpperCase()}`);
+    }
+
     getEquipment() {
         this.equipmentArray = [];
         this.trinketPatch = [];
@@ -278,7 +290,7 @@ export class CharacterGeneratorComponent implements OnChanges {
         this.name = '';
         const firstNameNum = this.randomNumber.getRandomNumber(0, 99);
         const lastNameNum = this.randomNumber.getRandomNumber(0, 99);
-        this.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`;
+        this.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`.trim();
     }
 
     getSavesSubtext(save: string) {
@@ -345,5 +357,13 @@ export class CharacterGeneratorComponent implements OnChanges {
             this.statsArray.intellect += this.randomNumber.getRandomNumber(1, 10);
             this.statsArray.combat += this.randomNumber.getRandomNumber(1, 10);
         }
+    }
+
+    rollSave(key: any) {
+        this.objectKeys(this.rolledSaveTotal).forEach(objKey => this.rolledSaveTotal[objKey] = 0);
+        this.rolledSaveNums = this.rolledSaveNums.map(() => {
+            return this.randomNumber.getRandomNumber(0, 9);
+        });
+        this.rolledSaveTotal[key] = Number(`${this.rolledSaveNums[0]}${this.rolledSaveNums[1]}`);
     }
 }

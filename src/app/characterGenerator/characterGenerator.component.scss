@@ -72,13 +72,13 @@
 
 .saves-grid {
     grid-gap: 0rem;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 1fr .5fr 2fr;
     grid-template-areas:
     "title title title"
-    "sanity san-stat san-stat"
-    "fear fea-stat fea-stat"
-    "body bod-stat bod-stat"
-    "armor arm-stat arm-stat";
+    "sanity san-stat san-save"
+    "fear fea-stat fea-save"
+    "body bod-stat bod-save"
+    "armor arm-stat arm-save";
 
     .san-section {
         grid-area: sanity;
@@ -104,6 +104,19 @@
     }
     .arm-stat {
         grid-area: arm-stat;
+    }
+
+    .san-save {
+        grid-area: san-save;
+    }
+    .fea-save {
+        grid-area: fea-save;
+    }
+    .bod-save {
+        grid-area: bod-save;
+    }
+    .arm-save {
+        grid-area: arm-save;
     }
 }
 
@@ -155,6 +168,11 @@
     color: lightgray;
 }
 
+.savesHover:hover {
+    background-color: white;
+    color: black;
+}
+
 @media only screen and (max-width: 768px) {
     .cg-grid-master {
         grid-template-columns: 1fr;
@@ -168,13 +186,12 @@
             "trinket";        
     }
     .saves-grid {
-        grid-template-columns: repeat(2, 1fr);
         grid-template-areas:
-        "title title"
-        "sanity san-stat"
-        "fear fea-stat"
-        "body bod-stat"
-        "armor arm-stat";
+        "title title title"
+        "sanity san-stat san-save"
+        "fear fea-stat fea-save"
+        "body bod-stat bod-save"
+        "armor arm-stat arm-save";
     }
     .stats-grid {
         grid-gap: 0rem;

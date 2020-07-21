@@ -1,6 +1,6 @@
 import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core';
 import { RandomNumberService } from '../services/randomNumber.service';
-import { CharacterStats, CharacterSaves } from '../interfaces/mosh.interface';
+import { CharSheet, CharacterTrinketPatch } from '../interfaces/mosh.interface';
 import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../services/randomTables.constants';
 
 @Component({
@@ -10,9 +10,13 @@ import { FIRST_NAMES, LAST_NAMES, SKILLS, ITEMS, STRESS_PANIC } from '../service
 })
 
 export class CharacterGeneratorComponent implements OnChanges {
+    // tslint:disable: no-string-literal
+
     @Input() bias: boolean;
-    @Input() statsArray: CharacterStats;
+    @Input() charSheet: CharSheet;
+    @Input() uploadedSheet: CharSheet;
     @Output() charName = new EventEmitter<string>();
+    @Output() jsonToDownload = new EventEmitter<any>();
 
     classArray = [
         'teamster',
@@ -21,7 +25,6 @@ export class CharacterGeneratorComponent implements OnChanges {
         'marine'
     ];
     class = '';
-    credits = 0;
     currStats = {
         max_Health: 0,
         stress: 0,
@@ -81,8 +84,10 @@ export class CharacterGeneratorComponent implements OnChanges {
             'Cybernetic Diagnostic Scanner'
         ]
     };
+    jsonObj = {};
     loadoutName = '';
     name = '';
+    notes = '';
     rolledCheckTotal = {
         strength: null,
         speed: null,
@@ -97,7 +102,6 @@ export class CharacterGeneratorComponent implements OnChanges {
         body: null,
         armor: null
     };
-    savesArray: CharacterSaves;
     savesPresets = {
         teamster: {
             sanity : 30,
@@ -167,6 +171,8 @@ export class CharacterGeneratorComponent implements OnChanges {
         armor: 0,
     };
     trinketPatch = [];
+    trinket = {};
+    patch = {};
     objectKeys = Object.keys;
 
     constructor(private randomNumber: RandomNumberService) {}
@@ -175,32 +181,44 @@ export class CharacterGeneratorComponent implements OnChanges {
         this.startCharacterGen();
     }
 
-    startCharacterGen() {
-        this.generateName();
-        this.rollStats();
-        this.rollClass();
-        this.assignSaves();
-        this.assignSkills();
-        this.getEquipment();
-        this.charName.emit(`${this.name.toUpperCase()} THE ${this.class.toUpperCase()}`);
+    saveModChanges(newVal: number, key: any) {
+        this.jsonObj[key] = newVal;
+    }
 
-        this.currStats.max_Health = this.statsArray.max_Health;
-        this.currStats.stress = this.statsArray.stress;
-        this.currStats.resolve = this.statsArray.resolve;
+    startCharacterGen() {
+        if (this.uploadedSheet.name !== '') {
+            // display existing char
+            this.charSheet = this.uploadedSheet;
+        } else {
+            // create new char
+            this.generateName();
+            this.rollStats();
+            this.rollClass();
+            this.assignSaves();
+            this.assignSkills();
+            this.getEquipment(false);
+            this.getTrinketPatch();
+        }
+        this.charName.emit(`${this.charSheet.name.toUpperCase()} THE ${this.charSheet.class.toUpperCase()}`);
+        this.charSheet.currMods.max_Health = this.charSheet.statsArray.max_Health;
+        this.currStats.stress = this.charSheet.statsArray.stress;
+        this.currStats.resolve = this.charSheet.statsArray.resolve;
+
+        this.createJsonToDownload();
     }
 
     assignSaves() {
-        this.savesArray = this.savesPresets[this.class];
+        this.charSheet.savesArray = this.savesPresets[this.charSheet.class];
     }
 
     assignSkills() {
-        const baseSkills = this.skillsPresets[this.class].base;
-        const pickOne = this.skillsPresets[this.class].pickOne;
-        const pickTwo = this.skillsPresets[this.class].pickTwo;
-        let points = this.skillsPresets[this.class].skillPoints;
+        const baseSkills = this.skillsPresets[this.charSheet.class].base;
+        const pickOne = this.skillsPresets[this.charSheet.class].pickOne;
+        const pickTwo = this.skillsPresets[this.charSheet.class].pickTwo;
+        let points = this.skillsPresets[this.charSheet.class].skillPoints;
         const skillsToFind = [];
         let pickTwoCounter = 0;
-        this.skillsArray = [];
+        this.charSheet.skillsArray = [];
 
         if (baseSkills) {
             skillsToFind.push(...baseSkills);
@@ -226,8 +244,8 @@ export class CharacterGeneratorComponent implements OnChanges {
                 filteredSkills = SKILLS.filter(skill => {
                     return skill.cost <= points &&
                     (
-                        this.skillsPresets[this.class].thematics &&
-                        this.skillsPresets[this.class].thematics.includes(skill.title.toLowerCase())
+                        this.skillsPresets[this.charSheet.class].thematics &&
+                        this.skillsPresets[this.charSheet.class].thematics.includes(skill.title.toLowerCase())
                     ) && (!skillsToFind.includes(skill.title.toLowerCase()));
                 });
             } else if (this.bias && randomBias >= 3 && points >= 2) {
@@ -261,27 +279,59 @@ export class CharacterGeneratorComponent implements OnChanges {
         } while (points > 0);
 
         skillsToFind.forEach(skill => {
-            this.skillsArray.push(SKILLS.find(x => x.title.toLowerCase() === skill.toLowerCase()));
+            this.charSheet.skillsArray.push(SKILLS.find(x => x.title.toLowerCase() === skill.toLowerCase()));
         });
     }
 
-    changeName(newName: any) {
-        this.name = newName.toUpperCase();
-        this.charName.emit(`${newName.toUpperCase()} THE ${this.class.toUpperCase()}`);
+    changeCredits(newCredits: number) {
+        this.charSheet.credits = newCredits;
+        this.jsonObj['credits'] = this.charSheet.credits;
     }
 
-    getEquipment() {
-        this.equipmentArray = [];
+    changeName(newName: string) {
+        this.charSheet.name = newName.toUpperCase();
+        const title = `${this.charSheet.name} THE ${this.charSheet.class.toUpperCase()}`;
+
+        this.jsonObj['name'] = this.charSheet.name;
+        this.charName.emit(title);
+    }
+
+    changeNotes(newNote: string) {
+        this.charSheet.notes = newNote;
+        this.jsonObj['notes'] = this.charSheet.notes;
+    }
+
+    createJsonToDownload() {
+        this.jsonObj = {
+            name: `${this.charSheet.name.trim()}`,
+            class: `${this.charSheet.class.toUpperCase()}`,
+            statsArray: this.charSheet.statsArray,
+            savesArray: this.charSheet.savesArray,
+            skillsArray: this.charSheet.skillsArray,
+            equipmentArray: this.charSheet.equipmentArray,
+            credits: this.charSheet.credits,
+            trinket: this.charSheet.trinket,
+            patch: this.charSheet.patch,
+            notes: this.charSheet.notes,
+            currMods: this.charSheet.currMods,
+            loadoutName: this.charSheet.loadoutName,
+        };
+
+        this.jsonToDownload.emit(this.jsonObj);
+    }
+
+    getEquipment(chooseNew: boolean) {
+        this.charSheet.equipmentArray = [];
         this.trinketPatch = [];
-        this.credits = 0;
+        this.charSheet.credits = 0;
         let chosenLoadout;
         const keys = Object.keys(this.equipmentPresets);
 
-        if (this.bias) {
-            if (this.class === 'marine') {
+        if (this.bias && !chooseNew) {
+            if (this.charSheet.class === 'marine') {
                 chosenLoadout = 2; // extermination
             } else {
-                const skillTitles = this.skillsArray.map(skill => skill.title.toLowerCase());
+                const skillTitles = this.charSheet.skillsArray.map(skill => skill.title.toLowerCase());
                 if (skillTitles.includes('first aid') || skillTitles.includes('biology')) { // examination
                     chosenLoadout = 3;
                 } else if (skillTitles.includes('scavenging') || skillTitles.includes('heavy machinery')) { // excavation
@@ -293,30 +343,64 @@ export class CharacterGeneratorComponent implements OnChanges {
                 }
             }
         } else {
-            chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+            if (chooseNew) {
+                const prevLoadout = this.loadoutName;
+                do {
+                    chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+                } while (prevLoadout === keys[chosenLoadout]);
+            } else {
+                chosenLoadout = this.randomNumber.getRandomNumber(0, 3);
+            }
         }
 
-        this.loadoutName = keys[chosenLoadout];
-        this.equipmentArray = this.equipmentPresets[keys[chosenLoadout]].map(item => {
+        this.charSheet.loadoutName = keys[chosenLoadout];
+        this.charSheet.equipmentArray = this.equipmentPresets[keys[chosenLoadout]].map(item => {
             return ITEMS.find(x => x.title.toLowerCase().trim() === item.toLowerCase());
         });
 
-        for (let i = 0; i < 2; i++) {
-            const trinketOrPatch = i % 2 ? false : true;
-            this.trinketPatch.push(this.randomNumber.getTrinketOrPatch(0, 99, trinketOrPatch));
-        }
-
         for (let i = 0; i < 5; i++) {
-            this.credits += this.randomNumber.getRandomNumber(1, 10);
+            this.charSheet.credits += this.randomNumber.getRandomNumber(1, 10);
         }
-        this.credits = this.credits * 10;
+        this.charSheet.credits = this.charSheet.credits * 10;
+
+        if (chooseNew) {
+            this.jsonObj['loadoutName'] = this.charSheet.loadoutName;
+            this.jsonObj['equipmentArray'] = this.charSheet.equipmentArray;
+            this.jsonObj['credits'] = this.charSheet.credits;
+        }
+    }
+
+    getTrinketPatch(reroll?: boolean, trinketOrPatch?: number) {
+        if (reroll) {
+            let tempTrinketPatch: CharacterTrinketPatch;
+            if (trinketOrPatch === 0) {
+                tempTrinketPatch = this.randomNumber.getTrinketOrPatch(0, 99, true);
+                if (tempTrinketPatch['num'] === this.charSheet.trinket['num']) {
+                    this.getTrinketPatch(true, 0);
+                } else {
+                    this.charSheet.trinket = tempTrinketPatch;
+                }
+            } else {
+                tempTrinketPatch = this.randomNumber.getTrinketOrPatch(0, 99, false);
+                if (tempTrinketPatch['num'] === this.charSheet.patch['num']) {
+                    this.getTrinketPatch(true, 1);
+                } else {
+                    this.charSheet.patch = this.randomNumber.getTrinketOrPatch(0, 99, false);
+                }
+            }
+        } else {
+            this.charSheet.trinket = this.randomNumber.getTrinketOrPatch(0, 99, true);
+            this.charSheet.patch = this.randomNumber.getTrinketOrPatch(0, 99, false);
+        }
+        this.jsonObj['trinket'] = this.charSheet.trinket;
+        this.jsonObj['patch'] = this.charSheet.patch;
     }
 
     generateName() {
-        this.name = '';
+        this.charSheet.name = '';
         const firstNameNum = this.randomNumber.getRandomNumber(0, 99);
         const lastNameNum = this.randomNumber.getRandomNumber(0, 99);
-        this.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`.trim();
+        this.charSheet.name = `${FIRST_NAMES[firstNameNum]} ${LAST_NAMES[lastNameNum]}`.trim();
     }
 
     getSavesSubtext(save: string) {
@@ -324,64 +408,65 @@ export class CharacterGeneratorComponent implements OnChanges {
     }
 
     getStress() {
-        return STRESS_PANIC.find(x => x.title === this.class);
+
+        return STRESS_PANIC.find(x => x.title.toLowerCase() === this.charSheet.class.toLowerCase());
     }
 
     rollClass() {
         if (this.bias) {
             if (
-                this.statsArray.combat > this.statsArray.strength &&
-                this.statsArray.combat > this.statsArray.speed &&
-                this.statsArray.combat > this.statsArray.intellect
+                this.charSheet.statsArray.combat > this.charSheet.statsArray.strength &&
+                this.charSheet.statsArray.combat > this.charSheet.statsArray.speed &&
+                this.charSheet.statsArray.combat > this.charSheet.statsArray.intellect
                 ) {
-                    this.class = 'marine';
+                    this.charSheet.class = 'marine';
                 } else if (
-                  this.statsArray.intellect > this.statsArray.strength &&
-                  this.statsArray.intellect > this.statsArray.speed
+                  this.charSheet.statsArray.intellect > this.charSheet.statsArray.strength &&
+                  this.charSheet.statsArray.intellect > this.charSheet.statsArray.speed
                 ) {
-                    this.class = 'scientist';
+                    this.charSheet.class = 'scientist';
                 } else if (
-                    this.statsArray.strength + this.statsArray.speed >
-                    this.statsArray.speed + this.statsArray.intellect
+                    this.charSheet.statsArray.strength + this.charSheet.statsArray.speed >
+                    this.charSheet.statsArray.speed + this.charSheet.statsArray.intellect
                 ) {
-                    this.class = 'teamster';
+                    this.charSheet.class = 'teamster';
                 } else {
-                    this.class = 'android';
+                    this.charSheet.class = 'android';
                 }
         } else {
-            this.class = this.classArray[this.randomNumber.getRandomNumber(0, 3)];
+            this.charSheet.class = this.classArray[this.randomNumber.getRandomNumber(0, 3)];
         }
 
-        switch (this.class) {
+        switch (this.charSheet.class) {
             case 'teamster': {
-                this.statsArray.strength += 5;
-                this.statsArray.speed += 5;
+                this.charSheet.statsArray.strength += 5;
+                this.charSheet.statsArray.speed += 5;
                 break;
             }
             case 'android' : {
-                this.statsArray.speed += 5;
-                this.statsArray.intellect += 5;
+                this.charSheet.statsArray.speed += 5;
+                this.charSheet.statsArray.intellect += 5;
                 break;
             }
             case 'scientist' : {
-                this.statsArray.intellect += 10;
+                this.charSheet.statsArray.intellect += 10;
                 break;
             }
             case 'marine' : {
-                this.statsArray.combat += 5;
+                this.charSheet.statsArray.combat += 5;
                 break;
             }
         }
 
-        this.statsArray.max_Health = this.statsArray.strength * 2;
+        this.charSheet.statsArray.max_Health = this.charSheet.statsArray.strength * 2;
     }
 
     rollStats() {
         for (let i = 0; i < 6; i++) {
-            this.statsArray.strength += this.randomNumber.getRandomNumber(1, 10);
-            this.statsArray.speed += this.randomNumber.getRandomNumber(1, 10);
-            this.statsArray.intellect += this.randomNumber.getRandomNumber(1, 10);
-            this.statsArray.combat += this.randomNumber.getRandomNumber(1, 10);
+            this.charSheet.statsArray.strength += this.randomNumber.getRandomNumber(1, 10);
+            this.charSheet.statsArray.speed += this.randomNumber.getRandomNumber(1, 10);
+            this.charSheet.statsArray.intellect += this.randomNumber.getRandomNumber(1, 10);
+            this.charSheet.statsArray.combat += this.randomNumber.getRandomNumber(1, 10);
         }
     }
 
@@ -399,5 +484,17 @@ export class CharacterGeneratorComponent implements OnChanges {
             });
             this.rolledSaveTotal[key] = Number(`${this.rolledSaveNums[0]}${this.rolledSaveNums[1]}`);
         }
+    }
+
+    growWidth(event: any) {
+        event.target.style.width = '0px';
+        event.target.style.width = (event.target.scrollWidth + 20) + 'px';
+    }
+
+    growTextarea(event: any) {
+        event.target.style.height = '0px';
+        event.target.style.height = (event.target.scrollHeight + 5) + 'px';
+
+        this.jsonObj['notes'] = this.charSheet.notes;
     }
 }

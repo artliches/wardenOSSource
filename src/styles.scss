@@ -1,6 +1,7 @@
 $web-safe-magenta: #ff0066;
 $web-safe-cyan: #009999;
 $web-safe-grey: #cccccc;
+$purple: #cd00cd;
 $golden: #ffcc00;
 
 @page { size: auto;  margin: 0mm; }
@@ -15,6 +16,85 @@ body {
 .basic-grid {
   display: grid;
   grid-gap: 1rem;
+}
+
+.main-grid {
+  display: grid;
+  grid-gap: 1rem;
+
+  grid-template-columns: 1fr;
+  grid-template-areas: 
+    "banner"
+    "upper"
+    "display"
+    "lower";
+
+  .banner-section {
+    grid-area: banner;
+    display: grid;
+    grid-gap: 0rem;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "banner"
+      "subtext";
+    margin-bottom: 2rem;
+    
+    .warden-subtext {
+      grid-area: subtext;
+      cursor: pointer;
+      font-family: 'PT Serif', Times, serif;
+      font-size: 0.9rem;
+    }
+  }
+
+  .upper-button-section {
+    grid-area: upper;
+    justify-self: center;
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 1rem;
+    grid-template-areas:
+      "left middle right";
+    
+    .left {
+      grid-area: left;
+      display: grid;
+      grid-gap: 1rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fill, 1fr);
+    }
+
+    .middle {
+      grid-area: middle;
+      display: grid;
+      grid-gap: 1rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fill, 1fr);
+    }
+
+    .right {
+      grid-area: right;
+      display: grid;
+      grid-gap: 1rem;
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(auto-fill, 1fr);
+    }
+  }
+
+  .display-section {
+    grid-area: display;
+    justify-self: stretch;
+  }
+
+  .lower-button-section {
+    grid-area: lower;
+    justify-self: center;
+
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: 1fr;
+  }
 }
 
 .warden-grid {
@@ -34,85 +114,48 @@ body {
   }
 }
 
-.button-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 1fr;
-  grid-gap: 1rem;
-  grid-template-areas: 
-    "sStation cRand trinket"
-    "rStation cBias patch";
-  
-  padding-bottom: 1rem;
-  justify-items: center;
-}
-
 .control-button {
   color: black;
   font-family: 'PT Serif', Times, serif;
   font-size: 1.3rem;
   border: none;
 
-  &.crew-button {
+  box-shadow: 1px 1px 2px rgba(#fff, .2);
+
+  &.magenta-button {
     background-color: $web-safe-magenta;
     border: 1px solid $web-safe-magenta;
-    &.clickable:hover {
-      background-color: black;
-      color: $web-safe-magenta;
-    }
   }
 
-  &.randGen-button {
+  &.purple-button {
+    background-color: $purple;
+    border: 1px solid $purple;
+
+  }
+
+  &.cyan-button {
     background-color: $web-safe-cyan;
     border: 1px solid $web-safe-cyan;
-    &.clickable:hover {
-      background-color: black;
-      color: $web-safe-cyan;
-    }
   }
 
   &.yellow-button {
     background-color: $golden;
     color: black;
     border: 1px solid $golden;
-    &.clickable:hover {
-      background-color: black;
-      color: $golden;
-    }
   }
-}
-
-.print-button {
-  grid-area: cRand;
-}
-
-.crew-random-button {
-  grid-area: cRand;
-}
-
-.crew-bias-button {
-  grid-area: cBias;
-}
-
-.trinket-button {
-  grid-area: trinket;
-}
-
-.patch-button {
-  grid-area: patch;
-}
-
-.space-station-button {
-  grid-area: sStation;
-}
-
-.rim-station-button {
-  grid-area: rStation;
 }
 
 .clickable {
   cursor: pointer;
   user-select: none;
+  &:hover {
+    // box-shadow: 0px 15px 25px -5px;
+    transform: scale(1.02);
+  }
+  &:active {
+    // box-shadow: 0px 4px 8px;
+    transform: scale(.95);
+  }
 }
 
 .card {
@@ -165,41 +208,42 @@ body {
   color: lightgrey;
 }
 
-.print-button-grid {
-  padding-top: 1rem;
-}
-
 .moshInput {
   background-color: black;
   color: white;
   font: 1.3rem Inconsolata, monospace;
   border: 1px solid white;
-  
 }
 
 .printOnly {
   display: none;
 }
 
-@media only screen and (max-width: 768px) {  
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
-  .button-grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    grid-template-areas:
-      "sStation"
-      "rStation"
-      "cRand"
-      "cBias"
-      "patch"
-      "trinket";
-  }
-  .warden-grid {
-    grid-template-columns: 1fr;
-    justify-items: center;
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
-    .warden-subtext {
+@media only screen and (max-width: 768px) {
+  .main-grid {
+    .upper-button-section {
+      grid-area: upper;
       justify-self: center;
+      display: grid;
+  
+      grid-template-columns: 2fr;
+      grid-gap: 1rem;
+      grid-template-areas:
+        "left"
+        "right" 
+        "middle";
     }
   }
 }
@@ -211,6 +255,19 @@ body {
     color: black;
     font: .9rem Inconsolata, monospace;
   }
+
+  .main-grid {
+    .banner-section {
+      display: none;
+    }
+    .upper-button-section {
+      display: none;
+    }
+    .lower-button-section {
+      display: none;
+    }
+  }
+
 
   .hiddenPrint {
     display: none;
@@ -238,7 +295,6 @@ body {
       background-color:white;
       color: black;
     }
-
   }
 
   .printItemBold {
@@ -255,18 +311,6 @@ body {
 
   .basic-grid {
     grid-gap: 0rem;
-  }
-
-  .warden-banner {
-    display: none;
-  }
-
-  .warden-grid {
-    margin-bottom: 0rem;
-  }
-
-  .button-grid {
-    display: none;
   }
 
   .title-section {

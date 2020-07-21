@@ -33,6 +33,37 @@ export interface ShipStatus {
     };
 }
 
+export interface CharSheet {
+    name: string;
+    class: string;
+    currMods: CharacterMods;
+    statsArray: CharacterStats;
+    savesArray: CharacterSaves;
+    skillsArray: Array<CharacterSkills>;
+    loadoutName: string;
+    equipmentArray: Array<CharacterEquipment>;
+    credits: number;
+    trinket: CharacterTrinketPatch;
+    patch: CharacterTrinketPatch;
+    notes: string;
+}
+
+export interface CharacterMods {
+    max_Health: number;
+    strength: number;
+    speed: number;
+    intellect: number;
+    combat: number;
+
+    sanity: number;
+    fear: number;
+    body: number;
+    armor: number;
+
+    stress: number;
+    resolve: number;
+}
+
 export interface CharacterStats {
     stress: number;
     resolve: number;
@@ -44,8 +75,32 @@ export interface CharacterStats {
 }
 
 export interface CharacterSaves {
-    sanity: string;
-    fear: string;
-    body: string;
-    armor: string;
+    sanity: number;
+    fear: number;
+    body: number;
+    armor: number;
+}
+
+export interface CharacterSkills {
+    title: string;
+    percent: string;
+    cost: number;
+    pre: Array<string>;
+    descrip: string;
+}
+
+export interface CharacterEquipment {
+    title: string;
+    dmg?: string;
+    crit?: string;
+    range?: string;
+    ammo?: string;
+    shots?: string;
+    special?: string;
+    descrip?: string;
+}
+
+export interface CharacterTrinketPatch {
+    num: number;
+    descrip: string;
 }

@@ -1,43 +1,49 @@
-<section class='warden-grid'>
-    <h1 class='warden-banner'>
-        WARDEN OS
-    </h1>
-    <span (click)='getRandomWardenSubtext()' class='warden-subtext clickable'><i>"{{wardenSubtext}}"</i></span>
+<section class='main-grid'>
+    <section class='banner-section'>
+        <h1 class='warden-banner'>
+            WARDEN OS
+        </h1>
+        <span (click)='getRandomWardenSubtext()' class='warden-subtext clickable'><i>"{{wardenSubtext}}"</i></span>
+    </section>
+    <section class='upper-button-section'>
+        <section class='left'>
+            <button class='control-button cyan-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(true)'>
+                HAIL THE CORESPACE STATION
+            </button>
+            <button class='control-button cyan-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(false)'>
+                HAIL THE RIMSPACE STATION
+            </button>
+        </section>
+
+        <section class='middle'>
+            <button class='control-button magenta-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(false, true); getRandomPersonSaying()'>
+                <div>CREATE A TRULY RANDOM MEMBER</div>
+            </button>
+            <button class='control-button magenta-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(true, true); getRandomPersonSaying()'>
+                <div>CREATE A BIASED CREW MEMBER</div>
+            </button>
+            <button onclick="document.querySelector('#hiddenInput').click()" class='control-button purple-button clickable'>
+                UPLOAD A CREW MEMBER
+            </button>
+        </section>
+
+        <section class='right'>
+            <button class='control-button yellow-button clickable' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
+                SCAN THE DERELICT SHIP
+            </button>
+        </section>
+    </section>
+
+    <section class='display-section'>
+        <app-character-generator *ngIf='flags["crew"]' (charName)='passPagePrintTitle($event)' (jsonToDownload)='passJsonToDownload($event)' [charSheet]='charSheet' [uploadedSheet]='uploadedSheet' [bias]='bias'></app-character-generator>
+        <app-trinket-patch-display *ngIf='flags["trinket"]' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
+        <app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
+        <app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
+    </section>
+
+    <section class='lower-button-section'>
+        <button *ngIf='flags["print"]' class='control-button yellow-button clickable' (click)='print()'>PRINT {{pagePrintTitle}}</button>
+        <a *ngIf='flags["download"]' id='downloadAnchorElem' class='control-button download-button yellow-button clickable' (click)='download()'>DOWNLOAD {{pagePrintTitle}}</a>
+    </section>
 </section>
-<section class='button-grid'>
-    <button class='control-button crew-button crew-random-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(false); getRandomPersonSaying()'>
-        <div>CREATE A TRULY RANDOM MEMBER</div>
-    </button>
-    <div class='crew-bias-button'>
-        <button class='control-button crew-button clickable' (click)='flipFlags("crew"); generateRandomCrewMember(true); getRandomPersonSaying()'>
-            <div>CREATE A BIASED CREW MEMBER</div>
-        </button>
-    </div>
-    <!-- <div class='trinket-button'>
-        <button class='control-button yellow-button' (click)='flipFlags("trinket"); generateRandomTrinketPatch(); getRandomPersonSaying()'>
-            SEARCH THE BODY
-        </button>
-    </div> -->
-    <div class='patch-button'>
-        <button class='control-button yellow-button clickable' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
-            SCAN THE DERELICT SHIP
-        </button>
-    </div>
-    <div class='space-station-button'>
-        <button class='control-button randGen-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(true)'>
-            HAIL THE CORESPACE STATION
-        </button>
-    </div>
-    <div class='rim-station-button'>
-        <button class='control-button randGen-button clickable' (click)='flipFlags("station"); generateRandomSpaceStation(false)'>
-            HAIL THE RIMSPACE STATION
-        </button>
-    </div>
-</section>
-<app-character-generator *ngIf='flags["crew"]' (charName)='passPagePrintTitle($event)' [statsArray]='defaultStatArray' [bias]='bias'></app-character-generator>
-<app-trinket-patch-display *ngIf='flags["trinket"]' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
-<app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
-<app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
-<section *ngIf='flags["print"]' class='button-grid print-button-grid'>
-    <button class='control-button print-button yellow-button clickable' (click)='print()'>PRINT {{pagePrintTitle}}</button>
-</section>
+<input style='display: none' #fileUploadInput type='file' id='hiddenInput' accept=".json, application/json" (change)='uploadFile($event)'>

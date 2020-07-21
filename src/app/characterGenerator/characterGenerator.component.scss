@@ -6,10 +6,28 @@
         "stats saves"
         "skills skills"
         "equip equip"
-        "trinket trinket";
+        "trinket trinket"
+        "notes notes";
 
     .name-section {
         grid-area: name;
+    }
+}
+
+.notes-grid {
+    grid-area: notes;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "title"
+        "textarea";
+    .title {
+        grid-area: title;
+    }
+    textarea {
+        grid-area: textarea;
+        resize: none;
+        border: none;
     }
 }
 
@@ -228,6 +246,10 @@
 .subsection-title {
     background-color: white;
     color: black;
+    &.clickable:hover {
+        background-color: black;
+        color: white;
+    }
 }
 
 .itemDetailsFont {
@@ -250,7 +272,8 @@
             "skills"
             "stress"
             "equip"
-            "trinket";        
+            "trinket"
+            "notes";    
     }
     .saves-grid {
         justify-items: stretch;

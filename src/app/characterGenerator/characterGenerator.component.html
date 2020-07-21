@@ -3,10 +3,11 @@
         <div class='section-banner title-section'>NAME</div>
         <div class='card scan-card'>
             <input class='moshInput hiddenPrint'
-                [(ngModel)]='name' (ngModelChange)='changeName($event)'
+                (keyup)='growWidth($event)'
+                [(ngModel)]='charSheet.name' (ngModelChange)='changeName($event)'
                 type="text"
                 style="text-transform:uppercase">
-                <span class='printOnly'>{{name.trim()}}</span> THE {{class.toUpperCase()}}
+                <span class='printOnly'>{{charSheet.name.trim()}}</span> THE {{charSheet.class.toUpperCase()}}
         </div>
     </section>
 
@@ -15,7 +16,7 @@
             <div class='title-section section-banner'>STATS</div>
         </section>
         <section class='stress-resolve-health-track'>
-            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'stress-title': key === 'stress',
                     'resolve-title': key === 'resolve',
@@ -24,22 +25,22 @@
                 }">
                 {{key.toUpperCase()}}
             </div>
-            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'stress-stat': key === 'stress',
                     'resolve-stat': key === 'resolve',
                     'health-stat': key.toLowerCase() === 'max_health',
                     'no-display': key !== 'stress' && key !== 'resolve' && key.toLowerCase() !== 'max_health'
                 }">
-                <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='currStats[key]' type="number" min="0">
-                <span class='printOnly'>{{currStats[key]}}</span>
+                <input (change)='saveModChanges($event.target.value, key)' style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='charSheet.currMods[key]' type="number" min="0">
+                <span class='printOnly'>{{charSheet.currMods[key]}}</span>
             </div>
             <div class='card scan-card health-max'>
-                / {{statsArray['max_Health']}}
+                / {{charSheet.statsArray['max_Health']}}
             </div>
         </section>
         <section class='stats-column'>
-            <div class='card scan-card clickable charHover' (click)='rollCheckOrSave(key, true)' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card clickable charHover' (click)='rollCheckOrSave(key, true)' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'str-title': key === 'strength',
                     'spd-title': key === 'speed',
@@ -49,7 +50,7 @@
                 }">
                 {{key.toUpperCase()}}
             </div>
-            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'str-stat': key === 'strength',
                     'spd-stat': key === 'speed',
@@ -57,9 +58,9 @@
                     'com-stat': key === 'combat',
                     'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
                 }">
-                {{statsArray[key]}}
+                {{charSheet.statsArray[key]}}
             </div>
-            <div class='card scan-card' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'str-add': key === 'strength',
                     'spd-add': key === 'speed',
@@ -67,10 +68,10 @@
                     'com-add': key === 'combat',
                     'no-display': key === 'stress' || key ==='resolve' || key.toLowerCase() === 'max_health'
                 }">
-                + <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='statMod[key]' type="number" min="0" max="99" value="0">
-                <span class='printOnly'>{{statMod[key]}}</span>
+                + <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='charSheet.currMods[key]' type="number" min="0" max="99" value="0">
+                <span class='printOnly'>{{charSheet.currMods[key]}}</span>
             </div>
-            <div class='card scan-card hiddenPrint' *ngFor='let key of objectKeys(statsArray)'
+            <div class='card scan-card hiddenPrint' *ngFor='let key of objectKeys(charSheet.statsArray)'
                 [ngClass]="{
                     'str-result': key === 'strength',
                     'spd-result': key === 'speed',
@@ -80,12 +81,12 @@
                 }">
                 <span *ngIf='rolledCheckTotal[key] !== null'>
                     [{{rolledCheckNums[0]}}, {{rolledCheckNums[1]}}] 
-                    <span [ngStyle]="{'color': rolledCheckTotal[key] <= statsArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledCheckTotal[key]}}</span>
-                    <span style='color: red' *ngIf='rolledCheckTotal[key] > statsArray[key] + statMod[key]'>
+                    <span [ngStyle]="{'color': rolledCheckTotal[key] <= charSheet.statsArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledCheckTotal[key]}}</span>
+                    <span style='color: red' *ngIf='rolledCheckTotal[key] > charSheet.statsArray[key] + statMod[key]'>
                         <span *ngIf='rolledCheckNums[0] === rolledCheckNums[1]'> CRIT</span>
                         FAIL
                     </span>
-                    <span style='color: green' *ngIf='rolledCheckTotal[key] <= statsArray[key] + statMod[key]'>
+                    <span style='color: green' *ngIf='rolledCheckTotal[key] <= charSheet.statsArray[key] + statMod[key]'>
                         <span *ngIf='rolledCheckNums[0] === rolledCheckNums[1]'> CRIT</span>
                         PASS
                     </span>
@@ -96,7 +97,7 @@
 
     <section class='card crew-card basic-grid saves-grid'>
         <div class='title-section section-banner'>SAVES</div>
-        <div *ngFor='let key of objectKeys(savesArray)'
+        <div *ngFor='let key of objectKeys(charSheet.savesArray)'
             class='card scan-card'
             [ngClass]="{
                 'san-section': key === 'sanity',
@@ -108,7 +109,7 @@
             <b class='clickable charHover' (click)='rollCheckOrSave(key, false)'>{{key.toUpperCase()}}</b>
             <div class='subText'>{{getSavesSubtext(key.toLowerCase())}}</div>
         </div>
-        <span *ngFor='let key of objectKeys(savesArray)'
+        <span *ngFor='let key of objectKeys(charSheet.savesArray)'
             class='card scan-card'
             [ngClass]="{
                 'san-stat': key === 'sanity',
@@ -116,9 +117,9 @@
                 'bod-stat': key === 'body',
                 'arm-stat': key === 'armor'
             }">
-            {{savesArray[key]}}
+            {{charSheet.savesArray[key]}}
         </span>
-        <span *ngFor='let key of objectKeys(savesArray)'
+        <span *ngFor='let key of objectKeys(charSheet.savesArray)'
             class='card scan-card'
             [ngClass]="{
                 'san-add': key === 'sanity',
@@ -129,7 +130,7 @@
             + <input style='width: 3rem' class='moshInput hiddenPrint' [(ngModel)]='statMod[key]' type="number" min="0" max="99" value="0">
             <span class='printOnly'>{{statMod[key]}}</span>
         </span>
-        <span *ngFor='let key of objectKeys(savesArray)'
+        <span *ngFor='let key of objectKeys(charSheet.savesArray)'
             class='card scan-card hiddenPrint'
             [ngClass]="{
                 'san-save': key === 'sanity',
@@ -139,23 +140,24 @@
             }">
             <span *ngIf='rolledSaveTotal[key] !== null'>
                     [{{rolledSaveNums[0]}}, {{rolledSaveNums[1]}}] 
-                <span [ngStyle]="{'color': rolledSaveTotal[key] <= savesArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledSaveTotal[key]}}</span>
-                <span style='color: red' *ngIf='rolledSaveTotal[key] > savesArray[key] + statMod[key]'>
+                <span [ngStyle]="{'color': rolledSaveTotal[key] <= charSheet.savesArray[key] + statMod[key] ? 'green' : 'red'}">{{rolledSaveTotal[key]}}</span>
+                <span style='color: red' *ngIf='rolledSaveTotal[key] > charSheet.savesArray[key] + statMod[key]'>
                     <span *ngIf='rolledSaveNums[0] === rolledSaveNums[1]'> CRIT</span>
                     FAIL
                 </span>
-                <span style='color: green' *ngIf='rolledSaveTotal[key] <= savesArray[key] + statMod[key]'>
+                <span style='color: green' *ngIf='rolledSaveTotal[key] <= charSheet.savesArray[key] + statMod[key]'>
                     <span *ngIf='rolledSaveNums[0] === rolledSaveNums[1]'> CRIT</span>
                     PASS
                 </span>
             </span>
         </span>
     </section>
+
     <section class='card crew-card basic-grid skills-grid'>
         <div class='section-banner title-section'>
             SKILLS
         </div>
-        <div class='card scan-card' *ngFor='let skill of skillsArray'>
+        <div class='card scan-card' *ngFor='let skill of charSheet.skillsArray'>
             <span class='printItemBold'>
                 >> {{skill.title}} | {{skill.percent}}
             </span>
@@ -169,10 +171,10 @@
         <div class='title-section section-banner'>
             EQUIPMENT
         </div>
-        <div class='subsection-title'>
-            {{loadoutName.toUpperCase()}} LOADOUT
+        <div (click)='getEquipment(true)' class='subsection-title clickable'>
+            {{charSheet.loadoutName.toUpperCase()}} LOADOUT
         </div>
-        <div class='card scan-card' *ngFor='let item of equipmentArray'>
+        <div class='card scan-card' *ngFor='let item of charSheet.equipmentArray'>
             <span class='printItemBold'>
                 >> {{item.title.trim()}}
             </span>
@@ -200,7 +202,9 @@
             </div>
         </div>
         <div class='card scan-card'>
-            >> CREDITS: {{credits}}
+            >> CREDITS:
+            <input (keyup)='growWidth($event)' class='moshInput hiddenPrint' [(ngModel)]='charSheet.credits' (ngModelChange)='changeCredits($event)' type="number" min="0" max="999" value="0">
+            <span class='printOnly'>{{charSheet.credits}}</span>
         </div>
     </section>
 
@@ -208,14 +212,14 @@
         <div class='title-section section-banner'>
             TRINKETS & PATCHES
         </div>
-        <div class='subsection-title'>
+        <div (click)='getTrinketPatch(true, 0)' class='subsection-title clickable'>
             TRINKET
         </div>
-        <div class='card scan-card'> >> {{trinketPatch[0].num}} - {{trinketPatch[0].descrip}}</div>
-        <div class='subsection-title'>
+        <div class='card scan-card'> >> {{charSheet.trinket['num']}} - {{charSheet.trinket['descrip']}}</div>
+        <div (click)='getTrinketPatch(true, 1)' class='subsection-title clickable'>
             PATCH
         </div>
-        <div class='card scan-card'> >> {{trinketPatch[1].num}} - {{trinketPatch[1].descrip}}</div>
+        <div class='card scan-card'> >> {{charSheet.patch['num']}} - {{charSheet.patch['descrip']}}</div>
     </section>
 
     <section class='card crew-card basic-grid stress-grid'>
@@ -228,5 +232,12 @@
         <div class='card scan-card' *ngIf='getStress().extra'>
             >> {{getStress().extra}}
         </div>
+    </section>
+    
+    <section class='card crew-card basic-grid notes-grid'>
+        <div class='title-section section-banner'>
+            NOTES
+        </div>
+        <textarea (keyup)='growTextarea($event)' [(ngModel)]='charSheet.notes' (ngModelChange)='changeNotes($event)' class='card scan-card'></textarea>
     </section>
 </div>

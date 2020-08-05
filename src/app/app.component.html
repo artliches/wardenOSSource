@@ -38,7 +38,7 @@
         <app-character-generator *ngIf='flags["crew"]' (charName)='passPagePrintTitle($event)' (jsonToDownload)='passJsonToDownload($event)' [charSheet]='charSheet' [uploadedSheet]='uploadedSheet' [bias]='bias'></app-character-generator>
         <app-trinket-patch-display *ngIf='flags["trinket"]' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
         <app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
-        <app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAblib]='genSpaceStation'></app-space-station-generator>
+        <app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAttributes]='genSpaceStation'></app-space-station-generator>
     </section>
 
     <section class='lower-button-section'>

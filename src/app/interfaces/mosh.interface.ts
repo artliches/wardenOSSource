@@ -104,3 +104,28 @@ export interface CharacterTrinketPatch {
     num: number;
     descrip: string;
 }
+
+export interface StationAttributes {
+    call_sign: string;
+    celestial_body: string;
+    common_problems: string;
+    control_faction: string;
+    core_leader: string;
+    core_station: string;
+    corespaceCrisis: boolean;
+    crisis: string;
+    goods: string;
+    group: string;
+    noteworthy_locations: string;
+    resource: string;
+    rim_landmarks: string;
+    rim_station: string;
+    rimspaceCrisis: boolean;
+    rival_faction: string;
+    rival_leader: string;
+    station_name1: string;
+    station_name2: string;
+    structure: string;
+    isRimspaceCrisis: boolean;
+    isCorespaceCrisis: boolean;
+}

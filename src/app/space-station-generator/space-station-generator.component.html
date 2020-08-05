@@ -2,7 +2,7 @@
     <section class='space-station-title section-banner'>
         HAILING
         <span *ngIf='coreOrRim; else rim'>
-            CORESPACE STATION <b>{{stationAblib[0].toUpperCase()}} {{stationAblib[1].toUpperCase()}}</b>
+            CORESPACE STATION <b>{{stationAttributes.station_name1.toUpperCase()}} {{stationAttributes.station_name2.toUpperCase()}}</b>
         </span>
         <ng-template #rim>
             RIMSPACE OUTPOST CALL-SIGN <b>{{callSign.toUpperCase()}}</b>
@@ -10,7 +10,7 @@
         
     </section>
     <div class='card scan-card station-section' [innerHTML]='stationDescrip'></div>
-    <div class='card scan-card commonProblem-section' [innerHtml]='stationAblib[10]'></div>
+    <div class='card scan-card commonProblem-section' [innerHtml]='stationAttributes.common_problems'></div>
     <div class='card scan-card crisis-section' [innerHTML]='crisisOrSafe'></div>
     <div class='card scan-card struct-section'>
         <span [innerHTML]='stationStructure'></span>

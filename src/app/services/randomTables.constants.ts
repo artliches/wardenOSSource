@@ -776,7 +776,7 @@ export const SPACE_STATION = [
     ]
   },
   {
-    title: 'celestial body',
+    title: 'celestial_body',
     table: [
       'still terraforming planet',
       'overpopulated slumworld',

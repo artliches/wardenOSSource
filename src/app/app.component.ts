@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CharacterStats, CharSheet } from './interfaces/mosh.interface';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { CharacterStats, CharSheet, StationAttributes } from './interfaces/mosh.interface';
 import { RandomNumberService } from './services/randomNumber.service';
 
 @Component({
@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     station: false
   };
   genDerelict = false;
-  genSpaceStation = [];
+  genSpaceStation: StationAttributes;
   jsonToDownload: any;
   personButtonText = this.random.getRandomSaying(99, 1).text;
   previousSaying = [];
@@ -106,7 +106,30 @@ export class AppComponent implements OnInit {
   generateRandomSpaceStation(coreOrRim) {
     document.title = `WARDEN OS ONLINE`;
     this.coreOrRim = coreOrRim;
-    this.genSpaceStation = [];
+    this.genSpaceStation = {
+      call_sign: '',
+      celestial_body: '',
+      common_problems: '',
+      control_faction: '',
+      core_leader: '',
+      core_station: '',
+      corespaceCrisis: false,
+      crisis: '',
+      goods: '',
+      group: '',
+      noteworthy_locations: '',
+      resource: '',
+      rim_landmarks: '',
+      rim_station: '',
+      rimspaceCrisis: false,
+      rival_faction: '',
+      rival_leader: '',
+      station_name1: '',
+      station_name2: '',
+      structure: '',
+      isRimspaceCrisis: false,
+      isCorespaceCrisis: false,
+    };
 
     this.flags.print = true;
   }

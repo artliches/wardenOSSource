@@ -127,8 +127,6 @@ export class AppComponent implements OnInit {
       station_name1: '',
       station_name2: '',
       structure: '',
-      isRimspaceCrisis: false,
-      isCorespaceCrisis: false,
     };
 
     this.flags.print = true;

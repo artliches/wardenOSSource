@@ -14,8 +14,9 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   @Input() stationAttributes: StationAttributes;
   @Output() stationTitle = new EventEmitter<string>();
   amalgamationStructure = [];
-  callSign = '';
-  crisisOrSafe = '';
+  stationType = "";
+  stationIdentifier = '';
+  marketStatus = '';
   locationDescrips = [];
   stationDescrip = '';
   stationNotableLocations = '';
@@ -26,9 +27,9 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   constructor(private random: RandomNumberService) { }
 
   ngOnChanges() {
-    this.callSign = '';
+    this.stationIdentifier = '';
     this.stationDescrip = '';
-    this.crisisOrSafe = '';
+    this.marketStatus = '';
     this.stationStructure = '';
     this.amalgamationStructure = [];
     this.generateRandomStation();
@@ -39,8 +40,6 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       this.stationAttributes[SPACE_STATION[key].title] =
         SPACE_STATION[key].table[this.random.getRandomNumber(0, SPACE_STATION[key].table.length - 1)];
     });
-    this.stationAttributes.isRimspaceCrisis = this.random.getRandomNumber(1, 100) <= 20;
-    this.stationAttributes.isCorespaceCrisis = this.random.getRandomNumber(1, 100) <= 5;
 
     const stationName = `<b class='magenta'>${this.stationAttributes.station_name1} ${this.stationAttributes.station_name2}</b>`;
     const numLocations = this.random.getRandomNumber(1, 10);
@@ -56,57 +55,67 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     });
 
     if (this.coreOrRim) {
+      this.stationType = `Corespace Station`;
+      this.stationIdentifier = `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}`;      
       this.stationDescrip = `
-      ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
-      orbiting a(n) <b class='magenta'>${this.stationAttributes.celestial_body}</b>.
-      It's run by a(n) <b class='magenta'>${this.stationAttributes.core_leader}</b>
-      backed by <b class='magenta'>${this.stationAttributes.control_faction.trim()}
-      </b>. Docking costs <b class='magenta'>${this.random.getRandomNumber(1, 10) * 100}
-      </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
-    `;
+        ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
+        orbiting a(n) <b class='magenta'>${this.stationAttributes.celestial_body}</b>.
+        It's run by a(n) <b class='magenta'>${this.stationAttributes.core_leader}</b>
+        backed by <b class='magenta'>${this.stationAttributes.control_faction.trim()}
+        </b>. Docking costs <b class='magenta'>${this.random.getRandomNumber(1, 10) * 100}
+        </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
+      `;
 
-      const percentOff = this.random.getRandomNumber(1, 100) - 10;
-
-      this.crisisOrSafe = this.stationAttributes.isCorespaceCrisis ?
-        `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
-        ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
-        <div class='crisis-warning'>!!!WARNING!!!</div>` :
-        `You can buy supplies and fuel as per normal, though at a hefty markup of
-        <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAttributes[6]}</b> at
-        <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
-        <b class='magenta'>${this.stationAttributes.resource}</b>.`;
+      const isInCrisis  = this.random.getRandomNumber(1, 100) <= 5;
+      if (isInCrisis){
+        this.marketStatus =
+          `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
+          ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
+          <div class='crisis-warning'>!!!WARNING!!!</div>`;
+      } else {
+        const percentOff = this.random.getRandomNumber(1, 100) - 10;
+        this.marketStatus =
+          `You can buy supplies and fuel as per normal, though at a hefty markup of
+          <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAttributes[6]}</b> at
+          <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
+          <b class='magenta'>${this.stationAttributes.resource}</b>.`;
+      }
 
       this.stationStructure = this.createStationStructure(stationName);
 
       this.stationNotableLocations = `${stationName} has <b class='magenta'>${numLocations} notable location(s)</b>.`;
     } else {
-      this.callSign = this.random.rollStringDice(`${this.stationAttributes.call_sign.trim()}`, '[d');
+      this.stationType = `Rimspace Outpost`;
+      this.stationIdentifier = this.random.rollStringDice(`${this.stationAttributes.call_sign.trim()}`, '[d');
       this.stationDescrip = `
         Out on the rim, near a(n) <b class='magenta'>${this.stationAttributes.rim_landmarks.trim()}</b>,
         a(n) <b class='magenta'>${this.stationAttributes.rim_station.trim()}</b> station (call-sign
-        <b class="magenta">${this.callSign}</b>) spins. It\'s outwardly controlled
+        <b class="magenta">${this.stationIdentifier}</b>) spins. It\'s outwardly controlled
         by <b class='magenta'>${this.stationAttributes.control_faction.trim()}</b>, though is subtly undermined by
         <b class='magenta'>${this.stationAttributes.rival_faction.trim()}</b>, led by a(n)
         <b class='magenta'>${this.stationAttributes.rival_leader.trim()}</b>.
       `;
 
-      this.crisisOrSafe = this.stationAttributes.isRimspaceCrisis ?
-        `<div class='crisis-warning'>!!!WARNING!!!</div>
-        <b class="magenta">${this.callSign}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
-        <div class='crisis-warning'>!!!WARNING!!!</div>` :
-        `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
-        for sale and there\'s a rumor going around that the station is in dire need of
-        <b class='magenta'>${this.stationAttributes.resource}</b>.
-      `;
+      const isInCrisis = this.random.getRandomNumber(1, 100) <= 20;
+      if (isInCrisis){
+        this.marketStatus =
+          `<div class='crisis-warning'>!!!WARNING!!!</div>
+          <b class="magenta">${this.stationIdentifier}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
+          <div class='crisis-warning'>!!!WARNING!!!</div>`;
+       } else {
+        this.marketStatus =
+          `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
+          for sale and there\'s a rumor going around that the station is in dire need of
+          <b class='magenta'>${this.stationAttributes.resource}</b>.`;
 
-      this.stationStructure = this.createStationStructure(`<b class="magenta">${this.callSign}</b>`);
-      this.stationNotableLocations = `<b class="magenta">${this.callSign}</b>
+       }
+
+      this.stationStructure = this.createStationStructure(`<b class="magenta">${this.stationIdentifier}</b>`);
+      this.stationNotableLocations = `<b class="magenta">${this.stationIdentifier}</b>
         has <b class='magenta'>${numLocations} notable location(s)</b>.`;
     }
 
-    this.stationTitle.emit(this.coreOrRim ?
-      `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}` :
-      `${this.callSign.toUpperCase()}`);
+    this.stationTitle.emit(`${this.stationIdentifier.toUpperCase()}`);
   }
 
   createAmalgamationStructure(numberOfRolls: number) {

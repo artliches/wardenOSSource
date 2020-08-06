@@ -14,7 +14,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   @Input() stationAttributes: StationAttributes;
   @Output() stationTitle = new EventEmitter<string>();
   amalgamationStructure = [];
-  callSign = '';
+  stationIdentifier = '';
   crisisOrSafe = '';
   locationDescrips = [];
   stationDescrip = '';
@@ -26,7 +26,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   constructor(private random: RandomNumberService) { }
 
   ngOnChanges() {
-    this.callSign = '';
+    this.stationIdentifier = '';
     this.stationDescrip = '';
     this.crisisOrSafe = '';
     this.stationStructure = '';
@@ -56,6 +56,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     });
 
     if (this.coreOrRim) {
+      this.stationIdentifier = `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}`;      
       this.stationDescrip = `
       ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
       orbiting a(n) <b class='magenta'>${this.stationAttributes.celestial_body}</b>.
@@ -80,11 +81,11 @@ export class SpaceStationGeneratorComponent implements OnChanges {
 
       this.stationNotableLocations = `${stationName} has <b class='magenta'>${numLocations} notable location(s)</b>.`;
     } else {
-      this.callSign = this.random.rollStringDice(`${this.stationAttributes.call_sign.trim()}`, '[d');
+      this.stationIdentifier = this.random.rollStringDice(`${this.stationAttributes.call_sign.trim()}`, '[d');
       this.stationDescrip = `
         Out on the rim, near a(n) <b class='magenta'>${this.stationAttributes.rim_landmarks.trim()}</b>,
         a(n) <b class='magenta'>${this.stationAttributes.rim_station.trim()}</b> station (call-sign
-        <b class="magenta">${this.callSign}</b>) spins. It\'s outwardly controlled
+        <b class="magenta">${this.stationIdentifier}</b>) spins. It\'s outwardly controlled
         by <b class='magenta'>${this.stationAttributes.control_faction.trim()}</b>, though is subtly undermined by
         <b class='magenta'>${this.stationAttributes.rival_faction.trim()}</b>, led by a(n)
         <b class='magenta'>${this.stationAttributes.rival_leader.trim()}</b>.
@@ -92,21 +93,19 @@ export class SpaceStationGeneratorComponent implements OnChanges {
 
       this.crisisOrSafe = this.stationAttributes.isRimspaceCrisis ?
         `<div class='crisis-warning'>!!!WARNING!!!</div>
-        <b class="magenta">${this.callSign}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
+        <b class="magenta">${this.stationIdentifier}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
         <div class='crisis-warning'>!!!WARNING!!!</div>` :
         `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
         for sale and there\'s a rumor going around that the station is in dire need of
         <b class='magenta'>${this.stationAttributes.resource}</b>.
       `;
 
-      this.stationStructure = this.createStationStructure(`<b class="magenta">${this.callSign}</b>`);
-      this.stationNotableLocations = `<b class="magenta">${this.callSign}</b>
+      this.stationStructure = this.createStationStructure(`<b class="magenta">${this.stationIdentifier}</b>`);
+      this.stationNotableLocations = `<b class="magenta">${this.stationIdentifier}</b>
         has <b class='magenta'>${numLocations} notable location(s)</b>.`;
     }
 
-    this.stationTitle.emit(this.coreOrRim ?
-      `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}` :
-      `${this.callSign.toUpperCase()}`);
+    this.stationTitle.emit(`${this.stationIdentifier.toUpperCase()}`);
   }
 
   createAmalgamationStructure(numberOfRolls: number) {

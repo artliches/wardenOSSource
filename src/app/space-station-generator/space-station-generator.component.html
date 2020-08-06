@@ -2,10 +2,10 @@
     <section class='space-station-title section-banner'>
         HAILING
         <span *ngIf='coreOrRim; else rim'>
-            CORESPACE STATION <b>{{stationAttributes.station_name1.toUpperCase()}} {{stationAttributes.station_name2.toUpperCase()}}</b>
+            CORESPACE STATION <b>{{stationIdentifier.toUpperCase()}}</b>
         </span>
         <ng-template #rim>
-            RIMSPACE OUTPOST CALL-SIGN <b>{{callSign.toUpperCase()}}</b>
+            RIMSPACE OUTPOST CALL-SIGN <b>{{stationIdentifier.toUpperCase()}}</b>
         </ng-template>
         
     </section>

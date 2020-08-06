@@ -58,13 +58,13 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     if (this.coreOrRim) {
       this.stationIdentifier = `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}`;      
       this.stationDescrip = `
-      ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
-      orbiting a(n) <b class='magenta'>${this.stationAttributes.celestial_body}</b>.
-      It's run by a(n) <b class='magenta'>${this.stationAttributes.core_leader}</b>
-      backed by <b class='magenta'>${this.stationAttributes.control_faction.trim()}
-      </b>. Docking costs <b class='magenta'>${this.random.getRandomNumber(1, 10) * 100}
-      </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
-    `;
+        ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
+        orbiting a(n) <b class='magenta'>${this.stationAttributes.celestial_body}</b>.
+        It's run by a(n) <b class='magenta'>${this.stationAttributes.core_leader}</b>
+        backed by <b class='magenta'>${this.stationAttributes.control_faction.trim()}
+        </b>. Docking costs <b class='magenta'>${this.random.getRandomNumber(1, 10) * 100}
+        </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
+      `;
 
       const percentOff = this.random.getRandomNumber(1, 100) - 10;
 

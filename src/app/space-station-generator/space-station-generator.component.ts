@@ -40,8 +40,6 @@ export class SpaceStationGeneratorComponent implements OnChanges {
       this.stationAttributes[SPACE_STATION[key].title] =
         SPACE_STATION[key].table[this.random.getRandomNumber(0, SPACE_STATION[key].table.length - 1)];
     });
-    this.stationAttributes.isRimspaceCrisis = this.random.getRandomNumber(1, 100) <= 20;
-    this.stationAttributes.isCorespaceCrisis = this.random.getRandomNumber(1, 100) <= 5;
 
     const stationName = `<b class='magenta'>${this.stationAttributes.station_name1} ${this.stationAttributes.station_name2}</b>`;
     const numLocations = this.random.getRandomNumber(1, 10);
@@ -68,16 +66,20 @@ export class SpaceStationGeneratorComponent implements OnChanges {
         </b>cr, and a cheap room is <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>cr/night.
       `;
 
-      const percentOff = this.random.getRandomNumber(1, 100) - 10;
-
-      this.crisisOrSafe = this.stationAttributes.isCorespaceCrisis ?
-        `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
-        ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
-        <div class='crisis-warning'>!!!WARNING!!!</div>` :
-        `You can buy supplies and fuel as per normal, though at a hefty markup of
-        <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAttributes[6]}</b> at
-        <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
-        <b class='magenta'>${this.stationAttributes.resource}</b>.`;
+      const isInCrisis  = this.random.getRandomNumber(1, 100) <= 5;
+      if (isInCrisis){
+        this.crisisOrSafe =
+          `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
+          ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
+          <div class='crisis-warning'>!!!WARNING!!!</div>`;
+      } else {
+        const percentOff = this.random.getRandomNumber(1, 100) - 10;
+        this.crisisOrSafe =
+          `You can buy supplies and fuel as per normal, though at a hefty markup of
+          <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAttributes[6]}</b> at
+          <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
+          <b class='magenta'>${this.stationAttributes.resource}</b>.`;
+      }
 
       this.stationStructure = this.createStationStructure(stationName);
 
@@ -94,14 +96,19 @@ export class SpaceStationGeneratorComponent implements OnChanges {
         <b class='magenta'>${this.stationAttributes.rival_leader.trim()}</b>.
       `;
 
-      this.crisisOrSafe = this.stationAttributes.isRimspaceCrisis ?
-        `<div class='crisis-warning'>!!!WARNING!!!</div>
-        <b class="magenta">${this.stationIdentifier}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
-        <div class='crisis-warning'>!!!WARNING!!!</div>` :
-        `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
-        for sale and there\'s a rumor going around that the station is in dire need of
-        <b class='magenta'>${this.stationAttributes.resource}</b>.
-      `;
+      const isInCrisis = this.random.getRandomNumber(1, 100) <= 20;
+      if (isInCrisis){
+        this.crisisOrSafe =
+          `<div class='crisis-warning'>!!!WARNING!!!</div>
+          <b class="magenta">${this.stationIdentifier}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
+          <div class='crisis-warning'>!!!WARNING!!!</div>`;
+       } else {
+        this.crisisOrSafe =
+          `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
+          for sale and there\'s a rumor going around that the station is in dire need of
+          <b class='magenta'>${this.stationAttributes.resource}</b>.`;
+
+       }
 
       this.stationStructure = this.createStationStructure(`<b class="magenta">${this.stationIdentifier}</b>`);
       this.stationNotableLocations = `<b class="magenta">${this.stationIdentifier}</b>

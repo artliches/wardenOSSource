@@ -126,6 +126,4 @@ export interface StationAttributes {
     station_name1: string;
     station_name2: string;
     structure: string;
-    isRimspaceCrisis: boolean;
-    isCorespaceCrisis: boolean;
 }

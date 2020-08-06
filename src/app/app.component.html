@@ -31,6 +31,9 @@
             <button class='control-button yellow-button clickable' (click)='flipFlags("derelict"); generateDerelict(); getRandomDerelictSaying()'>
                 SCAN THE DERELICT SHIP
             </button>
+            <button class='control-button yellow-button clickable' (click)='flipFlags("debug")'>
+                SHOW GOOGLE SHEETS DATA
+            </button>
         </section>
     </section>
 
@@ -39,6 +42,12 @@
         <app-trinket-patch-display *ngIf='flags["trinket"]' [trinketPatch]='trinketPatch'></app-trinket-patch-display>
         <app-derelict-generator *ngIf='flags["derelict"]' (derelictTitle)='passPagePrintTitle($event)' [genDerelict]='genDerelict'></app-derelict-generator>
         <app-space-station-generator *ngIf='flags["station"]' (stationTitle)='passPagePrintTitle($event)' [coreOrRim]='coreOrRim' [stationAttributes]='genSpaceStation'></app-space-station-generator>
+
+        <section *ngIf='sheetsData && flags["debug"]'>
+            <div *ngFor='let item of sheetsData | keyvalue'>
+                {{item.key}} : {{item.value}}
+            </div>
+        </section>
     </section>
 
     <section class='lower-button-section'>

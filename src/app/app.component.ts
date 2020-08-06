@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CharacterStats, CharSheet, StationAttributes } from './interfaces/mosh.interface';
 import { RandomNumberService } from './services/randomNumber.service';
+import { HttpClient } from '@angular/common/http';
+import { GoogleSheetsService } from './services/googleSheets.service';
 
 @Component({
   selector: 'app-root',
@@ -21,7 +23,8 @@ export class AppComponent implements OnInit {
     download: false,
     print: false,
     trinket: false,
-    station: false
+    station: false,
+    debug: false,
   };
   genDerelict = false;
   genSpaceStation: StationAttributes;
@@ -34,12 +37,24 @@ export class AppComponent implements OnInit {
   wardenSubtext = this.random.getRandomSaying(99, 0).text;
   uploadedSheet: CharSheet;
 
+  sheetsData = {};
+
   objectKeys = Object.keys;
 
-  constructor(private random: RandomNumberService) {}
+  constructor(private random: RandomNumberService, private googleSheets: GoogleSheetsService) {}
 
   ngOnInit() {
     document.title = 'WARDEN OS ONLINE';
+
+    this.googleSheets.getSheetsData().subscribe(response => {
+      if (response) {
+        const responseContent = response.feed.entry;
+        responseContent.forEach((data, index, array) => {
+          // const column = data.title.$t[0];
+          this.sheetsData[data.title.$t] = data.content.$t;
+        });
+      }
+    });
   }
 
   uploadFile(event: any) {

@@ -14,6 +14,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   @Input() stationAttributes: StationAttributes;
   @Output() stationTitle = new EventEmitter<string>();
   amalgamationStructure = [];
+  stationType = "";
   stationIdentifier = '';
   crisisOrSafe = '';
   locationDescrips = [];
@@ -56,6 +57,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
     });
 
     if (this.coreOrRim) {
+      this.stationType = `Corespace Station`;
       this.stationIdentifier = `${this.stationAttributes.station_name1.toUpperCase()} ${this.stationAttributes.station_name2.toUpperCase()}`;      
       this.stationDescrip = `
         ${stationName} is a(n) <b class='magenta'>${this.stationAttributes.core_station}</b>
@@ -81,6 +83,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
 
       this.stationNotableLocations = `${stationName} has <b class='magenta'>${numLocations} notable location(s)</b>.`;
     } else {
+      this.stationType = `Rimspace Outpost`;
       this.stationIdentifier = this.random.rollStringDice(`${this.stationAttributes.call_sign.trim()}`, '[d');
       this.stationDescrip = `
         Out on the rim, near a(n) <b class='magenta'>${this.stationAttributes.rim_landmarks.trim()}</b>,

@@ -1,12 +1,6 @@
 <section class='basic-grid space-station-grid-master card randGen-card'>
     <section class='space-station-title section-banner'>
-        HAILING
-        <span *ngIf='coreOrRim; else rim'>
-            CORESPACE STATION <b>{{stationIdentifier.toUpperCase()}}</b>
-        </span>
-        <ng-template #rim>
-            RIMSPACE OUTPOST CALL-SIGN <b>{{stationIdentifier.toUpperCase()}}</b>
-        </ng-template>
+        HAILING {{stationType.toUpperCase()}}: <b>{{stationIdentifier.toUpperCase()}}</b>
         
     </section>
     <div class='card scan-card station-section' [innerHTML]='stationDescrip'></div>

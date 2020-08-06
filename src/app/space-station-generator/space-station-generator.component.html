@@ -5,7 +5,7 @@
     </section>
     <div class='card scan-card station-section' [innerHTML]='stationDescrip'></div>
     <div class='card scan-card commonProblem-section' [innerHtml]='stationAttributes.common_problems'></div>
-    <div class='card scan-card crisis-section' [innerHTML]='crisisOrSafe'></div>
+    <div class='card scan-card crisis-section' [innerHTML]='marketStatus'></div>
     <div class='card scan-card struct-section'>
         <span [innerHTML]='stationStructure'></span>
         <span class='amalgam-section' *ngIf='amalgamationStructure.length > 0'>

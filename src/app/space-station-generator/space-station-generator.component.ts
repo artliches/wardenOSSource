@@ -16,7 +16,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   amalgamationStructure = [];
   stationType = "";
   stationIdentifier = '';
-  crisisOrSafe = '';
+  marketStatus = '';
   locationDescrips = [];
   stationDescrip = '';
   stationNotableLocations = '';
@@ -29,7 +29,7 @@ export class SpaceStationGeneratorComponent implements OnChanges {
   ngOnChanges() {
     this.stationIdentifier = '';
     this.stationDescrip = '';
-    this.crisisOrSafe = '';
+    this.marketStatus = '';
     this.stationStructure = '';
     this.amalgamationStructure = [];
     this.generateRandomStation();
@@ -68,13 +68,13 @@ export class SpaceStationGeneratorComponent implements OnChanges {
 
       const isInCrisis  = this.random.getRandomNumber(1, 100) <= 5;
       if (isInCrisis){
-        this.crisisOrSafe =
+        this.marketStatus =
           `<div class='crisis-warning'>!!!WARNING!!!</div>${stationName} is in the midst of a
           ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
           <div class='crisis-warning'>!!!WARNING!!!</div>`;
       } else {
         const percentOff = this.random.getRandomNumber(1, 100) - 10;
-        this.crisisOrSafe =
+        this.marketStatus =
           `You can buy supplies and fuel as per normal, though at a hefty markup of
           <b class='magenta'>${this.random.getRandomSum(2, 1, 100)}</b>%. They also buy <b class='magenta'>${this.stationAttributes[6]}</b> at
           <b class='magenta'>${percentOff > 0 ? percentOff : 0}</b>% off and local free-traders have a line on where to find
@@ -98,12 +98,12 @@ export class SpaceStationGeneratorComponent implements OnChanges {
 
       const isInCrisis = this.random.getRandomNumber(1, 100) <= 20;
       if (isInCrisis){
-        this.crisisOrSafe =
+        this.marketStatus =
           `<div class='crisis-warning'>!!!WARNING!!!</div>
           <b class="magenta">${this.stationIdentifier}</b> is in the midst of a ${this.random.rollStringDice(`${this.stationAttributes.crisis}`, 'd1')}
           <div class='crisis-warning'>!!!WARNING!!!</div>`;
        } else {
-        this.crisisOrSafe =
+        this.marketStatus =
           `You can buy fuel as normal, but they are currently only offering <b class='magenta'>${this.stationAttributes.goods}</b>
           for sale and there\'s a rumor going around that the station is in dire need of
           <b class='magenta'>${this.stationAttributes.resource}</b>.`;
